@@ -1,2 +1,0 @@
-# CMRX-Customizations
-CompareMedsRX Customizations
