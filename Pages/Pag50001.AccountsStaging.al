@@ -5,7 +5,6 @@ page 50001 "CRX Accounts Staging"
     PageType = List;
     SourceTable = "CRX Accounts Staging";
     UsageCategory = Lists;
-    Editable = false;
 
     layout
     {
