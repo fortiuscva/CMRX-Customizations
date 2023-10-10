@@ -29,6 +29,10 @@ table 50003 "CRX peos staging"
         {
             Caption = 'contacts';
         }
+        field(7; total; text[250])
+        {
+            Caption = 'total';
+        }
     }
     keys
     {

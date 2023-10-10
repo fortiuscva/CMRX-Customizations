@@ -113,6 +113,14 @@ table 50004 "CRX Usages Staging"
         {
             Caption = 'privacy_optout';
         }
+        field(28; Dosage; text[250])
+        {
+            Caption = 'Dosage';
+        }
+        field(29; total; text[250])
+        {
+            Caption = 'total';
+        }
     }
     keys
     {

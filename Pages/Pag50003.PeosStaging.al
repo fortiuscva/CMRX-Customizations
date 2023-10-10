@@ -32,6 +32,10 @@ page 50003 "CRX Peos Staging"
                 {
                     ToolTip = 'Specifies the value of the contacts field.';
                 }
+                field(total; rec.total)
+                {
+                    ToolTip = 'Total No. of lines received in the Response';
+                }
             }
         }
     }

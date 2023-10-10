@@ -13,11 +13,16 @@ codeunit 50000 "CRX Access Token Management"
         HeaderVarLcl: HttpHeaders;
         RequestVarLcl: HttpRequestMessage;
         ResponseVarLcl: HttpResponseMessage;
+        AcccountDetailsTxt: Text;
+        AccountJsonText: Text;
         URLVarLcl: Text;
         ResponseTextVarLcl: Text;
         JArray: JsonArray;
         Jtoken: JsonToken;
         Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        i: Integer;
     begin
         URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/accounts/15';
         AccessToken.FindFirst();
@@ -32,33 +37,33 @@ codeunit 50000 "CRX Access Token Management"
         ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
         ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
         if ResponseVarLcl.IsSuccessStatusCode() THEN begin
-            Clear(Jtoken);
-            Clear(JArray);
 
-            ResponseTextVarLcl := DelStr(ResponseTextVarLcl, StrLen(ResponseTextVarLcl), StrLen(ResponseTextVarLcl) - 1);
-            ResponseTextVarLcl := CopyStr(ResponseTextVarLcl, 12, StrLen(ResponseTextVarLcl));
-            ResponseTextVarLcl := '[' + ResponseTextVarLcl + ']';
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            Jtoken.ReadFrom(ResponseTextVarLcl);
-            JArray := Jtoken.AsArray();
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('account', AccountJsonText) then begin
+                AccountJsonText := '[' + AccountJsonText + ']';
 
-            foreach Jtoken in Jarray do begin
-                AccountStagingRecLcl.Init();
-                AccountStagingRecLcl.id := GetValueasText(Jtoken, 'id');
-                AccountStagingRecLcl.first_name := GetValueasText(Jtoken, 'first_name');
-                AccountStagingRecLcl.last_name := GetValueasText(Jtoken, 'last_name');
-                AccountStagingRecLcl.email := GetValueasText(Jtoken, 'email');
-                AccountStagingRecLcl.phone := GetValueasText(Jtoken, 'phone');
-                AccountStagingRecLcl.group_id := GetValueasText(Jtoken, 'group_id');
-                AccountStagingRecLcl.zip := GetValueasText(Jtoken, 'zip');
-                AccountStagingRecLcl.sex := GetValueasText(Jtoken, 'sex');
-                AccountStagingRecLcl.ethnicity := GetValueasText(Jtoken, 'ethnicity');
-                AccountStagingRecLcl.age_range := GetValueasText(Jtoken, 'age_range');
-                AccountStagingRecLcl.affiliate_id := GetValueasText(Jtoken, 'affiliate_id');
-                AccountStagingRecLcl.privacy_optout := GetValueasText(Jtoken, 'privacy_optout');
-                AccountStagingRecLcl.created_at := GetValueasText(Jtoken, 'created_at');
-                AccountStagingRecLcl.updated_at := GetValueasText(Jtoken, 'updated_at');
-                AccountStagingRecLcl.Insert(true);
+                ArrayJsonMgt.InitializeCollection(AccountJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(AcccountDetailsTxt, i);
+                    JsonMgt.InitializeObject(AcccountDetailsTxt);
+                    AccountStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', AccountStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('first_name', AccountStagingRecLcl.first_name);
+                    JsonMgt.GetStringPropertyValueByName('last_name', AccountStagingRecLcl.last_name);
+                    JsonMgt.GetStringPropertyValueByName('email', AccountStagingRecLcl.email);
+                    JsonMgt.GetStringPropertyValueByName('phone', AccountStagingRecLcl.phone);
+                    JsonMgt.GetStringPropertyValueByName('group_id', AccountStagingRecLcl.group_id);
+                    JsonMgt.GetStringPropertyValueByName('zip', AccountStagingRecLcl.zip);
+                    JsonMgt.GetStringPropertyValueByName('sex', AccountStagingRecLcl.sex);
+                    JsonMgt.GetStringPropertyValueByName('ethnicity', AccountStagingRecLcl.ethnicity);
+                    JsonMgt.GetStringPropertyValueByName('age_range', AccountStagingRecLcl.age_range);
+                    JsonMgt.GetStringPropertyValueByName('affiliate_id', AccountStagingRecLcl.affiliate_id);
+                    JsonMgt.GetStringPropertyValueByName('privacy_optout', AccountStagingRecLcl.privacy_optout);
+                    JsonMgt.GetStringPropertyValueByName('created_at', AccountStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('updated_at', AccountStagingRecLcl.updated_at);
+                    AccountStagingRecLcl.Insert(true);
+                end;
             end;
         end;
     end;
@@ -71,11 +76,16 @@ codeunit 50000 "CRX Access Token Management"
         HeaderVarLcl: HttpHeaders;
         RequestVarLcl: HttpRequestMessage;
         ResponseVarLcl: HttpResponseMessage;
+        GroupDetailsTxt: Text;
+        GroupJsonText: Text;
         URLVarLcl: Text;
         ResponseTextVarLcl: Text;
         JArray: JsonArray;
         Jtoken: JsonToken;
-        JObject: JsonObject;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        i: Integer;
     begin
         URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/groups/5';
         AccessToken.FindFirst();
@@ -90,24 +100,26 @@ codeunit 50000 "CRX Access Token Management"
         ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
         ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
         if ResponseVarLcl.IsSuccessStatusCode() THEN begin
-            Clear(Jtoken);
-            Clear(JArray);
 
-            Jtoken.ReadFrom(ResponseTextVarLcl);
-            JObject := Jtoken.AsObject();
-            JObject.SelectToken('group', Jtoken);
-            JArray := Jtoken.AsArray();
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            foreach Jtoken in Jarray do begin
-                GroupStagingRecLcl.Init();
-                GroupStagingRecLcl.id := GetValueasText(Jtoken, 'id');
-                GroupStagingRecLcl.name := GetValueasText(Jtoken, 'name');
-                GroupStagingRecLcl.peo_id := GetValueasText(Jtoken, 'peo_id');
-                GroupStagingRecLcl.salesman_id := GetValueasText(Jtoken, 'salesman_id');
-                GroupStagingRecLcl.created_at := GetValueasText(Jtoken, 'created_at');
-                GroupStagingRecLcl.updated_at := GetValueasText(Jtoken, 'updated_at');
-                GroupStagingRecLcl.contacts := GetValueasText(Jtoken, 'contacts');
-                GroupStagingRecLcl.Insert(true);
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('group', GroupJsonText) then begin
+                GroupJsonText := '[' + GroupJsonText + ']';
+
+                ArrayJsonMgt.InitializeCollection(GroupJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(GroupDetailsTxt, i);
+                    JsonMgt.InitializeObject(GroupDetailsTxt);
+                    GroupStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', GroupStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('name', GroupStagingRecLcl.name);
+                    JsonMgt.GetStringPropertyValueByName('peo_id', GroupStagingRecLcl.peo_id);
+                    JsonMgt.GetStringPropertyValueByName('salesman_id', GroupStagingRecLcl.salesman_id);
+                    JsonMgt.GetStringPropertyValueByName('created_at', GroupStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('updated_at', GroupStagingRecLcl.updated_at);
+                    JsonMgt.GetStringPropertyValueByName('contacts', GroupStagingRecLcl.contacts);
+                    GroupStagingRecLcl.Insert(true);
+                end;
             end;
         end;
     end;
@@ -120,10 +132,18 @@ codeunit 50000 "CRX Access Token Management"
         HeaderVarLcl: HttpHeaders;
         RequestVarLcl: HttpRequestMessage;
         ResponseVarLcl: HttpResponseMessage;
+        PeosDetailsTxt: Text;
+        PeosJsonText: Text;
+        PeosTotalText: Text;
         URLVarLcl: Text;
         ResponseTextVarLcl: Text;
         JArray: JsonArray;
         Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        TotalJsonMgt: Codeunit "JSON Management";
+        i: Integer;
     begin
         URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/peos/list?limit=15&offset=0&updated_after=2023-09-01 21:15:44';
         AccessToken.FindFirst();
@@ -138,21 +158,30 @@ codeunit 50000 "CRX Access Token Management"
         ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
         ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
         if ResponseVarLcl.IsSuccessStatusCode() THEN begin
-            Clear(Jtoken);
-            Clear(JArray);
 
 
-            Jtoken.ReadFrom(ResponseTextVarLcl);
-            JArray := Jtoken.AsArray();
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            foreach Jtoken in Jarray do begin
-                PeosStagingRecLcl.Init();
-                PeosStagingRecLcl.id := GetValueasText(Jtoken, 'id');
-                PeosStagingRecLcl.company := GetValueasText(Jtoken, 'company');
-                PeosStagingRecLcl.created_at := GetValueasText(Jtoken, 'created_at');
-                PeosStagingRecLcl.updated_at := GetValueasText(Jtoken, 'updated_at');
-                PeosStagingRecLcl.contacts := GetValueasText(Jtoken, 'contacts');
-                PeosStagingRecLcl.Insert(true);
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('peos', PeosJsonText) then begin
+                // PeosJsonText := '[' + PeosJsonText + ']';
+
+                ArrayJsonMgt.InitializeCollection(PeosJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(PeosDetailsTxt, i);
+                    JsonMgt.InitializeObject(PeosDetailsTxt);
+                    PeosStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', PeosStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('company', PeosStagingRecLcl.company);
+                    JsonMgt.GetStringPropertyValueByName('created_at', PeosStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('updated_at', PeosStagingRecLcl.updated_at);
+                    JsonMgt.GetStringPropertyValueByName('contacts', PeosStagingRecLcl.contacts);
+
+                    TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
+
+                    IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', PeosTotalText) then
+                        TotalJsonMgt.GetStringPropertyValueByName('total', PeosStagingRecLcl.total);
+                    PeosStagingRecLcl.Insert(true);
+                end;
             end;
         end;
     end;
@@ -165,10 +194,18 @@ codeunit 50000 "CRX Access Token Management"
         HeaderVarLcl: HttpHeaders;
         RequestVarLcl: HttpRequestMessage;
         ResponseVarLcl: HttpResponseMessage;
+        UsageDetailsTxt: Text;
+        UsageJsonText: Text;
+        UsageTotalText: Text;
         URLVarLcl: Text;
         ResponseTextVarLcl: Text;
         JArray: JsonArray;
         Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        TotalJsonMgt: Codeunit "JSON Management";
+        i: Integer;
     begin
         URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/usages/list?limit=50&offset=0&created_after=2023-09-20 00:00:00';
         AccessToken.FindFirst();
@@ -184,45 +221,49 @@ codeunit 50000 "CRX Access Token Management"
         ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
         ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
         if ResponseVarLcl.IsSuccessStatusCode() THEN begin
-            Clear(Jtoken);
-            Clear(JArray);
 
-            ResponseTextVarLcl := DelStr(ResponseTextVarLcl, StrLen(ResponseTextVarLcl), StrLen(ResponseTextVarLcl) - 1);
-            ResponseTextVarLcl := CopyStr(ResponseTextVarLcl, 11, StrLen(ResponseTextVarLcl));
-            ResponseTextVarLcl := '[' + ResponseTextVarLcl + ']';
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            Jtoken.ReadFrom(ResponseTextVarLcl);
-            JArray := Jtoken.AsArray();
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('usages', UsageJsonText) then begin
 
-            foreach Jtoken in Jarray do begin
-                UsagesStagingRecLcl.Init();
-                UsagesStagingRecLcl.id := GetValueasText(Jtoken, 'id');
-                UsagesStagingRecLcl.account_id := GetValueasText(Jtoken, 'account_id');
-                UsagesStagingRecLcl.provider := GetValueasText(Jtoken, 'provider');
-                UsagesStagingRecLcl.bin := GetValueasText(Jtoken, 'bin');
-                UsagesStagingRecLcl.npi := GetValueasText(Jtoken, 'npi');
-                UsagesStagingRecLcl.brand := GetValueasText(Jtoken, 'brand');
-                UsagesStagingRecLcl.ndc := GetValueasText(Jtoken, 'ndc');
-                UsagesStagingRecLcl.drug_name := GetValueasText(Jtoken, 'drug_name');
-                UsagesStagingRecLcl.extra := GetValueasText(Jtoken, 'extra');
-                UsagesStagingRecLcl.price := GetValueasText(Jtoken, 'price');
-                UsagesStagingRecLcl.quantity := GetValueasText(Jtoken, 'quantity');
-                UsagesStagingRecLcl.created_at := GetValueasText(Jtoken, 'created_at');
-                UsagesStagingRecLcl.member_id := GetValueasText(Jtoken, 'member_id');
-                UsagesStagingRecLcl.group_id := GetValueasText(Jtoken, 'group_id');
-                UsagesStagingRecLcl.email := GetValueasText(Jtoken, 'email');
-                UsagesStagingRecLcl.phone := GetValueasText(Jtoken, 'phone');
-                UsagesStagingRecLcl.age_range := GetValueasText(Jtoken, 'age_range');
-                UsagesStagingRecLcl.ethnicity := GetValueasText(Jtoken, 'ethnicity');
-                UsagesStagingRecLcl.sex := GetValueasText(Jtoken, 'sex');
-                UsagesStagingRecLcl.first_name := GetValueasText(Jtoken, 'first_name');
-                UsagesStagingRecLcl.last_name := GetValueasText(Jtoken, 'last_name');
-                UsagesStagingRecLcl.account_zip := GetValueasText(Jtoken, 'account_zip');
-                UsagesStagingRecLcl.group_name := GetValueasText(Jtoken, 'group_name');
-                UsagesStagingRecLcl.peo_company := GetValueasText(Jtoken, 'peo_company');
-                UsagesStagingRecLcl.peo_id := GetValueasText(Jtoken, 'peo_id');
-                UsagesStagingRecLcl.privacy_optout := GetValueasText(Jtoken, 'privacy_optout');
-                UsagesStagingRecLcl.Insert(true);
+                ArrayJsonMgt.InitializeCollection(UsageJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(UsageDetailsTxt, i);
+                    JsonMgt.InitializeObject(UsageDetailsTxt);
+                    UsagesStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', UsagesStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('account_id', UsagesStagingRecLcl.account_id);
+                    JsonMgt.GetStringPropertyValueByName('provider', UsagesStagingRecLcl.provider);
+                    JsonMgt.GetStringPropertyValueByName('bin', UsagesStagingRecLcl.bin);
+                    JsonMgt.GetStringPropertyValueByName('npi', UsagesStagingRecLcl.npi);
+                    JsonMgt.GetStringPropertyValueByName('brand', UsagesStagingRecLcl.brand);
+                    JsonMgt.GetStringPropertyValueByName('ndc', UsagesStagingRecLcl.ndc);
+                    JsonMgt.GetStringPropertyValueByName('drug_name', UsagesStagingRecLcl.drug_name);
+                    JsonMgt.GetStringPropertyValueByName('dosage', UsagesStagingRecLcl.dosage);
+                    JsonMgt.GetStringPropertyValueByName('extra', UsagesStagingRecLcl.extra);
+                    JsonMgt.GetStringPropertyValueByName('price', UsagesStagingRecLcl.price);
+                    JsonMgt.GetStringPropertyValueByName('quantity', UsagesStagingRecLcl.quantity);
+                    JsonMgt.GetStringPropertyValueByName('created_at', UsagesStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('member_id', UsagesStagingRecLcl.member_id);
+                    JsonMgt.GetStringPropertyValueByName('group_id', UsagesStagingRecLcl.group_id);
+                    JsonMgt.GetStringPropertyValueByName('email', UsagesStagingRecLcl.email);
+                    JsonMgt.GetStringPropertyValueByName('phone', UsagesStagingRecLcl.phone);
+                    JsonMgt.GetStringPropertyValueByName('age_range', UsagesStagingRecLcl.age_range);
+                    JsonMgt.GetStringPropertyValueByName('ethnicity', UsagesStagingRecLcl.ethnicity);
+                    JsonMgt.GetStringPropertyValueByName('sex', UsagesStagingRecLcl.sex);
+                    JsonMgt.GetStringPropertyValueByName('first_name', UsagesStagingRecLcl.first_name);
+                    JsonMgt.GetStringPropertyValueByName('last_name', UsagesStagingRecLcl.last_name);
+                    JsonMgt.GetStringPropertyValueByName('account_zip', UsagesStagingRecLcl.account_zip);
+                    JsonMgt.GetStringPropertyValueByName('group_name', UsagesStagingRecLcl.group_name);
+                    JsonMgt.GetStringPropertyValueByName('peo_company', UsagesStagingRecLcl.peo_company);
+                    JsonMgt.GetStringPropertyValueByName('peo_id', UsagesStagingRecLcl.peo_id);
+                    JsonMgt.GetStringPropertyValueByName('privacy_optout', UsagesStagingRecLcl.privacy_optout);
+                    TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
+
+                    IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', UsageTotalText) then
+                        TotalJsonMgt.GetStringPropertyValueByName('total', UsagesStagingRecLcl.total);
+                    UsagesStagingRecLcl.Insert(true);
+                end;
             end;
         end;
     end;

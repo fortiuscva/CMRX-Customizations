@@ -44,6 +44,10 @@ page 50004 "CRX Usages Staging"
                 {
                     ToolTip = 'Specifies the value of the drug_name field.';
                 }
+                field(Dosage; Rec.Dosage)
+                {
+                    ToolTip = 'Specifies the value of the Dosage field.';
+                }
                 field(extra; Rec.extra)
                 {
                     ToolTip = 'Specifies the value of the extra field.';
@@ -111,6 +115,10 @@ page 50004 "CRX Usages Staging"
                 field(peo_id; Rec.peo_id)
                 {
                     ToolTip = 'Specifies the value of the peo_id field.';
+                }
+                field(total; rec.total)
+                {
+                    ToolTip = 'Total No. of lines received in the Response';
                 }
             }
         }
