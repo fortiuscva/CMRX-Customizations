@@ -24,7 +24,13 @@ codeunit 50000 "CRX Access Token Management"
         JsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
-        URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/accounts/15';
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Accounts Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Accounts Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Accounts Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        else
+            URLVarLcl := CMRXSetupRecLcl."Accounts Staging URL";
+
         AccessToken.FindFirst();
         contentVarLcl.GetHeaders(HeaderVarLcl);
         HeaderVarLcl.Remove('Content-Type');
@@ -40,8 +46,8 @@ codeunit 50000 "CRX Access Token Management"
 
             JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            IF JsonMgt.GetArrayPropertyValueAsStringByName('account', AccountJsonText) then begin
-                AccountJsonText := '[' + AccountJsonText + ']';
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('accounts', AccountJsonText) then begin
+                //AccountJsonText := '[' + AccountJsonText + ']';
 
                 ArrayJsonMgt.InitializeCollection(AccountJsonText);
                 for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
@@ -64,6 +70,8 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('updated_at', AccountStagingRecLcl.updated_at);
                     AccountStagingRecLcl.Insert(true);
                 end;
+                CMRXSetupRecLcl."Accounts Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
             end;
         end;
     end;
@@ -87,7 +95,13 @@ codeunit 50000 "CRX Access Token Management"
         JsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
-        URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/groups/5';
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Group Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Group Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Group Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        else
+            URLVarLcl := CMRXSetupRecLcl."Group Staging URL";
+
         AccessToken.FindFirst();
         contentVarLcl.GetHeaders(HeaderVarLcl);
         HeaderVarLcl.Remove('Content-Type');
@@ -103,8 +117,8 @@ codeunit 50000 "CRX Access Token Management"
 
             JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            IF JsonMgt.GetArrayPropertyValueAsStringByName('group', GroupJsonText) then begin
-                GroupJsonText := '[' + GroupJsonText + ']';
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('groups', GroupJsonText) then begin
+                //GroupJsonText := '[' + GroupJsonText + ']';
 
                 ArrayJsonMgt.InitializeCollection(GroupJsonText);
                 for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
@@ -120,6 +134,8 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('contacts', GroupStagingRecLcl.contacts);
                     GroupStagingRecLcl.Insert(true);
                 end;
+                CMRXSetupRecLcl."Group Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
             end;
         end;
     end;
@@ -145,7 +161,13 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
-        URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/peos/list?limit=15&offset=0&updated_after=2023-09-01 21:15:44';
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Peos Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Peos Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Peos Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        else
+            URLVarLcl := CMRXSetupRecLcl."Peos Staging URL";
+
         AccessToken.FindFirst();
         contentVarLcl.GetHeaders(HeaderVarLcl);
         HeaderVarLcl.Remove('Content-Type');
@@ -182,6 +204,8 @@ codeunit 50000 "CRX Access Token Management"
                         TotalJsonMgt.GetStringPropertyValueByName('total', PeosStagingRecLcl.total);
                     PeosStagingRecLcl.Insert(true);
                 end;
+                CMRXSetupRecLcl."Peos Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
             end;
         end;
     end;
@@ -207,10 +231,15 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
-        URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/usages/list?limit=50&offset=0&created_after=2023-09-20 00:00:00';
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Usages Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Usages Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Usages Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        else
+            URLVarLcl := CMRXSetupRecLcl."Usages Staging URL";
+
         AccessToken.FindFirst();
-        contentVarLcl.GetHeaders(HeaderVarLcl)
-        ;
+        contentVarLcl.GetHeaders(HeaderVarLcl);
         HeaderVarLcl.Remove('Content-Type');
         HeaderVarLcl.Add('Content-Type', 'application/json');
         ClientVarLcl.DefaultRequestHeaders.Clear();
@@ -264,6 +293,8 @@ codeunit 50000 "CRX Access Token Management"
                         TotalJsonMgt.GetStringPropertyValueByName('total', UsagesStagingRecLcl.total);
                     UsagesStagingRecLcl.Insert(true);
                 end;
+                CMRXSetupRecLcl."Usages Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
             end;
         end;
     end;
@@ -289,7 +320,13 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
-        URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/contacts/list?limit=15&offset=0&updated_after=2023-09-01 21:15:44';
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Contact Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Contact Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Contact Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        else
+            URLVarLcl := CMRXSetupRecLcl."Contact Staging URL";
+
         AccessToken.FindFirst();
         contentVarLcl.GetHeaders(HeaderVarLcl);
         HeaderVarLcl.Remove('Content-Type');
@@ -321,6 +358,8 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('salesman_id', ContactStagingRecLcl.salesman_id);
                     ContactStagingRecLcl.Insert(true);
                 end;
+                CMRXSetupRecLcl."Contact Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
             end;
         end;
     end;
@@ -391,4 +430,5 @@ codeunit 50000 "CRX Access Token Management"
 
     var
         AccessToken: Record "CRX Access Token";
+        CMRXSetupRecLcl: Record "CRX Setup";
 }
