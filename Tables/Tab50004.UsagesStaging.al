@@ -121,6 +121,17 @@ table 50004 "CRX Usages Staging"
         {
             Caption = 'total';
         }
+
+        field(35; Processed; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(36; "Processed Data/Time"; DateTime)
+        {
+            DataClassification = ToBeClassified;
+
+        }
     }
     keys
     {

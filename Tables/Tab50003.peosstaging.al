@@ -33,6 +33,16 @@ table 50003 "CRX peos staging"
         {
             Caption = 'total';
         }
+        field(20; Processed; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(21; "Processed Data/Time"; DateTime)
+        {
+            DataClassification = ToBeClassified;
+
+        }
     }
     keys
     {

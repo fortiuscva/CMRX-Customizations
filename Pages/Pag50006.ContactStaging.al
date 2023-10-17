@@ -1,9 +1,9 @@
-page 50003 "CRX Peos Staging"
+page 50006 "CRX Contact Staging"
 {
     ApplicationArea = All;
-    Caption = 'Peos Staging';
+    Caption = 'Contact Staging';
     PageType = List;
-    SourceTable = "CRX peos staging";
+    SourceTable = "CRX Contact Staging";
     UsageCategory = Lists;
 
     layout
@@ -17,30 +17,30 @@ page 50003 "CRX Peos Staging"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the id field.';
                 }
-                field(company; Rec.company)
+                field(name; Rec.name)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the company field.';
+                    ToolTip = 'Specifies the value of the name field.';
                 }
-                field(created_at; Rec.created_at)
+                field(note; Rec.note)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the created_at field.';
+                    ToolTip = 'Specifies the value of the note field.';
                 }
-                field(updated_at; Rec.updated_at)
+                field(phone; Rec.phone)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the updated_at field.';
+                    ToolTip = 'Specifies the value of the phone field.';
                 }
-                field(contacts; Rec.contacts)
+                field(email; Rec.email)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the contacts field.';
+                    ToolTip = 'Specifies the value of the email field.';
                 }
-                field(total; rec.total)
+                field(salesman_id; Rec.salesman_id)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Total No. of lines received in the Response';
+                    ToolTip = 'Specifies the value of the salesman_id field.';
                 }
                 field(Processed; rec.Processed)
                 {
@@ -65,19 +65,7 @@ page 50003 "CRX Peos Staging"
                 var
                     AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
                 begin
-                    AccessTokenMgtCULcl.GetPeosData();
-                end;
-            }
-            action("Process Data")
-            {
-                ApplicationArea = all;
-
-
-                trigger OnAction()
-                var
-                    ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
-                begin
-                    ProcessStagingDataaCULcl.ProcessPeosStaging();
+                    AccessTokenMgtCULcl.GetContactData();
                 end;
             }
         }

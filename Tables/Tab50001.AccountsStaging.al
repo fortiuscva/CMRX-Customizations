@@ -67,6 +67,16 @@ table 50001 "CRX Accounts Staging"
         {
             DataClassification = CustomerContent;
         }
+        field(35; Processed; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(36; "Processed Data/Time"; DateTime)
+        {
+            DataClassification = ToBeClassified;
+
+        }
     }
 
     keys

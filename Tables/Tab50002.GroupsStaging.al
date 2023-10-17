@@ -37,6 +37,16 @@ table 50002 "CRX Groups Staging"
         {
             Caption = 'contacts';
         }
+        field(20; Processed; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(21; "Processed Data/Time"; DateTime)
+        {
+            DataClassification = ToBeClassified;
+
+        }
     }
     keys
     {

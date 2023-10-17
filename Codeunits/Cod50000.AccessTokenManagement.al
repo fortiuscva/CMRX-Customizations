@@ -268,6 +268,63 @@ codeunit 50000 "CRX Access Token Management"
         end;
     end;
 
+    Procedure GetContactData()
+    var
+        ContactStagingRecLcl: Record "CRX Contact Staging";
+        ClientVarLcl: HttpClient;
+        contentVarLcl: HttpContent;
+        HeaderVarLcl: HttpHeaders;
+        RequestVarLcl: HttpRequestMessage;
+        ResponseVarLcl: HttpResponseMessage;
+        ContactDetailsTxt: Text;
+        ContactJsonText: Text;
+        ContactTotalText: Text;
+        URLVarLcl: Text;
+        ResponseTextVarLcl: Text;
+        JArray: JsonArray;
+        Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        TotalJsonMgt: Codeunit "JSON Management";
+        i: Integer;
+    begin
+        URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/contacts/list?limit=15&offset=0&updated_after=2023-09-01 21:15:44';
+        AccessToken.FindFirst();
+        contentVarLcl.GetHeaders(HeaderVarLcl);
+        HeaderVarLcl.Remove('Content-Type');
+        HeaderVarLcl.Add('Content-Type', 'application/json');
+        ClientVarLcl.DefaultRequestHeaders.Clear();
+        ClientVarLcl.DefaultRequestHeaders.Add('Authorization', 'Bearer ' + AccessToken."Access Token");
+        RequestVarLcl.Method := 'GET';
+        RequestVarLcl.SetRequestUri(URLVarLcl);
+        RequestVarLcl.Content(contentVarLcl);
+        ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
+        ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
+        if ResponseVarLcl.IsSuccessStatusCode() THEN begin
+
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
+
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('contacts', ContactJsonText) then begin
+                ContactJsonText := ContactJsonText;
+
+                ArrayJsonMgt.InitializeCollection(ContactJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(ContactDetailsTxt, i);
+                    JsonMgt.InitializeObject(ContactDetailsTxt);
+                    ContactStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', ContactStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('name', ContactStagingRecLcl.name);
+                    JsonMgt.GetStringPropertyValueByName('note', ContactStagingRecLcl.note);
+                    JsonMgt.GetStringPropertyValueByName('phone', ContactStagingRecLcl.phone);
+                    JsonMgt.GetStringPropertyValueByName('email', ContactStagingRecLcl.email);
+                    JsonMgt.GetStringPropertyValueByName('salesman_id', ContactStagingRecLcl.salesman_id);
+                    ContactStagingRecLcl.Insert(true);
+                end;
+            end;
+        end;
+    end;
+
     procedure GenerateAccessToken()
     var
         ClientVarLcl: HttpClient;
