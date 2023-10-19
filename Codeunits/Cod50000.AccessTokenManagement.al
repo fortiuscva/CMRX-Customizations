@@ -131,7 +131,7 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('salesman_id', GroupStagingRecLcl.salesman_id);
                     JsonMgt.GetStringPropertyValueByName('created_at', GroupStagingRecLcl.created_at);
                     JsonMgt.GetStringPropertyValueByName('updated_at', GroupStagingRecLcl.updated_at);
-                    JsonMgt.GetStringPropertyValueByName('contacts', GroupStagingRecLcl.contacts);
+                    //JsonMgt.GetStringPropertyValueByName('contacts', GroupStagingRecLcl.contacts);
                     GroupStagingRecLcl.Insert(true);
                 end;
                 CMRXSetupRecLcl."Group Staging Last Sync" := CurrentDateTime;
@@ -196,7 +196,7 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('company', PeosStagingRecLcl.company);
                     JsonMgt.GetStringPropertyValueByName('created_at', PeosStagingRecLcl.created_at);
                     JsonMgt.GetStringPropertyValueByName('updated_at', PeosStagingRecLcl.updated_at);
-                    JsonMgt.GetStringPropertyValueByName('contacts', PeosStagingRecLcl.contacts);
+                    //JsonMgt.GetStringPropertyValueByName('contacts', PeosStagingRecLcl.contacts);
 
                     TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
 
