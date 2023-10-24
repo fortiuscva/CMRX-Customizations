@@ -80,6 +80,11 @@ page 50001 "CRX Accounts Staging"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the updated_at field.';
                 }
+                field("Error Message"; Rec."Error Message")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Stores the reason for not processing the record.';
+                }
                 field(Processed; rec.Processed)
                 {
                     ApplicationArea = all;
@@ -113,9 +118,11 @@ page 50001 "CRX Accounts Staging"
 
                 trigger OnAction()
                 var
+                    AccountsStaging: Record "CRX Accounts Staging";
                     ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
                 begin
-                    ProcessStagingDataaCULcl.ProcessAccountStaging();
+                    CurrPage.SetSelectionFilter(AccountsStaging);
+                    ProcessStagingDataaCULcl.ProcessAccountStaging(AccountsStaging);
                 end;
             }
         }

@@ -42,6 +42,11 @@ page 50003 "CRX Peos Staging"
                     ApplicationArea = all;
                     ToolTip = 'Total No. of lines received in the Response';
                 }
+                field("Error Message"; Rec."Error Message")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Stores the reason for not processing the record.';
+                }
                 field(Processed; rec.Processed)
                 {
                     ApplicationArea = all;
@@ -72,12 +77,13 @@ page 50003 "CRX Peos Staging"
             {
                 ApplicationArea = all;
 
-
                 trigger OnAction()
                 var
+                    PeosStaging: Record "CRX peos staging";
                     ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
                 begin
-                    ProcessStagingDataaCULcl.ProcessPeosStaging();
+                    CurrPage.SetSelectionFilter(PeosStaging);
+                    ProcessStagingDataaCULcl.ProcessPeosStaging(PeosStaging);
                 end;
             }
         }

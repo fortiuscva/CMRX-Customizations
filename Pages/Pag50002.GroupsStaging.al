@@ -47,6 +47,11 @@ page 50002 "CRX Groups Staging"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the contacts field.';
                 }
+                field("Error Message"; Rec."Error Message")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Stores the reason for not processing the record.';
+                }
                 field(Processed; rec.Processed)
                 {
                     ApplicationArea = all;
@@ -80,9 +85,11 @@ page 50002 "CRX Groups Staging"
 
                 trigger OnAction()
                 var
+                    GroupsStaging: Record "CRX Groups Staging";
                     ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
                 begin
-                    ProcessStagingDataaCULcl.ProcessGroupsStaging();
+                    CurrPage.SetSelectionFilter(GroupsStaging);
+                    ProcessStagingDataaCULcl.ProcessGroupsStaging(GroupsStaging);
                 end;
             }
         }

@@ -43,6 +43,11 @@ table 50003 "CRX peos staging"
             DataClassification = ToBeClassified;
 
         }
+        field(26; "Error Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
     keys
     {

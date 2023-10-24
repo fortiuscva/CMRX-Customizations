@@ -77,6 +77,11 @@ table 50001 "CRX Accounts Staging"
             DataClassification = ToBeClassified;
 
         }
+        field(41; "Error Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
 
     keys

@@ -132,6 +132,11 @@ table 50004 "CRX Usages Staging"
             DataClassification = ToBeClassified;
 
         }
+        field(41; "Error Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
     keys
     {

@@ -47,6 +47,11 @@ table 50002 "CRX Groups Staging"
             DataClassification = ToBeClassified;
 
         }
+        field(26; "Error Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
     keys
     {
