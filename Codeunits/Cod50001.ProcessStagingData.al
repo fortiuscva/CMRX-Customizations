@@ -42,11 +42,12 @@ codeunit 50001 "CRX Process Staging Data"
                 CustomerRecLcl.Init();
                 CustomerRecLcl."No." := GroupsStagingRecLcl.id;
                 CustomerRecLcl.Name := GroupsStagingRecLcl.name;
-                if not GroupCustomerRecLcl.get(GroupsStagingRecLcl.peo_id) then
-                    Error(PeosNotFoundLbl, GroupsStagingRecLcl.peo_id);
-
-                Evaluate(CustomerRecLcl."CRX Peos Id", GroupsStagingRecLcl.peo_id);
-                //Evaluate(CustomerRecLcl."Salesperson Code",)
+                if GroupsStagingRecLcl.peo_id <> '' then begin
+                    if not GroupCustomerRecLcl.get(GroupsStagingRecLcl.peo_id) then
+                        Error(PeosNotFoundLbl, GroupsStagingRecLcl.peo_id);
+                    Evaluate(CustomerRecLcl."CRX Peos Id", GroupsStagingRecLcl.peo_id);
+                    //Evaluate(CustomerRecLcl."Salesperson Code",)
+                end;
                 if not CustomerRecLcl.Insert() then
                     CustomerRecLcl.Modify();
 
