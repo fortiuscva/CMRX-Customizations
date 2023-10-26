@@ -49,6 +49,22 @@ table 50007 "CRX Setup"
         {
             Caption = 'Contact Staging URL';
         }
+        field(12; "Brokers Staging Last Sync"; DateTime)
+        {
+            Caption = 'Brokers Staging Last Sync';
+        }
+        field(13; "Brokers Staging URL"; Text[1024])
+        {
+            Caption = 'Brokers Staging URL';
+        }
+        field(14; "Salesmen Staging Last Sync"; DateTime)
+        {
+            Caption = 'Salesmen Staging Last Sync';
+        }
+        field(15; "Salesmen Staging URL"; Text[1024])
+        {
+            Caption = 'Salesmen Staging URL';
+        }
     }
     keys
     {

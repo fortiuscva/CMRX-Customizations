@@ -121,7 +121,14 @@ table 50004 "CRX Usages Staging"
         {
             Caption = 'total';
         }
-
+        field(30; broker_company; Text[250])
+        {
+            Caption = 'broker_company';
+        }
+        field(31; broker_id; Text[250])
+        {
+            Caption = 'broker_id';
+        }
         field(35; Processed; Boolean)
         {
             DataClassification = ToBeClassified;

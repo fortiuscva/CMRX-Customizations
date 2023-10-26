@@ -9,14 +9,14 @@ codeunit 50004 "CRX Groups Staging"
         PeosNotFoundLbl: Label '%1 Peos not found.';
     begin
         CustomerRecLcl.Init();
-        CustomerRecLcl."No." := Rec.id;
-        CustomerRecLcl.Name := Rec.name;
+        CustomerRecLcl.Validate("No.", Rec.id);
+        CustomerRecLcl.Validate(Name, Rec.name);
         if Rec.peo_id <> '' then begin
             if not GroupCustomerRecLcl.get(Rec.peo_id) then
                 Error(PeosNotFoundLbl, Rec.peo_id);
             Evaluate(CustomerRecLcl."CRX Peos Id", Rec.peo_id);
-            //Evaluate(CustomerRecLcl."Salesperson Code",)
         end;
+        CustomerRecLcl."CRX Broker ID" := rec.broker_id;
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();
     end;

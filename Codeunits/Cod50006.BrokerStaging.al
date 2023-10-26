@@ -1,14 +1,16 @@
-codeunit 50002 "CRX Peos Staging"
+codeunit 50006 "CRX BrokerStaging"
 {
-    TableNo = "CRX peos staging";
+    TableNo = "CRX Brokers Staging";
 
     trigger OnRun()
     var
         CustomerRecLcl: Record Customer;
+        GroupCustomerRecLcl: Record Customer;
     begin
         CustomerRecLcl.Init();
         CustomerRecLcl.Validate("No.", Rec.id);
-        CustomerRecLcl.Validate(Name, Rec.company);
+        CustomerRecLcl.Validate(Name, rec.company);
+
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();
     end;

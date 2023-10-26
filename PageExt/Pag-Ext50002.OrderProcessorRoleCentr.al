@@ -79,6 +79,24 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         RunObject = Page "CRX Contact Staging";
                         ToolTip = 'Manage the Integration Data for Contact Staging';
                     }
+                    action("CRX Brokers Staging")
+                    {
+                        ApplicationArea = Location;
+                        Caption = 'Brokers Staging';
+                        Promoted = true;
+                        PromotedCategory = Process;
+                        RunObject = Page "CRX Brokers Staging";
+                        ToolTip = 'Manage the Integration Data for Brokers Staging';
+                    }
+                    action("CRX Salesmen Staging")
+                    {
+                        ApplicationArea = Location;
+                        Caption = 'Salesmen Staging';
+                        Promoted = true;
+                        PromotedCategory = Process;
+                        RunObject = Page "CRX Salesmen Staging";
+                        ToolTip = 'Manage the Integration Data for Salesmen Staging';
+                    }
                 }
             }
         }

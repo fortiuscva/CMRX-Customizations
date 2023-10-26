@@ -33,6 +33,14 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                 }
+                field("Brokers Staging URL"; rec."Brokers Staging URL")
+                {
+                    ApplicationArea = all;
+                }
+                field("Salesmen Staging URL"; rec."Salesmen Staging URL")
+                {
+                    ApplicationArea = all;
+                }
                 field("Accounts Staging Last Sync"; Rec."Accounts Staging Last Sync")
                 {
                     ApplicationArea = all;
@@ -58,6 +66,40 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Contact Staging Last Sync field.';
+                }
+                field("Brokers Staging Last Sync"; rec."Brokers Staging Last Sync")
+                {
+                    ApplicationArea = all;
+                }
+                field("Salesmen Staging Last Sync"; rec."Salesmen Staging Last Sync")
+                {
+                    ApplicationArea = all;
+                }
+            }
+        }
+    }
+    actions
+    {
+        area(Processing)
+        {
+            group("CMRX Staging")
+            {
+                action("Get Data")
+                {
+                    ApplicationArea = all;
+
+                    trigger OnAction()
+                    var
+                        AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
+                    begin
+                        AccessTokenMgtCULcl.GetPeosData();
+                        AccessTokenMgtCULcl.GetBrokersData();
+                        AccessTokenMgtCULcl.GetGroupData();
+                        AccessTokenMgtCULcl.GetAccountData();
+                        AccessTokenMgtCULcl.GetContactData();
+                        AccessTokenMgtCULcl.GetUsagesData();
+                        AccessTokenMgtCULcl.GetSalesmenData();
+                    end;
                 }
             }
         }

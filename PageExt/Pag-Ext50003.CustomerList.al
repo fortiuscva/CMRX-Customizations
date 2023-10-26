@@ -1,8 +1,8 @@
-pageextension 50000 "CRX Customer Card" extends "Customer Card"
+pageextension 50003 "CRX Customer List" extends "Customer List"
 {
     layout
     {
-        addlast(General)
+        addlast(Control1)
         {
             field("CRX Peos Id"; rec."CRX Peos Id")
             {

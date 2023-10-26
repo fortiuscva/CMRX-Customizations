@@ -1,9 +1,9 @@
-page 50002 "CRX Groups Staging"
+page 50009 "CRX Salesmen Staging"
 {
     ApplicationArea = All;
-    Caption = 'Groups Staging';
+    Caption = 'Salesmen Staging';
     PageType = List;
-    SourceTable = "CRX Groups Staging";
+    SourceTable = "CRX Salesmen Staging";
     UsageCategory = Lists;
 
     layout
@@ -14,48 +14,32 @@ page 50002 "CRX Groups Staging"
             {
                 field(id; Rec.id)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the id field.';
+                }
+                field(username; Rec.username)
+                {
+                    ToolTip = 'Specifies the value of the username field.';
                 }
                 field(name; Rec.name)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the name field.';
                 }
-                field(peo_id; Rec.peo_id)
+                field(email; Rec.email)
                 {
-                    ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the peo_id field.';
-                }
-                field(broker_id; Rec.broker_id)
-                {
-                    ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the broker_id field.';
-                }
-                field(salesman_id; Rec.salesman_id)
-                {
-                    ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the salesman_id field.';
+                    ToolTip = 'Specifies the value of the email field.';
                 }
                 field(created_at; Rec.created_at)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the created_at field.';
                 }
                 field(updated_at; Rec.updated_at)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the updated_at field.';
                 }
-                field(contacts; Rec.contacts)
+                field(total; rec.total)
                 {
                     ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the contacts field.';
-                }
-                field("Error Message"; Rec."Error Message")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Stores the reason for not processing the record.';
+                    ToolTip = 'Total No. of lines received in the Response';
                 }
                 field(Processed; rec.Processed)
                 {
@@ -80,7 +64,7 @@ page 50002 "CRX Groups Staging"
                 var
                     AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
                 begin
-                    AccessTokenMgtCULcl.GetGroupData();
+                    AccessTokenMgtCULcl.GetSalesmenData();
                 end;
             }
             action("Process Data")
@@ -90,11 +74,11 @@ page 50002 "CRX Groups Staging"
 
                 trigger OnAction()
                 var
-                    GroupsStaging: Record "CRX Groups Staging";
+                    SalesmentStaging: Record "CRX Salesmen Staging";
                     ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
                 begin
-                    CurrPage.SetSelectionFilter(GroupsStaging);
-                    ProcessStagingDataaCULcl.ProcessGroupsStaging(GroupsStaging);
+                    CurrPage.SetSelectionFilter(SalesmentStaging);
+                    ProcessStagingDataaCULcl.ProcessSalemenStaging(SalesmentStaging);
                 end;
             }
         }

@@ -93,4 +93,48 @@ codeunit 50001 "CRX Process Staging Data"
             Message('Processed Successfully!');
         end;
     end;
+
+    procedure ProcessBrokerStaging(var BrokersStagingRecLcl: Record "CRX Brokers Staging")
+    var
+        BrokersStagingCU: Codeunit "CRX BrokerStaging";
+    begin
+        BrokersStagingRecLcl.SetRange(Processed, false);
+        if BrokersStagingRecLcl.FindSet() then begin
+            repeat
+                ClearLastError();
+                if not BrokersStagingCU.Run(BrokersStagingRecLcl) then begin
+                    BrokersStagingRecLcl."Error Message" := GetLastErrorText();
+                    BrokersStagingRecLcl.Processed := false;
+                end else begin
+                    BrokersStagingRecLcl.Processed := true;
+                    BrokersStagingRecLcl."Error Message" := '';
+                    BrokersStagingRecLcl."Processed Data/Time" := CurrentDateTime;
+                end;
+                BrokersStagingRecLcl.Modify();
+            until BrokersStagingRecLcl.Next() = 0;
+            Message('Processed Successfully!');
+        end;
+    end;
+
+    procedure ProcessSalemenStaging(var SalesmenStagingRecLcl: Record "CRX Salesmen Staging")
+    var
+        SalesmenStagingCU: Codeunit "CRX SalesmenStaging";
+    begin
+        SalesmenStagingRecLcl.SetRange(Processed, false);
+        if SalesmenStagingRecLcl.FindSet() then begin
+            repeat
+                ClearLastError();
+                if not SalesmenStagingCU.Run(SalesmenStagingRecLcl) then begin
+                    SalesmenStagingRecLcl."Error Message" := GetLastErrorText();
+                    SalesmenStagingRecLcl.Processed := false;
+                end else begin
+                    SalesmenStagingRecLcl.Processed := true;
+                    SalesmenStagingRecLcl."Error Message" := '';
+                    SalesmenStagingRecLcl."Processed Data/Time" := CurrentDateTime;
+                end;
+                SalesmenStagingRecLcl.Modify();
+            until SalesmenStagingRecLcl.Next() = 0;
+            Message('Processed Successfully!');
+        end;
+    end;
 }

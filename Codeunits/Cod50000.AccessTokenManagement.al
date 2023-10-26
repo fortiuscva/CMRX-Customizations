@@ -128,6 +128,7 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('id', GroupStagingRecLcl.id);
                     JsonMgt.GetStringPropertyValueByName('name', GroupStagingRecLcl.name);
                     JsonMgt.GetStringPropertyValueByName('peo_id', GroupStagingRecLcl.peo_id);
+                    JsonMgt.GetStringPropertyValueByName('broker_id', GroupStagingRecLcl.broker_id);
                     JsonMgt.GetStringPropertyValueByName('salesman_id', GroupStagingRecLcl.salesman_id);
                     JsonMgt.GetStringPropertyValueByName('created_at', GroupStagingRecLcl.created_at);
                     JsonMgt.GetStringPropertyValueByName('updated_at', GroupStagingRecLcl.updated_at);
@@ -359,6 +360,142 @@ codeunit 50000 "CRX Access Token Management"
                     ContactStagingRecLcl.Insert(true);
                 end;
                 CMRXSetupRecLcl."Contact Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
+            end;
+        end;
+    end;
+
+    Procedure GetBrokersData()
+    var
+        BrokersStagingRecLcl: Record "CRX Brokers Staging";
+        ClientVarLcl: HttpClient;
+        contentVarLcl: HttpContent;
+        HeaderVarLcl: HttpHeaders;
+        RequestVarLcl: HttpRequestMessage;
+        ResponseVarLcl: HttpResponseMessage;
+        BrokersDetailsTxt: Text;
+        BrokersJsonText: Text;
+        BrokersTotalText: Text;
+        URLVarLcl: Text;
+        ResponseTextVarLcl: Text;
+        JArray: JsonArray;
+        Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        TotalJsonMgt: Codeunit "JSON Management";
+        i: Integer;
+    begin
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Brokers Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Brokers Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Brokers Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        else
+            URLVarLcl := CMRXSetupRecLcl."Brokers Staging URL";
+
+        AccessToken.FindFirst();
+        contentVarLcl.GetHeaders(HeaderVarLcl);
+        HeaderVarLcl.Remove('Content-Type');
+        HeaderVarLcl.Add('Content-Type', 'application/json');
+        ClientVarLcl.DefaultRequestHeaders.Clear();
+        ClientVarLcl.DefaultRequestHeaders.Add('Authorization', 'Bearer ' + AccessToken."Access Token");
+        RequestVarLcl.Method := 'GET';
+        RequestVarLcl.SetRequestUri(URLVarLcl);
+        RequestVarLcl.Content(contentVarLcl);
+        ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
+        ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
+        if ResponseVarLcl.IsSuccessStatusCode() THEN begin
+
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
+
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('brokers', BrokersJsonText) then begin
+                BrokersJsonText := BrokersJsonText;
+
+                ArrayJsonMgt.InitializeCollection(BrokersJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(BrokersDetailsTxt, i);
+                    JsonMgt.InitializeObject(BrokersDetailsTxt);
+                    BrokersStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', BrokersStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('company', BrokersStagingRecLcl.company);
+                    JsonMgt.GetStringPropertyValueByName('created_at', BrokersStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('updated_at', BrokersStagingRecLcl.updated_at);
+
+                    TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
+                    IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', BrokersTotalText) then
+                        TotalJsonMgt.GetStringPropertyValueByName('total', BrokersStagingRecLcl.total);
+                    BrokersStagingRecLcl.Insert(true);
+                end;
+                CMRXSetupRecLcl."Brokers Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
+            end;
+        end;
+    end;
+
+    Procedure GetSalesmenData()
+    var
+        SalesmenStagingRecLcl: Record "CRX Salesmen Staging";
+        ClientVarLcl: HttpClient;
+        contentVarLcl: HttpContent;
+        HeaderVarLcl: HttpHeaders;
+        RequestVarLcl: HttpRequestMessage;
+        ResponseVarLcl: HttpResponseMessage;
+        SalesmenDetailsTxt: Text;
+        SalesmenJsonText: Text;
+        SalesmenTotalText: Text;
+        URLVarLcl: Text;
+        ResponseTextVarLcl: Text;
+        JArray: JsonArray;
+        Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        TotalJsonMgt: Codeunit "JSON Management";
+        i: Integer;
+    begin
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Salesmen Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Salesmen Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Salesmen Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        else
+            URLVarLcl := CMRXSetupRecLcl."Salesmen Staging URL";
+
+        AccessToken.FindFirst();
+        contentVarLcl.GetHeaders(HeaderVarLcl);
+        HeaderVarLcl.Remove('Content-Type');
+        HeaderVarLcl.Add('Content-Type', 'application/json');
+        ClientVarLcl.DefaultRequestHeaders.Clear();
+        ClientVarLcl.DefaultRequestHeaders.Add('Authorization', 'Bearer ' + AccessToken."Access Token");
+        RequestVarLcl.Method := 'GET';
+        RequestVarLcl.SetRequestUri(URLVarLcl);
+        RequestVarLcl.Content(contentVarLcl);
+        ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
+        ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
+        if ResponseVarLcl.IsSuccessStatusCode() THEN begin
+
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
+
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('salesmen', SalesmenJsonText) then begin
+                SalesmenJsonText := SalesmenJsonText;
+
+                ArrayJsonMgt.InitializeCollection(SalesmenJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(SalesmenDetailsTxt, i);
+                    JsonMgt.InitializeObject(SalesmenDetailsTxt);
+                    SalesmenStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', SalesmenStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('username', SalesmenStagingRecLcl.username);
+                    JsonMgt.GetStringPropertyValueByName('name', SalesmenStagingRecLcl.name);
+                    JsonMgt.GetStringPropertyValueByName('email', SalesmenStagingRecLcl.email);
+                    JsonMgt.GetStringPropertyValueByName('created_at', SalesmenStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('updated_at', SalesmenStagingRecLcl.updated_at);
+
+                    TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
+                    IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', SalesmenTotalText) then
+                        TotalJsonMgt.GetStringPropertyValueByName('total', SalesmenStagingRecLcl.total);
+                    SalesmenStagingRecLcl.Insert(true);
+                end;
+                CMRXSetupRecLcl."Salesmen Staging Last Sync" := CurrentDateTime;
                 CMRXSetupRecLcl.Modify();
             end;
         end;

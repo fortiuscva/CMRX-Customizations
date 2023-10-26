@@ -1,7 +1,7 @@
-table 50002 "CRX Groups Staging"
+table 50008 "CRX Brokers Staging"
 {
-    Caption = 'Groups Staging';
-    DataClassification = ToBeClassified;
+    Caption = 'Brokers Staging';
+    DataClassification = CustomerContent;
 
     fields
     {
@@ -13,33 +13,21 @@ table 50002 "CRX Groups Staging"
         {
             Caption = 'id';
         }
-        field(3; name; Text[250])
+        field(3; company; Text[250])
         {
-            Caption = 'name';
+            Caption = 'company';
         }
-        field(4; peo_id; Text[250])
-        {
-            Caption = 'peo_id';
-        }
-        field(5; salesman_id; Text[250])
-        {
-            Caption = 'salesman_id';
-        }
-        field(6; created_at; Text[250])
+        field(4; created_at; Text[250])
         {
             Caption = 'created_at';
         }
-        field(7; updated_at; Text[250])
+        field(5; updated_at; Text[250])
         {
             Caption = 'updated_at';
         }
-        field(8; contacts; Text[250])
+        field(6; total; Text[250])
         {
-            Caption = 'contacts';
-        }
-        field(9; broker_id; Text[250])
-        {
-            Caption = 'broker_id';
+            Caption = 'total';
         }
         field(35; Processed; Boolean)
         {
@@ -66,10 +54,10 @@ table 50002 "CRX Groups Staging"
     }
     trigger OnInsert()
     var
-        GroupsStagingRecLcl: Record "CRX Groups Staging";
+        BrokersStagingRecLcl: Record "CRX Brokers Staging";
     begin
-        if GroupsStagingRecLcl.FindLast() then
-            "Entry No." := GroupsStagingRecLcl."Entry No." + 1
+        if BrokersStagingRecLcl.FindLast() then
+            "Entry No." := BrokersStagingRecLcl."Entry No." + 1
         else
             "Entry No." := 1;
     end;

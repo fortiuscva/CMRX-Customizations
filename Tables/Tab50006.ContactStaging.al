@@ -33,6 +33,18 @@ table 50006 "CRX Contact Staging"
         {
             Caption = 'salesman_id';
         }
+        field(9; broker_id; Text[250])
+        {
+            Caption = 'broker_id';
+        }
+        field(10; group_ids; Text[250])
+        {
+            Caption = 'group_ids';
+        }
+        field(11; peo_ids; Text[250])
+        {
+            Caption = 'peo_ids';
+        }
         field(35; Processed; Boolean)
         {
             DataClassification = ToBeClassified;
@@ -42,6 +54,11 @@ table 50006 "CRX Contact Staging"
         {
             DataClassification = ToBeClassified;
 
+        }
+        field(41; "Error Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
         }
     }
     keys

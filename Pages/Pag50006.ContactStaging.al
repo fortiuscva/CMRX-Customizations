@@ -42,6 +42,21 @@ page 50006 "CRX Contact Staging"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the salesman_id field.';
                 }
+                field(broker_id; Rec.broker_id)
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the broker_id field.';
+                }
+                field(group_ids; Rec.group_ids)
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the group_ids field.';
+                }
+                field(peo_ids; Rec.peo_ids)
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the peo_ids field.';
+                }
                 field(Processed; rec.Processed)
                 {
                     ApplicationArea = all;
