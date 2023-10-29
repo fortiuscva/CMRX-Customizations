@@ -75,6 +75,7 @@ table 50001 "CRX Accounts Staging"
         field(36; "Processed Data/Time"; DateTime)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
 
         }
         field(41; "Error Message"; Text[250])

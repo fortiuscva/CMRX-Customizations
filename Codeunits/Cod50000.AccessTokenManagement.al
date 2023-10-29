@@ -2,7 +2,7 @@ codeunit 50000 "CRX Access Token Management"
 {
     trigger OnRun()
     begin
-
+        FetchAllAPIData();
     end;
 
     procedure GetAccountData()
@@ -432,17 +432,17 @@ codeunit 50000 "CRX Access Token Management"
         end;
     end;
 
-    Procedure GetSalesmenData()
+    Procedure GetSalespersonData()
     var
-        SalesmenStagingRecLcl: Record "CRX Salesmen Staging";
+        SalespersonStagingRecLcl: Record "CRX Salesperson Staging";
         ClientVarLcl: HttpClient;
         contentVarLcl: HttpContent;
         HeaderVarLcl: HttpHeaders;
         RequestVarLcl: HttpRequestMessage;
         ResponseVarLcl: HttpResponseMessage;
-        SalesmenDetailsTxt: Text;
-        SalesmenJsonText: Text;
-        SalesmenTotalText: Text;
+        SalespersonDetailsTxt: Text;
+        SalespersonJsonText: Text;
+        SalespersonTotalText: Text;
         URLVarLcl: Text;
         ResponseTextVarLcl: Text;
         JArray: JsonArray;
@@ -455,10 +455,10 @@ codeunit 50000 "CRX Access Token Management"
     begin
         CMRXSetupRecLcl.Get();
 
-        if CMRXSetupRecLcl."Salesmen Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Salesmen Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Salesmen Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+        if CMRXSetupRecLcl."Salesperson Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Salesperson Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Salesperson Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
         else
-            URLVarLcl := CMRXSetupRecLcl."Salesmen Staging URL";
+            URLVarLcl := CMRXSetupRecLcl."Salesperson Staging URL";
 
         AccessToken.FindFirst();
         contentVarLcl.GetHeaders(HeaderVarLcl);
@@ -475,27 +475,27 @@ codeunit 50000 "CRX Access Token Management"
 
             JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            IF JsonMgt.GetArrayPropertyValueAsStringByName('salesmen', SalesmenJsonText) then begin
-                SalesmenJsonText := SalesmenJsonText;
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('salesmen', SalespersonJsonText) then begin
+                SalespersonJsonText := SalespersonJsonText;
 
-                ArrayJsonMgt.InitializeCollection(SalesmenJsonText);
+                ArrayJsonMgt.InitializeCollection(SalespersonJsonText);
                 for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
-                    ArrayJsonMgt.GetObjectFromCollectionByIndex(SalesmenDetailsTxt, i);
-                    JsonMgt.InitializeObject(SalesmenDetailsTxt);
-                    SalesmenStagingRecLcl.Init();
-                    JsonMgt.GetStringPropertyValueByName('id', SalesmenStagingRecLcl.id);
-                    JsonMgt.GetStringPropertyValueByName('username', SalesmenStagingRecLcl.username);
-                    JsonMgt.GetStringPropertyValueByName('name', SalesmenStagingRecLcl.name);
-                    JsonMgt.GetStringPropertyValueByName('email', SalesmenStagingRecLcl.email);
-                    JsonMgt.GetStringPropertyValueByName('created_at', SalesmenStagingRecLcl.created_at);
-                    JsonMgt.GetStringPropertyValueByName('updated_at', SalesmenStagingRecLcl.updated_at);
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(SalespersonDetailsTxt, i);
+                    JsonMgt.InitializeObject(SalespersonDetailsTxt);
+                    SalespersonStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', SalespersonStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('username', SalespersonStagingRecLcl.username);
+                    JsonMgt.GetStringPropertyValueByName('name', SalespersonStagingRecLcl.name);
+                    JsonMgt.GetStringPropertyValueByName('email', SalespersonStagingRecLcl.email);
+                    JsonMgt.GetStringPropertyValueByName('created_at', SalespersonStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('updated_at', SalespersonStagingRecLcl.updated_at);
 
                     TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
-                    IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', SalesmenTotalText) then
-                        TotalJsonMgt.GetStringPropertyValueByName('total', SalesmenStagingRecLcl.total);
-                    SalesmenStagingRecLcl.Insert(true);
+                    IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', SalespersonTotalText) then
+                        TotalJsonMgt.GetStringPropertyValueByName('total', SalespersonStagingRecLcl.total);
+                    SalespersonStagingRecLcl.Insert(true);
                 end;
-                CMRXSetupRecLcl."Salesmen Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl."Salesperson Staging Last Sync" := CurrentDateTime;
                 CMRXSetupRecLcl.Modify();
             end;
         end;
@@ -564,6 +564,18 @@ codeunit 50000 "CRX Access Token Management"
             if not JToken.AsValue().IsNull() then
                 exit(JToken.AsValue().AsText());
     end;
+
+    procedure FetchAllAPIData()
+    begin
+        GetPeosData();
+        GetBrokersData();
+        GetGroupData();
+        GetAccountData();
+        GetContactData();
+        GetUsagesData();
+        GetSalespersonData();
+    end;
+
 
     var
         AccessToken: Record "CRX Access Token";

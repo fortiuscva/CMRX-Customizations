@@ -1,9 +1,9 @@
-page 50009 "CRX Salesmen Staging"
+page 50009 "CRX Salesperson Staging"
 {
     ApplicationArea = All;
-    Caption = 'Salesmen Staging';
+    Caption = 'Salesperson Staging';
     PageType = List;
-    SourceTable = "CRX Salesmen Staging";
+    SourceTable = "CRX Salesperson Staging";
     UsageCategory = Lists;
 
     layout
@@ -12,6 +12,14 @@ page 50009 "CRX Salesmen Staging"
         {
             repeater(General)
             {
+                field(Processed; rec.Processed)
+                {
+                    ApplicationArea = all;
+                }
+                field("Processed Data/Time"; rec."Processed Data/Time")
+                {
+                    ApplicationArea = all;
+                }
                 field(id; Rec.id)
                 {
                     ToolTip = 'Specifies the value of the id field.';
@@ -41,14 +49,6 @@ page 50009 "CRX Salesmen Staging"
                     ApplicationArea = all;
                     ToolTip = 'Total No. of lines received in the Response';
                 }
-                field(Processed; rec.Processed)
-                {
-                    ApplicationArea = all;
-                }
-                field("Processed Data/Time"; rec."Processed Data/Time")
-                {
-                    ApplicationArea = all;
-                }
             }
         }
     }
@@ -59,26 +59,35 @@ page 50009 "CRX Salesmen Staging"
             action(GetData)
             {
                 ApplicationArea = all;
+                Caption = 'Get Data';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                Image = GetEntries;
 
                 trigger OnAction()
                 var
                     AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
                 begin
-                    AccessTokenMgtCULcl.GetSalesmenData();
+                    AccessTokenMgtCULcl.GetSalespersonData();
                 end;
             }
             action("Process Data")
             {
                 ApplicationArea = all;
-
+                Caption = 'Process Data';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                Image = Process;
 
                 trigger OnAction()
                 var
-                    SalesmentStaging: Record "CRX Salesmen Staging";
-                    ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
+                    SalespersonStaging: Record "CRX Salesperson Staging";
+                    ProcessStagingDataCULcl: Codeunit "CRX Process Staging Data";
                 begin
-                    CurrPage.SetSelectionFilter(SalesmentStaging);
-                    ProcessStagingDataaCULcl.ProcessSalemenStaging(SalesmentStaging);
+                    CurrPage.SetSelectionFilter(SalespersonStaging);
+                    ProcessStagingDataCULcl.ProcessSalespersonStaging(SalespersonStaging);
                 end;
             }
         }

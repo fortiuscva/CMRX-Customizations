@@ -137,6 +137,7 @@ table 50004 "CRX Usages Staging"
         field(36; "Processed Data/Time"; DateTime)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
 
         }
         field(41; "Error Message"; Text[250])

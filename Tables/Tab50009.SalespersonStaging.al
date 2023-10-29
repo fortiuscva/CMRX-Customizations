@@ -1,6 +1,6 @@
-table 50009 "CRX Salesmen Staging"
+table 50009 "CRX Salesperson Staging"
 {
-    Caption = 'Salesmen Staging';
+    Caption = 'Salesperson Staging';
     DataClassification = CustomerContent;
 
     fields
@@ -45,6 +45,7 @@ table 50009 "CRX Salesmen Staging"
         field(36; "Processed Data/Time"; DateTime)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
 
         }
         field(41; "Error Message"; Text[250])
@@ -62,10 +63,10 @@ table 50009 "CRX Salesmen Staging"
     }
     trigger OnInsert()
     var
-        SalesmenStagingRecLcl: Record "CRX Salesmen Staging";
+        SalespersonStagingRecLcl: Record "CRX Salesperson Staging";
     begin
-        if SalesmenStagingRecLcl.FindLast() then
-            "Entry No." := SalesmenStagingRecLcl."Entry No." + 1
+        if SalespersonStagingRecLcl.FindLast() then
+            "Entry No." := SalespersonStagingRecLcl."Entry No." + 1
         else
             "Entry No." := 1;
     end;

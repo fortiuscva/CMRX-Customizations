@@ -5,13 +5,14 @@ codeunit 50001 "CRX Process Staging Data"
 
     end;
 
-    procedure ProcessPeosStaging(var PeosStagingRecLcl: Record "CRX peos staging")
+    procedure ProcessPeosStaging(var PeosStagingRecPar: Record "CRX peos staging")
     var
-        CustomerRecLcl: Record Customer;
         PeosStagingCU: Codeunit "CRX Peos Staging";
+        PeosStagingRecLcl: Record "CRX peos staging";
     begin
+        PeosStagingRecLcl.Copy(PeosStagingRecPar);
         PeosStagingRecLcl.SetRange(Processed, false);
-        if PeosStagingRecLcl.FindSet() then begin
+        if PeosStagingRecLcl.FindSet() then
             repeat
                 ClearLastError();
                 if not PeosStagingCU.Run(PeosStagingRecLcl) then begin
@@ -23,17 +24,19 @@ codeunit 50001 "CRX Process Staging Data"
                     PeosStagingRecLcl."Processed Data/Time" := CurrentDateTime;
                 end;
                 PeosStagingRecLcl.Modify();
+                Commit();
             until PeosStagingRecLcl.Next() = 0;
-            Message('Processed Successfully!');
-        end;
+        Message('Processed Successfully!');
     end;
 
-    procedure ProcessGroupsStaging(var GroupsStagingRecLcl: Record "CRX Groups Staging")
+    procedure ProcessGroupsStaging(var GroupsStagingRecPar: Record "CRX Groups Staging")
     var
         GroupsStagingCU: Codeunit "CRX Groups Staging";
+        GroupsStagingRecLcl: Record "CRX Groups Staging";
     begin
+        GroupsStagingRecLcl.Copy(GroupsStagingRecPar);
         GroupsStagingRecLcl.SetRange(Processed, false);
-        if GroupsStagingRecLcl.FindSet() then begin
+        if GroupsStagingRecLcl.FindSet() then
             repeat
                 ClearLastError();
                 if not GroupsStagingCU.Run(GroupsStagingRecLcl) then begin
@@ -45,17 +48,19 @@ codeunit 50001 "CRX Process Staging Data"
                     GroupsStagingRecLcl."Processed Data/Time" := CurrentDateTime;
                 end;
                 GroupsStagingRecLcl.Modify();
+                Commit();
             until GroupsStagingRecLcl.Next() = 0;
-            Message('Processed Successfully!');
-        end;
+        Message('Processed Successfully!');
     end;
 
-    procedure ProcessUsagesStaging(var UsagesStagingRecLcl: Record "CRX Usages Staging")
+    procedure ProcessUsagesStaging(var UsagesStagingRecPar: Record "CRX Usages Staging")
     var
         UsuagesStagingCU: Codeunit "CRX Usages Staging";
+        UsagesStagingRecLcl: Record "CRX Usages Staging";
     begin
+        UsagesStagingRecLcl.Copy(UsagesStagingRecPar);
         UsagesStagingRecLcl.SetRange(Processed, false);
-        if UsagesStagingRecLcl.FindSet() then begin
+        if UsagesStagingRecLcl.FindSet() then
             repeat
                 ClearLastError();
                 if not UsuagesStagingCU.Run(UsagesStagingRecLcl) then begin
@@ -67,17 +72,19 @@ codeunit 50001 "CRX Process Staging Data"
                     UsagesStagingRecLcl."Processed Data/Time" := CurrentDateTime;
                 end;
                 UsagesStagingRecLcl.Modify();
+                Commit();
             until UsagesStagingRecLcl.Next() = 0;
-            Message('Processed Successfully!');
-        end;
+        Message('Processed Successfully!');
     end;
 
-    procedure ProcessAccountStaging(var AccountsStagingRecLcl: Record "CRX Accounts Staging")
+    procedure ProcessAccountStaging(var AccountsStagingRecPar: Record "CRX Accounts Staging")
     var
         AccountsStagingCU: Codeunit "CRX Accounts Staging";
+        AccountsStagingRecLcl: Record "CRX Accounts Staging";
     begin
+        AccountsStagingRecLcl.Copy(AccountsStagingRecPar);
         AccountsStagingRecLcl.SetRange(Processed, false);
-        if AccountsStagingRecLcl.FindSet() then begin
+        if AccountsStagingRecLcl.FindSet() then
             repeat
                 ClearLastError();
                 if not AccountsStagingCU.Run(AccountsStagingRecLcl) then begin
@@ -89,17 +96,19 @@ codeunit 50001 "CRX Process Staging Data"
                     AccountsStagingRecLcl."Processed Data/Time" := CurrentDateTime;
                 end;
                 AccountsStagingRecLcl.Modify();
+                Commit();
             until AccountsStagingRecLcl.Next() = 0;
-            Message('Processed Successfully!');
-        end;
+        Message('Processed Successfully!');
     end;
 
-    procedure ProcessBrokerStaging(var BrokersStagingRecLcl: Record "CRX Brokers Staging")
+    procedure ProcessBrokerStaging(var BrokersStagingRecPar: Record "CRX Brokers Staging")
     var
-        BrokersStagingCU: Codeunit "CRX BrokerStaging";
+        BrokersStagingCU: Codeunit "CRX Broker Staging";
+        BrokersStagingRecLcl: Record "CRX Brokers Staging";
     begin
+        BrokersStagingRecLcl.Copy(BrokersStagingRecPar);
         BrokersStagingRecLcl.SetRange(Processed, false);
-        if BrokersStagingRecLcl.FindSet() then begin
+        if BrokersStagingRecLcl.FindSet() then
             repeat
                 ClearLastError();
                 if not BrokersStagingCU.Run(BrokersStagingRecLcl) then begin
@@ -111,30 +120,32 @@ codeunit 50001 "CRX Process Staging Data"
                     BrokersStagingRecLcl."Processed Data/Time" := CurrentDateTime;
                 end;
                 BrokersStagingRecLcl.Modify();
+                Commit();
             until BrokersStagingRecLcl.Next() = 0;
-            Message('Processed Successfully!');
-        end;
+        Message('Processed Successfully!');
     end;
 
-    procedure ProcessSalemenStaging(var SalesmenStagingRecLcl: Record "CRX Salesmen Staging")
+    procedure ProcessSalespersonStaging(Var SalespersonStagingRecPar: Record "CRX Salesperson Staging")
     var
-        SalesmenStagingCU: Codeunit "CRX SalesmenStaging";
+        SalespersonStagingCU: Codeunit "CRX Salesperson Staging";
+        SalespersonStagingRecLcl: Record "CRX Salesperson Staging";
     begin
-        SalesmenStagingRecLcl.SetRange(Processed, false);
-        if SalesmenStagingRecLcl.FindSet() then begin
+        SalespersonStagingRecLcl.Copy(SalespersonStagingRecPar);
+        SalespersonStagingRecLcl.SetRange(Processed, false);
+        if SalespersonStagingRecLcl.FindSet() then
             repeat
                 ClearLastError();
-                if not SalesmenStagingCU.Run(SalesmenStagingRecLcl) then begin
-                    SalesmenStagingRecLcl."Error Message" := GetLastErrorText();
-                    SalesmenStagingRecLcl.Processed := false;
+                if not SalespersonStagingCU.Run(SalespersonStagingRecLcl) then begin
+                    SalespersonStagingRecLcl."Error Message" := GetLastErrorText();
+                    SalespersonStagingRecLcl.Processed := false;
                 end else begin
-                    SalesmenStagingRecLcl.Processed := true;
-                    SalesmenStagingRecLcl."Error Message" := '';
-                    SalesmenStagingRecLcl."Processed Data/Time" := CurrentDateTime;
+                    SalespersonStagingRecLcl.Processed := true;
+                    SalespersonStagingRecLcl."Error Message" := '';
+                    SalespersonStagingRecLcl."Processed Data/Time" := CurrentDateTime;
                 end;
-                SalesmenStagingRecLcl.Modify();
-            until SalesmenStagingRecLcl.Next() = 0;
-            Message('Processed Successfully!');
-        end;
+                SalespersonStagingRecLcl.Modify();
+                Commit();
+            until SalespersonStagingRecLcl.Next() = 0;
+        Message('Processed Successfully!');
     end;
 }

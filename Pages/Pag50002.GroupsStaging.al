@@ -12,6 +12,14 @@ page 50002 "CRX Groups Staging"
         {
             repeater(General)
             {
+                field(Processed; rec.Processed)
+                {
+                    ApplicationArea = all;
+                }
+                field("Processed Data/Time"; rec."Processed Data/Time")
+                {
+                    ApplicationArea = all;
+                }
                 field(id; Rec.id)
                 {
                     ApplicationArea = all;
@@ -57,14 +65,6 @@ page 50002 "CRX Groups Staging"
                     ApplicationArea = All;
                     ToolTip = 'Stores the reason for not processing the record.';
                 }
-                field(Processed; rec.Processed)
-                {
-                    ApplicationArea = all;
-                }
-                field("Processed Data/Time"; rec."Processed Data/Time")
-                {
-                    ApplicationArea = all;
-                }
             }
         }
     }
@@ -75,6 +75,11 @@ page 50002 "CRX Groups Staging"
             action(GetData)
             {
                 ApplicationArea = all;
+                Caption = 'Get Data';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                Image = GetEntries;
 
                 trigger OnAction()
                 var
@@ -86,6 +91,11 @@ page 50002 "CRX Groups Staging"
             action("Process Data")
             {
                 ApplicationArea = all;
+                Caption = 'Process Data';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                Image = Process;
 
 
                 trigger OnAction()

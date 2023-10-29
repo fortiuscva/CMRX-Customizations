@@ -12,6 +12,14 @@ page 50006 "CRX Contact Staging"
         {
             repeater(General)
             {
+                field(Processed; rec.Processed)
+                {
+                    ApplicationArea = all;
+                }
+                field("Processed Data/Time"; rec."Processed Data/Time")
+                {
+                    ApplicationArea = all;
+                }
                 field(id; Rec.id)
                 {
                     ApplicationArea = all;
@@ -57,14 +65,6 @@ page 50006 "CRX Contact Staging"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the peo_ids field.';
                 }
-                field(Processed; rec.Processed)
-                {
-                    ApplicationArea = all;
-                }
-                field("Processed Data/Time"; rec."Processed Data/Time")
-                {
-                    ApplicationArea = all;
-                }
             }
         }
     }
@@ -75,6 +75,12 @@ page 50006 "CRX Contact Staging"
             action(GetData)
             {
                 ApplicationArea = all;
+                Caption = 'Get Data';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                Image = GetEntries;
+
 
                 trigger OnAction()
                 var

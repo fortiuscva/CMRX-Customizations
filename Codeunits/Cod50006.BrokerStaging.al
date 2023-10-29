@@ -1,4 +1,4 @@
-codeunit 50006 "CRX BrokerStaging"
+codeunit 50006 "CRX Broker Staging"
 {
     TableNo = "CRX Brokers Staging";
 

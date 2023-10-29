@@ -37,7 +37,7 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                 }
-                field("Salesmen Staging URL"; rec."Salesmen Staging URL")
+                field("Salesperson Staging URL"; rec."Salesperson Staging URL")
                 {
                     ApplicationArea = all;
                 }
@@ -71,37 +71,20 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                 }
-                field("Salesmen Staging Last Sync"; rec."Salesmen Staging Last Sync")
+                field("Salesperson Staging Last Sync"; rec."Salesperson Staging Last Sync")
                 {
                     ApplicationArea = all;
                 }
             }
         }
     }
-    actions
-    {
-        area(Processing)
-        {
-            group("CMRX Staging")
-            {
-                action("Get Data")
-                {
-                    ApplicationArea = all;
 
-                    trigger OnAction()
-                    var
-                        AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
-                    begin
-                        AccessTokenMgtCULcl.GetPeosData();
-                        AccessTokenMgtCULcl.GetBrokersData();
-                        AccessTokenMgtCULcl.GetGroupData();
-                        AccessTokenMgtCULcl.GetAccountData();
-                        AccessTokenMgtCULcl.GetContactData();
-                        AccessTokenMgtCULcl.GetUsagesData();
-                        AccessTokenMgtCULcl.GetSalesmenData();
-                    end;
-                }
-            }
-        }
-    }
+    trigger OnOpenPage()
+    begin
+        Rec.Reset();
+        if not Rec.Get() then begin
+            Rec.Init();
+            Rec.Insert();
+        end;
+    end;
 }
