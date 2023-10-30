@@ -2,6 +2,8 @@ table 50004 "CRX Usages Staging"
 {
     Caption = 'Usages Staging';
     DataClassification = ToBeClassified;
+    LookupPageId = "CRX Usages Staging";
+    DrillDownPageId = "CRX Usages Staging";
 
     fields
     {

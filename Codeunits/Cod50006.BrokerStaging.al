@@ -9,7 +9,9 @@ codeunit 50006 "CRX Broker Staging"
     begin
         CustomerRecLcl.Init();
         CustomerRecLcl.Validate("No.", Rec.id);
-        CustomerRecLcl.Validate(Name, rec.company);
+        //CustomerRecLcl.Validate(Name, rec.company);
+        CustomerRecLcl."CRX Company" := rec.company;
+        CustomerRecLcl."CRX Broker" := true;
 
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();
