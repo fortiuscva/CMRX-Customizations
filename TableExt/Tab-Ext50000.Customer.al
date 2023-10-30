@@ -26,5 +26,25 @@ tableextension 50000 "CRX Customer" extends Customer
             FieldClass = FlowField;
             CalcFormula = count(Employee where("CRX Group Id" = field("No.")));
         }
+        field(50004; "CRX Insurance"; Text[50])
+        {
+            Caption = 'Insurance';
+            DataClassification = customercontent;
+        }
+        field(50005; "CRX Broker"; Boolean)
+        {
+            Caption = 'Broker';
+            DataClassification = customercontent;
+        }
+        field(50006; "CRX Usages"; text[20])
+        {
+            Caption = 'Usages';
+            DataClassification = customercontent;
+        }
+        field(50007; "CRX Groups"; text[20])
+        {
+            Caption = 'Groups';
+            DataClassification = customercontent;
+        }
     }
 }
