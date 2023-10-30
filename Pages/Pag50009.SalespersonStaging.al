@@ -5,7 +5,8 @@ page 50009 "CRX Salesperson Staging"
     PageType = List;
     SourceTable = "CRX Salesperson Staging";
     UsageCategory = Lists;
-
+    DeleteAllowed = false;
+    InsertAllowed = false;
     layout
     {
         area(content)
@@ -19,35 +20,49 @@ page 50009 "CRX Salesperson Staging"
                 field("Processed Data/Time"; rec."Processed Data/Time")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field(id; Rec.id)
                 {
                     ToolTip = 'Specifies the value of the id field.';
+                    ApplicationArea = all;
+                    Editable = false;
                 }
                 field(username; Rec.username)
                 {
                     ToolTip = 'Specifies the value of the username field.';
+                    ApplicationArea = all;
+                    Editable = false;
                 }
                 field(name; Rec.name)
                 {
                     ToolTip = 'Specifies the value of the name field.';
+                    ApplicationArea = all;
+                    Editable = false;
                 }
                 field(email; Rec.email)
                 {
                     ToolTip = 'Specifies the value of the email field.';
+                    ApplicationArea = all;
+                    Editable = false;
                 }
                 field(created_at; Rec.created_at)
                 {
                     ToolTip = 'Specifies the value of the created_at field.';
+                    ApplicationArea = all;
+                    Editable = false;
                 }
                 field(updated_at; Rec.updated_at)
                 {
                     ToolTip = 'Specifies the value of the updated_at field.';
+                    ApplicationArea = all;
+                    Editable = false;
                 }
                 field(total; rec.total)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Total No. of lines received in the Response';
+                    ApplicationArea = all;
+                    Editable = false;
                 }
             }
         }

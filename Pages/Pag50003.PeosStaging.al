@@ -5,7 +5,8 @@ page 50003 "CRX Peos Staging"
     PageType = List;
     SourceTable = "CRX peos staging";
     UsageCategory = Lists;
-
+    DeleteAllowed = false;
+    InsertAllowed = false;
     layout
     {
         area(content)
@@ -19,41 +20,49 @@ page 50003 "CRX Peos Staging"
                 field("Processed Data/Time"; rec."Processed Data/Time")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field(id; Rec.id)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the id field.';
+                    Editable = false;
                 }
                 field(company; Rec.company)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the company field.';
+                    Editable = false;
                 }
                 field(created_at; Rec.created_at)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the created_at field.';
+                    Editable = false;
                 }
                 field(updated_at; Rec.updated_at)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the updated_at field.';
+                    Editable = false;
                 }
                 field(contacts; Rec.contacts)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the contacts field.';
+                    Editable = false;
                 }
                 field(total; rec.total)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Total No. of lines received in the Response';
+                    Editable = false;
                 }
                 field("Error Message"; Rec."Error Message")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Stores the reason for not processing the record.';
+                    Editable = false;
                 }
             }
         }

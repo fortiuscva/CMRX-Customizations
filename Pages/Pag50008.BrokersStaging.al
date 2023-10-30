@@ -5,7 +5,8 @@ page 50008 "CRX Brokers Staging"
     PageType = List;
     SourceTable = "CRX Brokers Staging";
     UsageCategory = Lists;
-
+    DeleteAllowed = false;
+    InsertAllowed = false;
     layout
     {
         area(content)
@@ -19,25 +20,36 @@ page 50008 "CRX Brokers Staging"
                 field("Processed Data/Time"; rec."Processed Data/Time")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field(id; Rec.id)
                 {
+                    ApplicationArea = all;
+                    Editable = false;
                     ToolTip = 'Specifies the value of the id field.';
                 }
                 field(company; Rec.company)
                 {
+                    ApplicationArea = all;
+                    Editable = false;
                     ToolTip = 'Specifies the value of the company field.';
                 }
                 field(created_at; Rec.created_at)
                 {
+                    ApplicationArea = all;
+                    Editable = false;
                     ToolTip = 'Specifies the value of the created_at field.';
                 }
                 field(updated_at; Rec.updated_at)
                 {
+                    ApplicationArea = all;
+                    Editable = false;
                     ToolTip = 'Specifies the value of the updated_at field.';
                 }
                 field(total; Rec.total)
                 {
+                    ApplicationArea = all;
+                    Editable = false;
                     ToolTip = 'Specifies the value of the total field.';
                 }
             }

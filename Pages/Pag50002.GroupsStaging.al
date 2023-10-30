@@ -5,7 +5,8 @@ page 50002 "CRX Groups Staging"
     PageType = List;
     SourceTable = "CRX Groups Staging";
     UsageCategory = Lists;
-
+    DeleteAllowed = false;
+    InsertAllowed = false;
     layout
     {
         area(content)
@@ -15,55 +16,66 @@ page 50002 "CRX Groups Staging"
                 field(Processed; rec.Processed)
                 {
                     ApplicationArea = all;
+
                 }
                 field("Processed Data/Time"; rec."Processed Data/Time")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field(id; Rec.id)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the id field.';
+                    Editable = false;
                 }
                 field(name; Rec.name)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the name field.';
+                    Editable = false;
                 }
                 field(peo_id; Rec.peo_id)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the peo_id field.';
+                    Editable = false;
                 }
                 field(broker_id; Rec.broker_id)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the broker_id field.';
+                    Editable = false;
                 }
                 field(salesman_id; Rec.salesman_id)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the salesman_id field.';
+                    Editable = false;
                 }
                 field(created_at; Rec.created_at)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the created_at field.';
+                    Editable = false;
                 }
                 field(updated_at; Rec.updated_at)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the updated_at field.';
+                    Editable = false;
                 }
                 field(contacts; Rec.contacts)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the contacts field.';
+                    Editable = false;
                 }
                 field("Error Message"; Rec."Error Message")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Stores the reason for not processing the record.';
+                    Editable = false;
                 }
             }
         }
