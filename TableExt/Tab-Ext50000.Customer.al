@@ -48,5 +48,17 @@ tableextension 50000 "CRX Customer" extends Customer
             FieldClass = FlowField;
             CalcFormula = count("CRX Groups Staging" where(id = field("No."), broker_id = field("CRX Broker ID")));
         }
+        field(50008; "CRX Group"; Boolean)
+        {
+            Caption = 'Group';
+            DataClassification = customercontent;
+            Editable = false;
+        }
+        field(50009; "CRX Peo"; Boolean)
+        {
+            Caption = 'Peo';
+            DataClassification = customercontent;
+            Editable = false;
+        }
     }
 }

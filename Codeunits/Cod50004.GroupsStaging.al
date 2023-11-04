@@ -17,6 +17,8 @@ codeunit 50004 "CRX Groups Staging"
             Evaluate(CustomerRecLcl."CRX Peos Id", Rec.peo_id);
         end;
         CustomerRecLcl."CRX Broker ID" := rec.broker_id;
+        CustomerRecLcl."CRX Group" := true;
+
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();
     end;

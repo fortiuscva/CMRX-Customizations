@@ -9,6 +9,8 @@ codeunit 50002 "CRX Peos Staging"
         CustomerRecLcl.Init();
         CustomerRecLcl.Validate("No.", Rec.id);
         CustomerRecLcl.Validate(Name, Rec.company);
+        CustomerRecLcl."CRX Peo" := true;
+
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();
     end;

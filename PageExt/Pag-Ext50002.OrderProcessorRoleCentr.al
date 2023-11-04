@@ -2,6 +2,47 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
 {
     actions
     {
+        addafter("Transfer Orders")
+        {
+            action("CRX CRX_Peos")
+            {
+                ApplicationArea = All;
+                Caption = 'Peos';
+                RunObject = Page "CRX Peos List";
+                RunPageLink = "CRX Peo" = const(true);
+                ToolTip = 'Opens the Poes List';
+            }
+            action("CRX CRX_Groups")
+            {
+                ApplicationArea = All;
+                Caption = 'Groups';
+                RunObject = Page "CRX Groups List";
+                RunPageLink = "CRX Group" = const(true);
+                ToolTip = 'Opens the Groups';
+            }
+            action("CRX Brokers_List")
+            {
+                ApplicationArea = All;
+                Caption = 'Brokers';
+                RunObject = Page "CRX Brokers List";
+                RunPageLink = "CRX Broker" = const(true);
+                ToolTip = 'Opens the Brokers';
+            }
+            action("CRX Employee_List")
+            {
+                ApplicationArea = All;
+                Caption = 'Employee';
+                RunObject = Page "CRX Employee List";
+                ToolTip = 'Opens the Employee';
+            }
+            action("CRX Salesperson_List")
+            {
+                ApplicationArea = All;
+                Caption = 'Salesperson';
+                RunObject = Page "CRX Salesperson List";
+                ToolTip = 'Opens the Salesperson';
+            }
+        }
         addafter("Posted Documents")
         {
             group("CRX CMRX")
@@ -85,6 +126,48 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         Caption = 'Get Data(All API)';
                         RunObject = codeunit "CRX Access Token Management";
                         ToolTip = 'Fetch all APIs at onnce';
+                    }
+                }
+                group("CRX BC")
+                {
+                    Caption = 'BC';
+                    action("CRX Peos")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Peos';
+                        RunObject = Page "CRX Peos List";
+                        RunPageLink = "CRX Peo" = const(true);
+                        ToolTip = 'Opens the Poes List';
+                    }
+                    action("CRX Groups")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Groups';
+                        RunObject = Page "CRX Groups List";
+                        RunPageLink = "CRX Group" = const(true);
+                        ToolTip = 'Opens the Groups';
+                    }
+                    action("CRX Brokers List")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Brokers';
+                        RunObject = Page "CRX Brokers List";
+                        RunPageLink = "CRX Broker" = const(true);
+                        ToolTip = 'Opens the Brokers';
+                    }
+                    action("CRX Employee List")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Employee';
+                        RunObject = Page "CRX Employee List";
+                        ToolTip = 'Opens the Employee';
+                    }
+                    action("CRX Salesperson List")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Salesperson';
+                        RunObject = Page "CRX Salesperson List";
+                        ToolTip = 'Opens the Salesperson';
                     }
                 }
             }
