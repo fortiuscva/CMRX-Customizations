@@ -148,4 +148,28 @@ codeunit 50001 "CRX Process Staging Data"
             until SalespersonStagingRecLcl.Next() = 0;
         Message('Processed Successfully!');
     end;
+
+    procedure ProcessContactStaging(Var ContactStagingRecPar: Record "CRX Contact Staging")
+    var
+        ContactStagingCU: Codeunit "CRX Contact Staging";
+        ContactStagingRecLcl: Record "CRX Contact Staging";
+    begin
+        ContactStagingRecLcl.Copy(ContactStagingRecPar);
+        ContactStagingRecLcl.SetRange(Processed, false);
+        if ContactStagingRecLcl.FindSet() then
+            repeat
+                ClearLastError();
+                if not ContactStagingCU.Run(ContactStagingRecLcl) then begin
+                    ContactStagingRecLcl."Error Message" := GetLastErrorText();
+                    ContactStagingRecLcl.Processed := false;
+                end else begin
+                    ContactStagingRecLcl.Processed := true;
+                    ContactStagingRecLcl."Error Message" := '';
+                    ContactStagingRecLcl."Processed Data/Time" := CurrentDateTime;
+                end;
+                ContactStagingRecLcl.Modify();
+                Commit();
+            until ContactStagingRecLcl.Next() = 0;
+        Message('Processed Successfully!');
+    end;
 }

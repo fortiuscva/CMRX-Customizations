@@ -100,6 +100,25 @@ page 50006 "CRX Contact Staging"
                     AccessTokenMgtCULcl.GetContactData();
                 end;
             }
+            action("Process Data")
+            {
+                ApplicationArea = all;
+                Caption = 'Process Data';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                Image = Process;
+
+
+                trigger OnAction()
+                var
+                    ContactStaging: Record "CRX Contact Staging";
+                    ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
+                begin
+                    CurrPage.SetSelectionFilter(ContactStaging);
+                    ProcessStagingDataaCULcl.ProcessContactStaging(ContactStaging);
+                end;
+            }
         }
     }
 }

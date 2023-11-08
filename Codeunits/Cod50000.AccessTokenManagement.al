@@ -357,6 +357,9 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('phone', ContactStagingRecLcl.phone);
                     JsonMgt.GetStringPropertyValueByName('email', ContactStagingRecLcl.email);
                     JsonMgt.GetStringPropertyValueByName('salesman_id', ContactStagingRecLcl.salesman_id);
+                    JsonMgt.GetStringPropertyValueByName('broker_id', ContactStagingRecLcl.broker_id);
+                    JsonMgt.GetStringPropertyValueByName('group_id', ContactStagingRecLcl.group_ids);
+                    JsonMgt.GetStringPropertyValueByName('peo_ids', ContactStagingRecLcl.peo_ids);
                     ContactStagingRecLcl.Insert(true);
                 end;
                 CMRXSetupRecLcl."Contact Staging Last Sync" := CurrentDateTime;
