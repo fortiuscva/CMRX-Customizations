@@ -23,10 +23,22 @@ codeunit 50003 "CRX Accounts Staging"
         EmployeeRecLcl."CRX Ethnicity" := Rec.ethnicity;
         EmployeeRecLcl."CRX Age_range" := Rec.age_range;
 
-        if not CustomerRecLcl.get(Rec.group_id) then
-            Error(GroupIdNotFoundLbl, Rec.group_id);
 
-        EmployeeRecLcl."CRX Group Id" := Rec.group_id;
+        // if not CustomerRecLcl.get(Rec.group_id) then
+        //     Error(GroupIdNotFoundLbl, Rec.group_id);
+
+        if rec.group_id = '' then begin
+            CustomerRecLcl.Init();
+            CustomerRecLcl."No." := 'INDIVIDUAL';
+            CustomerRecLcl.Name := 'INDIVIDUAL';
+            CustomerRecLcl."CRX Group" := true;
+            if not CustomerRecLcl.Insert() then
+                CustomerRecLcl.Modify();
+
+            EmployeeRecLcl."CRX Group Id" := CustomerRecLcl."No.";
+
+        end else
+            EmployeeRecLcl."CRX Group Id" := Rec.group_id;
 
         if not EmployeeRecLcl.Insert() then
             EmployeeRecLcl.Modify();

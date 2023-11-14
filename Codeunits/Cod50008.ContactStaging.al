@@ -4,6 +4,7 @@ codeunit 50008 "CRX Contact Staging"
 
     trigger OnRun()
     var
+        CustomerRecLcl: Record Customer;
         ContactRecLcl: Record Contact;
         ContactBusinessRelationRecLcl: Record "Contact Business Relation";
     begin
@@ -20,6 +21,7 @@ codeunit 50008 "CRX Contact Staging"
                 if rec.peo_ids <> '' then
                     ContactBusinessRelationRecLcl.Validate("No.", rec.peo_ids);
 
+
         if not ContactBusinessRelationRecLcl.Insert() then
             ContactBusinessRelationRecLcl.Modify();
 
@@ -35,5 +37,11 @@ codeunit 50008 "CRX Contact Staging"
 
         if not ContactRecLcl.Insert() then
             ContactRecLcl.Modify();
+
+        if CustomerRecLcl.get(ContactBusinessRelationRecLcl."No.") then begin
+            CustomerRecLcl."Primary Contact No." := ContactRecLcl."No.";
+            CustomerRecLcl.Contact := ContactRecLcl.Name;
+            CustomerRecLcl.Modify();
+        end;
     end;
 }

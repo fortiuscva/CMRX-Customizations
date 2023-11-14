@@ -42,6 +42,10 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
             }
+            field("CRX Group"; rec."CRX Group")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 }
