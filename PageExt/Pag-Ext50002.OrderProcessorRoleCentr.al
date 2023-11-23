@@ -169,6 +169,20 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         RunObject = Page "CRX Salesperson List";
                         ToolTip = 'Opens the Salesperson';
                     }
+                    action("CRX Discount Card Data")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Discount Card Data';
+                        RunObject = Page "CRX Discount Card Data";
+                        ToolTip = 'Opens the Discount Card Data';
+                    }
+                    action("CRX Discount Card Data Reconcillation")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Discount Card Data Reconcillation';
+                        RunObject = Page "Discount Card Reconcillation";
+                        ToolTip = 'Opens the Discount Card Data Reconcillation';
+                    }
                 }
             }
         }

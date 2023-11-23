@@ -1,18 +1,19 @@
-page 50018 "CRX Discount Card Compare Data"
+page 50018 "CRX Error Details"
 {
     ApplicationArea = All;
-    Caption = 'Discount Card Compare Data';
+    Caption = 'Error Details';
     PageType = CardPart;
-    SourceTable = "CRX Discount Card Compare Data";
+    SourceTable = "CRX Error Details";
 
     layout
     {
         area(content)
         {
-            repeater(General)
+            repeater(Control1)
             {
                 field(Comment; Rec.Comment)
                 {
+                    Caption = '';
                     ToolTip = 'Specifies the value of the Comment field.';
                 }
             }

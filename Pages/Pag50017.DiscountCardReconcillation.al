@@ -1,7 +1,7 @@
 page 50017 "Discount Card Reconcillation"
 {
     ApplicationArea = All;
-    Caption = 'Discount Card Reconcillation';
+    Caption = 'Discount Card Data Reconcillation';
     PageType = Worksheet;
     SourceTable = "CRX Discount Card Data";
     UsageCategory = Tasks;
@@ -11,133 +11,94 @@ page 50017 "Discount Card Reconcillation"
     {
         area(content)
         {
-            field("Bin Filter"; BinFilterVarGbl)
+            group(Options)
             {
-                ApplicationArea = all;
+                Caption = 'Options';
+                field("Bin Filter"; BinFilterVarGbl)
+                {
+                    ApplicationArea = all;
 
-                trigger OnValidate()
-                begin
-                    CurrPage.SaveRecord();
-                    if BinFilterVarGbl <> '' then
-                        Rec.SetFilter(BIN, BinFilterVarGbl)
-                    else
-                        rec.SetRange(BIN);
-                    if NPIFilterVarGbl <> '' then
-                        Rec.SetFilter("Prescriber NPI", NPIFilterVarGbl)
-                    else
-                        rec.SetRange("Prescriber NPI");
-                    if NDCFilterVarGbl <> '' then
-                        Rec.SetFilter(NDC, NDCFilterVarGbl)
-                    else
-                        Rec.SetRange(NDC);
-                    Rec.SetRange("Record Status", RecordStatusVarGbl);
-                    CurrPage.Update(false);
-
-                end;
+                    trigger OnValidate()
+                    begin
+                        ValidateFilters();
+                    end;
+                }
+                field("NPI Filter"; NPIFilterVarGbl)
+                {
+                    ApplicationArea = all;
+                    trigger OnValidate()
+                    begin
+                        ValidateFilters();
+                    end;
+                }
+                field("NDC Filter"; NDCFilterVarGbl)
+                {
+                    ApplicationArea = all;
+                    trigger OnValidate()
+                    begin
+                        ValidateFilters();
+                    end;
+                }
             }
-            field("NPI Filter"; NPIFilterVarGbl)
+            field("Show Details"; RecordStatusVarGbl)
             {
                 ApplicationArea = all;
                 trigger OnValidate()
                 begin
-                    CurrPage.SaveRecord();
-                    if BinFilterVarGbl <> '' then
-                        Rec.SetFilter(BIN, BinFilterVarGbl)
-                    else
-                        rec.SetRange(BIN);
-                    if NPIFilterVarGbl <> '' then
-                        Rec.SetFilter("Prescriber NPI", NPIFilterVarGbl)
-                    else
-                        rec.SetRange("Prescriber NPI");
-                    if NDCFilterVarGbl <> '' then
-                        Rec.SetFilter(NDC, NDCFilterVarGbl)
-                    else
-                        Rec.SetRange(NDC);
-                    Rec.SetRange("Record Status", RecordStatusVarGbl);
-                    CurrPage.Update(false);
+                    ValidateFilters();
                 end;
             }
-            field("NDC Filter"; NDCFilterVarGbl)
-            {
-                ApplicationArea = all;
-                trigger OnValidate()
-                begin
-                    CurrPage.SaveRecord();
-                    if BinFilterVarGbl <> '' then
-                        Rec.SetFilter(BIN, BinFilterVarGbl)
-                    else
-                        rec.SetRange(BIN);
-                    if NPIFilterVarGbl <> '' then
-                        Rec.SetFilter("Prescriber NPI", NPIFilterVarGbl)
-                    else
-                        rec.SetRange("Prescriber NPI");
-                    if NDCFilterVarGbl <> '' then
-                        Rec.SetFilter(NDC, NDCFilterVarGbl)
-                    else
-                        Rec.SetRange(NDC);
-                    Rec.SetRange("Record Status", RecordStatusVarGbl);
-                    CurrPage.Update(false);
-                end;
-            }
-            field("Record Status Filter"; RecordStatusVarGbl)
-            {
-                ApplicationArea = all;
-                trigger OnValidate()
-                begin
-                    CurrPage.SaveRecord();
-                    if BinFilterVarGbl <> '' then
-                        Rec.SetFilter(BIN, BinFilterVarGbl)
-                    else
-                        rec.SetRange(BIN);
-                    if NPIFilterVarGbl <> '' then
-                        Rec.SetFilter("Prescriber NPI", NPIFilterVarGbl)
-                    else
-                        rec.SetRange("Prescriber NPI");
-                    if NDCFilterVarGbl <> '' then
-                        Rec.SetFilter(NDC, NDCFilterVarGbl)
-                    else
-                        Rec.SetRange(NDC);
-                    Rec.SetRange("Record Status", RecordStatusVarGbl);
-                    CurrPage.Update(false);
-                end;
-            }
-
             repeater(General)
             {
                 Editable = false;
                 field(BIN; Rec.BIN)
                 {
                     ToolTip = 'Specifies the value of the BIN field.';
+                    StyleExpr = StyleTxt;
                 }
                 field("DATE Submitted"; Rec."DATE Submitted")
                 {
                     ToolTip = 'Specifies the value of the DATE Submitted field.';
+                    StyleExpr = StyleTxt;
                 }
                 field("Prescriber NPI"; Rec."Prescriber NPI")
                 {
                     ToolTip = 'Specifies the value of the Prescriber NPI field.';
+                    StyleExpr = StyleTxt;
                 }
                 field(NDC; Rec.NDC)
                 {
                     ToolTip = 'Specifies the value of the NDC field.';
+                    StyleExpr = StyleTxt;
                 }
                 field(Quantity; Rec.Quantity)
                 {
                     ToolTip = 'Specifies the value of the Quantity field.';
+                    StyleExpr = StyleTxt;
                 }
                 field(Price; Rec.Price)
                 {
                     ToolTip = 'Specifies the value of the Price field.';
+                    StyleExpr = StyleTxt;
                 }
-                field("Record Status"; Rec."Record Status")
+                field("Compare Status"; Rec."Compare Status")
                 {
-                    ToolTip = 'Specifies the value of the Record Status field.';
+                    Visible = false;
+                    ToolTip = 'Specifies the value of the Compare Status field.';
+                    StyleExpr = StyleTxt;
                 }
+            }
+            part(Usages; "CRX Usages List SubForm")
+            {
+                Editable = false;
+                ApplicationArea = all;
+                SubPageLink = Bin = field(BIN), Npi = field("Prescriber NPI"), Ndc = field(NDC);
+                UpdatePropagation = Both;
             }
         }
         area(factboxes)
         {
-            part("Discount Card Compare Data"; "CRX Discount Card Compare Data")
+            part("Error Details"; "CRX Error Details")
             {
                 ApplicationArea = all;
                 SubPageLink = "Discount Card Entry No." = FIELD("Entry No.");
@@ -160,6 +121,7 @@ page 50017 "Discount Card Reconcillation"
                 trigger OnAction()
                 var
                     ImportDiscountCardXmlportLcl: XmlPort "CRX Import Discount Card Data";
+                    Customerledg: Page "Customer Ledger Entries";
                 begin
                     ImportDiscountCardXmlportLcl.Run();
                 end;
@@ -176,7 +138,7 @@ page 50017 "Discount Card Reconcillation"
                 var
                     DiscountCardDataRecLcl: Record "CRX Discount Card Data";
                     UsagesStagingRecLcl: Record "CRX Usages Staging";
-                    DiscountCardCompareRecLcl: Record "CRX Discount Card Compare Data";
+                    ErrorDetailsRecLcl: Record "CRX Error Details";
                 begin
                     DiscountCardDataRecLcl.Reset();
                     if BinFilterVarGbl <> '' then
@@ -186,13 +148,13 @@ page 50017 "Discount Card Reconcillation"
                     if NDCFilterVarGbl <> '' then
                         DiscountCardDataRecLcl.SetFilter(NDC, NDCFilterVarGbl);
                     if RecordStatusVarGbl <> RecordStatusVarGbl::" " then
-                        DiscountCardDataRecLcl.SetRange("Record Status", RecordStatusVarGbl);
+                        DiscountCardDataRecLcl.SetRange("Compare Status", RecordStatusVarGbl);
                     if DiscountCardDataRecLcl.FindSet() then
                         repeat
-                            DiscountCardCompareRecLcl.Reset();
-                            DiscountCardCompareRecLcl.SetRange("Discount Card Entry No.", DiscountCardDataRecLcl."Entry No.");
-                            if DiscountCardCompareRecLcl.FindSet() then
-                                DiscountCardCompareRecLcl.DeleteAll();
+                            ErrorDetailsRecLcl.Reset();
+                            ErrorDetailsRecLcl.SetRange("Discount Card Entry No.", DiscountCardDataRecLcl."Entry No.");
+                            if ErrorDetailsRecLcl.FindSet() then
+                                ErrorDetailsRecLcl.DeleteAll();
 
                             UsagesStagingRecLcl.Reset();
                             UsagesStagingRecLcl.SetRange(bin, DiscountCardDataRecLcl.BIN);
@@ -201,45 +163,83 @@ page 50017 "Discount Card Reconcillation"
                             if UsagesStagingRecLcl.FindFirst() then begin
                                 if (UsagesStagingRecLcl.quantity <> DiscountCardDataRecLcl.Quantity) or (UsagesStagingRecLcl.price <> DiscountCardDataRecLcl.Price) then begin
                                     if UsagesStagingRecLcl.quantity <> DiscountCardDataRecLcl.Quantity then begin
-                                        DiscountCardCompareRecLcl.Init();
-                                        DiscountCardCompareRecLcl."Discount Card Entry No." := DiscountCardDataRecLcl."Entry No.";
-                                        DiscountCardCompareRecLcl.Comment := 'Quantity of Discount does not Match.';
-                                        DiscountCardCompareRecLcl.Insert(true);
+                                        ErrorDetailsRecLcl.Init();
+                                        ErrorDetailsRecLcl."Discount Card Entry No." := DiscountCardDataRecLcl."Entry No.";
+                                        ErrorDetailsRecLcl.Comment := 'Quantity not matched';
+                                        ErrorDetailsRecLcl.Insert(true);
 
-                                        DiscountCardDataRecLcl."Record Status" := DiscountCardDataRecLcl."Record Status"::Unmatched;
+                                        DiscountCardDataRecLcl."Compare Status" := DiscountCardDataRecLcl."Compare Status"::Unmatched;
                                         DiscountCardDataRecLcl.Modify();
                                     end;
                                     if UsagesStagingRecLcl.price <> DiscountCardDataRecLcl.Price then begin
-                                        DiscountCardCompareRecLcl.Init();
-                                        DiscountCardCompareRecLcl."Discount Card Entry No." := DiscountCardDataRecLcl."Entry No.";
-                                        DiscountCardCompareRecLcl.Comment := 'Price of Discount does not Match.';
-                                        DiscountCardCompareRecLcl.Insert(true);
+                                        ErrorDetailsRecLcl.Init();
+                                        ErrorDetailsRecLcl."Discount Card Entry No." := DiscountCardDataRecLcl."Entry No.";
+                                        ErrorDetailsRecLcl.Comment := 'Price not matched';
+                                        ErrorDetailsRecLcl.Insert(true);
 
-                                        DiscountCardDataRecLcl."Record Status" := DiscountCardDataRecLcl."Record Status"::Unmatched;
+                                        DiscountCardDataRecLcl."Compare Status" := DiscountCardDataRecLcl."Compare Status"::Unmatched;
                                         DiscountCardDataRecLcl.Modify();
                                     end;
                                 end else begin
-                                    DiscountCardDataRecLcl."Record Status" := DiscountCardDataRecLcl."Record Status"::Matched;
+                                    DiscountCardDataRecLcl."Compare Status" := DiscountCardDataRecLcl."Compare Status"::Matched;
                                     DiscountCardDataRecLcl.Modify();
                                 end;
                             end else begin
-                                DiscountCardCompareRecLcl.Init();
-                                DiscountCardCompareRecLcl."Discount Card Entry No." := DiscountCardDataRecLcl."Entry No.";
-                                DiscountCardCompareRecLcl.Comment := 'Record does not exist.';
-                                DiscountCardCompareRecLcl.Insert(true);
+                                ErrorDetailsRecLcl.Init();
+                                ErrorDetailsRecLcl."Discount Card Entry No." := DiscountCardDataRecLcl."Entry No.";
+                                ErrorDetailsRecLcl.Comment := 'Record not exist.';
+                                ErrorDetailsRecLcl.Insert(true);
 
-                                DiscountCardDataRecLcl."Record Status" := DiscountCardDataRecLcl."Record Status"::Unmatched;
+                                DiscountCardDataRecLcl."Compare Status" := DiscountCardDataRecLcl."Compare Status"::Unmatched;
                                 DiscountCardDataRecLcl.Modify();
                             end;
                         until DiscountCardDataRecLcl.Next() = 0;
-                    Message('Record Compared successfully.');
+                    Message('Records Processed successfully.');
                 end;
             }
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        StyleTxt := SetStyle();
+    end;
+
     var
         BinFilterVarGbl: Text;
         NPIFilterVarGbl: Text;
         NDCFilterVarGbl: Text;
-        RecordStatusVarGbl: Enum "CRX Record Status";
+        StyleTxt: Text;
+        RecordStatusVarGbl: Enum "CRX Show Details";
+
+    procedure ValidateFilters()
+    begin
+        CurrPage.SaveRecord();
+        if BinFilterVarGbl <> '' then
+            Rec.SetFilter(BIN, BinFilterVarGbl)
+        else
+            rec.SetRange(BIN);
+        if NPIFilterVarGbl <> '' then
+            Rec.SetFilter("Prescriber NPI", NPIFilterVarGbl)
+        else
+            rec.SetRange("Prescriber NPI");
+        if NDCFilterVarGbl <> '' then
+            Rec.SetFilter(NDC, NDCFilterVarGbl)
+        else
+            Rec.SetRange(NDC);
+        if RecordStatusVarGbl <> RecordStatusVarGbl::" " then
+            Rec.SetRange("Compare Status", RecordStatusVarGbl)
+        else
+            rec.SetRange("Compare Status");
+        CurrPage.Update(false);
+    end;
+
+    procedure SetStyle() Style: Text
+    var
+        IsHandled: Boolean;
+    begin
+        if rec."Compare Status" <> rec."Compare Status"::Unmatched then
+            exit('None')
+        else
+            exit('Attention');
+    end;
 }

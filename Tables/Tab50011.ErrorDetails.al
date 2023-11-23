@@ -1,6 +1,6 @@
-table 50011 "CRX Discount Card Compare Data"
+table 50011 "CRX Error Details"
 {
-    Caption = 'Discount Card Compare Data';
+    Caption = 'Error Details';
     DataClassification = CustomerContent;
 
     fields
@@ -27,10 +27,10 @@ table 50011 "CRX Discount Card Compare Data"
     }
     trigger OnInsert()
     var
-        DiscountCardCompareDataRecLcl: Record "CRX Discount Card Compare Data";
+        ErrorDetailsRecLcl: Record "CRX Error Details";
     begin
-        if DiscountCardCompareDataRecLcl.FindLast() then
-            "Entry No." := DiscountCardCompareDataRecLcl."Entry No." + 1
+        if ErrorDetailsRecLcl.FindLast() then
+            "Entry No." := ErrorDetailsRecLcl."Entry No." + 1
         else
             "Entry No." := 1;
     end;

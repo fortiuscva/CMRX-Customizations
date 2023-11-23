@@ -1,10 +1,10 @@
-enum 50000 "CRX Record Status"
+enum 50001 "CRX Discount Compare Data"
 {
     Extensible = true;
 
     value(0; " ")
     {
-        Caption = 'UnProcessed';
+        Caption = 'Not Processed';
     }
     value(1; Matched)
     {

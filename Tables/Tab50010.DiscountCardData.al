@@ -33,9 +33,9 @@ table 50010 "CRX Discount Card Data"
         {
             Caption = 'Price';
         }
-        field(8; "Record Status"; Enum "CRX Record Status")
+        field(8; "Compare Status"; Enum "CRX Show Details")
         {
-            Caption = 'Record Status';
+            Caption = 'Compare Status';
         }
     }
     keys
