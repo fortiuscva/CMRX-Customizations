@@ -53,5 +53,7 @@ table 50010 "CRX Discount Card Data"
             "Entry No." := DiscountCardDataRecLcl."Entry No." + 1
         else
             "Entry No." := 1;
+
+
     end;
 }

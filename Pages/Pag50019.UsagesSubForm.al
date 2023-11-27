@@ -1,7 +1,7 @@
-page 50019 "CRX Usages List SubForm"
+page 50019 "CRX Usages SubForm"
 {
     ApplicationArea = All;
-    Caption = 'Usages List SubForm';
+    Caption = 'Usages SubForm';
     PageType = ListPart;
     SourceTable = "CRX Usages Staging";
 

@@ -88,12 +88,13 @@ page 50017 "Discount Card Reconcillation"
                     StyleExpr = StyleTxt;
                 }
             }
-            part(Usages; "CRX Usages List SubForm")
+            part(Usages; "CRX Usages SubForm")
             {
                 Editable = false;
                 ApplicationArea = all;
                 SubPageLink = Bin = field(BIN), Npi = field("Prescriber NPI"), Ndc = field(NDC);
                 UpdatePropagation = Both;
+                Caption = 'Usages';
             }
         }
         area(factboxes)
