@@ -37,6 +37,14 @@ table 50010 "CRX Discount Card Data"
         {
             Caption = 'Compare Status';
         }
+        field(10; "Import DateTime"; DateTime)
+        {
+            Caption = 'Import Date & Time';
+        }
+        field(11; "Compare DateTime"; DateTime)
+        {
+            Caption = 'Compare  Date & Time';
+        }
     }
     keys
     {
@@ -54,6 +62,6 @@ table 50010 "CRX Discount Card Data"
         else
             "Entry No." := 1;
 
-
+        "Import DateTime" := CurrentDateTime;
     end;
 }

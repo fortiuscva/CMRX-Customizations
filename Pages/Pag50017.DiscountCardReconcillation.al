@@ -40,13 +40,26 @@ page 50017 "Discount Card Reconcillation"
                     end;
                 }
             }
-            field("Show Details"; RecordStatusVarGbl)
+
+            group(Details)
             {
-                ApplicationArea = all;
-                trigger OnValidate()
-                begin
-                    ValidateFilters();
-                end;
+                Caption = '';
+                field("Date Filter"; DateFilterVarGbl)
+                {
+                    ApplicationArea = all;
+                    trigger OnValidate()
+                    begin
+                        ValidateFilters();
+                    end;
+                }
+                field("Show Details"; RecordStatusVarGbl)
+                {
+                    ApplicationArea = all;
+                    trigger OnValidate()
+                    begin
+                        ValidateFilters();
+                    end;
+                }
             }
             repeater(General)
             {
@@ -85,6 +98,16 @@ page 50017 "Discount Card Reconcillation"
                 {
                     Visible = false;
                     ToolTip = 'Specifies the value of the Compare Status field.';
+                    StyleExpr = StyleTxt;
+                }
+                field("Import DateTime"; Rec."Import DateTime")
+                {
+                    ToolTip = 'Specifies the value of the Import DateTime field.';
+                    StyleExpr = StyleTxt;
+                }
+                field("Compare DateTime"; Rec."Compare DateTime")
+                {
+                    ToolTip = 'Specifies the value of the Compare DteTime field.';
                     StyleExpr = StyleTxt;
                 }
             }
@@ -140,7 +163,11 @@ page 50017 "Discount Card Reconcillation"
                     DiscountCardDataRecLcl: Record "CRX Discount Card Data";
                     UsagesStagingRecLcl: Record "CRX Usages Staging";
                     ErrorDetailsRecLcl: Record "CRX Error Details";
+                    DateFilterErrorLbl: Label 'Please Input the Date Filter';
                 begin
+                    if DateFilterVarGbl = '' then
+                        error(DateFilterErrorLbl);
+
                     DiscountCardDataRecLcl.Reset();
                     if BinFilterVarGbl <> '' then
                         DiscountCardDataRecLcl.SetFilter(BIN, BinFilterVarGbl);
@@ -150,6 +177,8 @@ page 50017 "Discount Card Reconcillation"
                         DiscountCardDataRecLcl.SetFilter(NDC, NDCFilterVarGbl);
                     if RecordStatusVarGbl <> RecordStatusVarGbl::" " then
                         DiscountCardDataRecLcl.SetRange("Compare Status", RecordStatusVarGbl);
+                    if DateFilterVarGbl <> '' then
+                        DiscountCardDataRecLcl.SetFilter("DATE Submitted", DateFilterVarGbl);
                     if DiscountCardDataRecLcl.FindSet() then
                         repeat
                             ErrorDetailsRecLcl.Reset();
@@ -179,10 +208,12 @@ page 50017 "Discount Card Reconcillation"
                                         ErrorDetailsRecLcl.Insert(true);
 
                                         DiscountCardDataRecLcl."Compare Status" := DiscountCardDataRecLcl."Compare Status"::Unmatched;
+                                        DiscountCardDataRecLcl."Compare DateTime" := CurrentDateTime();
                                         DiscountCardDataRecLcl.Modify();
                                     end;
                                 end else begin
                                     DiscountCardDataRecLcl."Compare Status" := DiscountCardDataRecLcl."Compare Status"::Matched;
+                                    DiscountCardDataRecLcl."Compare DateTime" := CurrentDateTime();
                                     DiscountCardDataRecLcl.Modify();
                                 end;
                             end else begin
@@ -192,6 +223,7 @@ page 50017 "Discount Card Reconcillation"
                                 ErrorDetailsRecLcl.Insert(true);
 
                                 DiscountCardDataRecLcl."Compare Status" := DiscountCardDataRecLcl."Compare Status"::Unmatched;
+                                DiscountCardDataRecLcl."Compare DateTime" := CurrentDateTime();
                                 DiscountCardDataRecLcl.Modify();
                             end;
                         until DiscountCardDataRecLcl.Next() = 0;
@@ -209,6 +241,7 @@ page 50017 "Discount Card Reconcillation"
         BinFilterVarGbl: Text;
         NPIFilterVarGbl: Text;
         NDCFilterVarGbl: Text;
+        DateFilterVarGbl: Text;
         StyleTxt: Text;
         RecordStatusVarGbl: Enum "CRX Show Details";
 
@@ -231,6 +264,11 @@ page 50017 "Discount Card Reconcillation"
             Rec.SetRange("Compare Status", RecordStatusVarGbl)
         else
             rec.SetRange("Compare Status");
+        if DateFilterVarGbl <> '' then
+            Rec.SetFilter("DATE Submitted", DateFilterVarGbl)
+        else
+            Rec.SetRange("DATE Submitted");
+
         CurrPage.Update(false);
     end;
 

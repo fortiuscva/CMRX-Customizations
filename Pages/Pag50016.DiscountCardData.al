@@ -36,6 +36,14 @@ page 50016 "CRX Discount Card Data"
                 {
                     ToolTip = 'Specifies the value of the Price field.';
                 }
+                field("Import DateTime"; Rec."Import DateTime")
+                {
+                    ToolTip = 'Specifies the value of the Import DateTime field.';
+                }
+                field("Compare DateTime"; Rec."Compare DateTime")
+                {
+                    ToolTip = 'Specifies the value of the Compare DteTime field.';
+                }
             }
         }
     }
