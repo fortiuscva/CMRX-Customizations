@@ -16,6 +16,10 @@ pageextension 50001 "CRX Employee Card" extends "Employee Card"
             {
                 ApplicationArea = all;
             }
+            field("CRX Usages"; rec."CRX Usages")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 }

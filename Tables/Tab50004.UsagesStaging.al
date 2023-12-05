@@ -2,6 +2,8 @@ table 50004 "CRX Usages Staging"
 {
     Caption = 'Usages Staging';
     DataClassification = ToBeClassified;
+    LookupPageId = "CRX Usages Staging";
+    DrillDownPageId = "CRX Usages Staging";
 
     fields
     {
@@ -121,7 +123,14 @@ table 50004 "CRX Usages Staging"
         {
             Caption = 'total';
         }
-
+        field(30; broker_company; Text[250])
+        {
+            Caption = 'broker_company';
+        }
+        field(31; broker_id; Text[250])
+        {
+            Caption = 'broker_id';
+        }
         field(35; Processed; Boolean)
         {
             DataClassification = ToBeClassified;
@@ -130,7 +139,13 @@ table 50004 "CRX Usages Staging"
         field(36; "Processed Data/Time"; DateTime)
         {
             DataClassification = ToBeClassified;
+            Editable = false;
 
+        }
+        field(41; "Error Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
         }
     }
     keys

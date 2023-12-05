@@ -2,10 +2,13 @@ table 50007 "CRX Setup"
 {
     Caption = 'CRX Setup';
     DataClassification = CustomerContent;
+    DrillDownPageID = "CRX Setup";
+    LookupPageID = "CRX Setup";
+
 
     fields
     {
-        field(1; "Primary key"; Integer)
+        field(1; "Primary key"; Code[10])
         {
             Caption = 'Primary key';
         }
@@ -48,6 +51,22 @@ table 50007 "CRX Setup"
         field(11; "Contact Staging URL"; Text[1024])
         {
             Caption = 'Contact Staging URL';
+        }
+        field(12; "Brokers Staging Last Sync"; DateTime)
+        {
+            Caption = 'Brokers Staging Last Sync';
+        }
+        field(13; "Brokers Staging URL"; Text[1024])
+        {
+            Caption = 'Brokers Staging URL';
+        }
+        field(14; "Salesperson Staging Last Sync"; DateTime)
+        {
+            Caption = 'Salesperson Staging Last Sync';
+        }
+        field(15; "Salesperson Staging URL"; Text[1024])
+        {
+            Caption = 'Salesperson Staging URL';
         }
     }
     keys

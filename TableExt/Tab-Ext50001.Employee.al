@@ -14,8 +14,15 @@ tableextension 50001 "CRX Employee" extends Employee
         }
         field(50002; "CRX Group Id"; Code[20])
         {
+            Caption = 'Group Id';
             DataClassification = CustomerContent;
             tablerelation = Customer."No.";
+        }
+        field(50007; "CRX Usages"; Integer)
+        {
+            Caption = 'Usages';
+            FieldClass = FlowField;
+            CalcFormula = count("CRX Usages Staging" where(account_id = field("No.")));
         }
     }
 }

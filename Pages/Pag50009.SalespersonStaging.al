@@ -1,9 +1,9 @@
-page 50002 "CRX Groups Staging"
+page 50009 "CRX Salesperson Staging"
 {
     ApplicationArea = All;
-    Caption = 'Groups Staging';
+    Caption = 'Salesperson Staging';
     PageType = List;
-    SourceTable = "CRX Groups Staging";
+    SourceTable = "CRX Salesperson Staging";
     UsageCategory = Lists;
     DeleteAllowed = false;
     InsertAllowed = false;
@@ -16,7 +16,6 @@ page 50002 "CRX Groups Staging"
                 field(Processed; rec.Processed)
                 {
                     ApplicationArea = all;
-
                 }
                 field("Processed Data/Time"; rec."Processed Data/Time")
                 {
@@ -25,56 +24,44 @@ page 50002 "CRX Groups Staging"
                 }
                 field(id; Rec.id)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the id field.';
+                    ApplicationArea = all;
+                    Editable = false;
+                }
+                field(username; Rec.username)
+                {
+                    ToolTip = 'Specifies the value of the username field.';
+                    ApplicationArea = all;
                     Editable = false;
                 }
                 field(name; Rec.name)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the name field.';
+                    ApplicationArea = all;
                     Editable = false;
                 }
-                field(peo_id; Rec.peo_id)
+                field(email; Rec.email)
                 {
+                    ToolTip = 'Specifies the value of the email field.';
                     ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the peo_id field.';
-                    Editable = false;
-                }
-                field(broker_id; Rec.broker_id)
-                {
-                    ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the broker_id field.';
-                    Editable = false;
-                }
-                field(salesman_id; Rec.salesman_id)
-                {
-                    ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the salesman_id field.';
                     Editable = false;
                 }
                 field(created_at; Rec.created_at)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the created_at field.';
+                    ApplicationArea = all;
                     Editable = false;
                 }
                 field(updated_at; Rec.updated_at)
                 {
-                    ApplicationArea = all;
                     ToolTip = 'Specifies the value of the updated_at field.';
-                    Editable = false;
-                }
-                field(contacts; Rec.contacts)
-                {
                     ApplicationArea = all;
-                    ToolTip = 'Specifies the value of the contacts field.';
                     Editable = false;
                 }
-                field("Error Message"; Rec."Error Message")
+                field(total; rec.total)
                 {
-                    ApplicationArea = All;
-                    ToolTip = 'Stores the reason for not processing the record.';
+                    ToolTip = 'Total No. of lines received in the Response';
+                    ApplicationArea = all;
                     Editable = false;
                 }
             }
@@ -97,7 +84,7 @@ page 50002 "CRX Groups Staging"
                 var
                     AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
                 begin
-                    AccessTokenMgtCULcl.GetGroupData();
+                    AccessTokenMgtCULcl.GetSalespersonData();
                 end;
             }
             action("Process Data")
@@ -109,14 +96,13 @@ page 50002 "CRX Groups Staging"
                 PromotedCategory = Process;
                 Image = Process;
 
-
                 trigger OnAction()
                 var
-                    GroupsStaging: Record "CRX Groups Staging";
-                    ProcessStagingDataaCULcl: Codeunit "CRX Process Staging Data";
+                    SalespersonStaging: Record "CRX Salesperson Staging";
+                    ProcessStagingDataCULcl: Codeunit "CRX Process Staging Data";
                 begin
-                    CurrPage.SetSelectionFilter(GroupsStaging);
-                    ProcessStagingDataaCULcl.ProcessGroupsStaging(GroupsStaging);
+                    CurrPage.SetSelectionFilter(SalespersonStaging);
+                    ProcessStagingDataCULcl.ProcessSalespersonStaging(SalespersonStaging);
                 end;
             }
         }
