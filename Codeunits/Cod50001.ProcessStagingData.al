@@ -53,30 +53,6 @@ codeunit 50001 "CRX Process Staging Data"
         Message('Processed Successfully!');
     end;
 
-    procedure ProcessUsagesStaging(var UsagesStagingRecPar: Record "CRX Usages Staging")
-    var
-        UsuagesStagingCU: Codeunit "CRX Usages Staging";
-        UsagesStagingRecLcl: Record "CRX Usages Staging";
-    begin
-        UsagesStagingRecLcl.Copy(UsagesStagingRecPar);
-        UsagesStagingRecLcl.SetRange(Processed, false);
-        if UsagesStagingRecLcl.FindSet() then
-            repeat
-                ClearLastError();
-                if not UsuagesStagingCU.Run(UsagesStagingRecLcl) then begin
-                    UsagesStagingRecLcl."Error Message" := GetLastErrorText();
-                    UsagesStagingRecLcl.Processed := false;
-                end else begin
-                    UsagesStagingRecLcl.Processed := true;
-                    UsagesStagingRecLcl."Error Message" := '';
-                    UsagesStagingRecLcl."Processed Data/Time" := CurrentDateTime;
-                end;
-                UsagesStagingRecLcl.Modify();
-                Commit();
-            until UsagesStagingRecLcl.Next() = 0;
-        Message('Processed Successfully!');
-    end;
-
     procedure ProcessAccountStaging(var AccountsStagingRecPar: Record "CRX Accounts Staging")
     var
         AccountsStagingCU: Codeunit "CRX Accounts Staging";

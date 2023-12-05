@@ -214,6 +214,7 @@ codeunit 50000 "CRX Access Token Management"
     procedure GetUsagesData()
     var
         UsagesStagingRecLcl: Record "CRX Usages Staging";
+        UsageidVarLcl: text[250];
         ClientVarLcl: HttpClient;
         contentVarLcl: HttpContent;
         HeaderVarLcl: HttpHeaders;
@@ -260,39 +261,46 @@ codeunit 50000 "CRX Access Token Management"
                 for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
                     ArrayJsonMgt.GetObjectFromCollectionByIndex(UsageDetailsTxt, i);
                     JsonMgt.InitializeObject(UsageDetailsTxt);
-                    UsagesStagingRecLcl.Init();
-                    JsonMgt.GetStringPropertyValueByName('id', UsagesStagingRecLcl.id);
-                    JsonMgt.GetStringPropertyValueByName('account_id', UsagesStagingRecLcl.account_id);
-                    JsonMgt.GetStringPropertyValueByName('provider', UsagesStagingRecLcl.provider);
-                    JsonMgt.GetStringPropertyValueByName('bin', UsagesStagingRecLcl.bin);
-                    JsonMgt.GetStringPropertyValueByName('npi', UsagesStagingRecLcl.npi);
-                    JsonMgt.GetStringPropertyValueByName('brand', UsagesStagingRecLcl.brand);
-                    JsonMgt.GetStringPropertyValueByName('ndc', UsagesStagingRecLcl.ndc);
-                    JsonMgt.GetStringPropertyValueByName('drug_name', UsagesStagingRecLcl.drug_name);
-                    JsonMgt.GetStringPropertyValueByName('dosage', UsagesStagingRecLcl.dosage);
-                    JsonMgt.GetStringPropertyValueByName('extra', UsagesStagingRecLcl.extra);
-                    JsonMgt.GetStringPropertyValueByName('price', UsagesStagingRecLcl.price);
-                    JsonMgt.GetStringPropertyValueByName('quantity', UsagesStagingRecLcl.quantity);
-                    JsonMgt.GetStringPropertyValueByName('created_at', UsagesStagingRecLcl.created_at);
-                    JsonMgt.GetStringPropertyValueByName('member_id', UsagesStagingRecLcl.member_id);
-                    JsonMgt.GetStringPropertyValueByName('group_id', UsagesStagingRecLcl.group_id);
-                    JsonMgt.GetStringPropertyValueByName('email', UsagesStagingRecLcl.email);
-                    JsonMgt.GetStringPropertyValueByName('phone', UsagesStagingRecLcl.phone);
-                    JsonMgt.GetStringPropertyValueByName('age_range', UsagesStagingRecLcl.age_range);
-                    JsonMgt.GetStringPropertyValueByName('ethnicity', UsagesStagingRecLcl.ethnicity);
-                    JsonMgt.GetStringPropertyValueByName('sex', UsagesStagingRecLcl.sex);
-                    JsonMgt.GetStringPropertyValueByName('first_name', UsagesStagingRecLcl.first_name);
-                    JsonMgt.GetStringPropertyValueByName('last_name', UsagesStagingRecLcl.last_name);
-                    JsonMgt.GetStringPropertyValueByName('account_zip', UsagesStagingRecLcl.account_zip);
-                    JsonMgt.GetStringPropertyValueByName('group_name', UsagesStagingRecLcl.group_name);
-                    JsonMgt.GetStringPropertyValueByName('peo_company', UsagesStagingRecLcl.peo_company);
-                    JsonMgt.GetStringPropertyValueByName('peo_id', UsagesStagingRecLcl.peo_id);
-                    JsonMgt.GetStringPropertyValueByName('privacy_optout', UsagesStagingRecLcl.privacy_optout);
-                    TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
 
-                    IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', UsageTotalText) then
-                        TotalJsonMgt.GetStringPropertyValueByName('total', UsagesStagingRecLcl.total);
-                    UsagesStagingRecLcl.Insert(true);
+                    Clear(UsageidVarLcl);
+                    JsonMgt.GetStringPropertyValueByName('id', UsageidVarLcl);
+                    UsagesStagingRecLcl.Reset();
+                    UsagesStagingRecLcl.SetRange(id, UsageidVarLcl);
+                    if not UsagesStagingRecLcl.FindFirst() then begin
+                        UsagesStagingRecLcl.Init();
+                        JsonMgt.GetStringPropertyValueByName('id', UsagesStagingRecLcl.id);
+                        JsonMgt.GetStringPropertyValueByName('account_id', UsagesStagingRecLcl.account_id);
+                        JsonMgt.GetStringPropertyValueByName('provider', UsagesStagingRecLcl.provider);
+                        JsonMgt.GetStringPropertyValueByName('bin', UsagesStagingRecLcl.bin);
+                        JsonMgt.GetStringPropertyValueByName('npi', UsagesStagingRecLcl.npi);
+                        JsonMgt.GetStringPropertyValueByName('brand', UsagesStagingRecLcl.brand);
+                        JsonMgt.GetStringPropertyValueByName('ndc', UsagesStagingRecLcl.ndc);
+                        JsonMgt.GetStringPropertyValueByName('drug_name', UsagesStagingRecLcl.drug_name);
+                        JsonMgt.GetStringPropertyValueByName('dosage', UsagesStagingRecLcl.dosage);
+                        JsonMgt.GetStringPropertyValueByName('extra', UsagesStagingRecLcl.extra);
+                        JsonMgt.GetStringPropertyValueByName('price', UsagesStagingRecLcl.price);
+                        JsonMgt.GetStringPropertyValueByName('quantity', UsagesStagingRecLcl.quantity);
+                        JsonMgt.GetStringPropertyValueByName('created_at', UsagesStagingRecLcl.created_at);
+                        JsonMgt.GetStringPropertyValueByName('member_id', UsagesStagingRecLcl.member_id);
+                        JsonMgt.GetStringPropertyValueByName('group_id', UsagesStagingRecLcl.group_id);
+                        JsonMgt.GetStringPropertyValueByName('email', UsagesStagingRecLcl.email);
+                        JsonMgt.GetStringPropertyValueByName('phone', UsagesStagingRecLcl.phone);
+                        JsonMgt.GetStringPropertyValueByName('age_range', UsagesStagingRecLcl.age_range);
+                        JsonMgt.GetStringPropertyValueByName('ethnicity', UsagesStagingRecLcl.ethnicity);
+                        JsonMgt.GetStringPropertyValueByName('sex', UsagesStagingRecLcl.sex);
+                        JsonMgt.GetStringPropertyValueByName('first_name', UsagesStagingRecLcl.first_name);
+                        JsonMgt.GetStringPropertyValueByName('last_name', UsagesStagingRecLcl.last_name);
+                        JsonMgt.GetStringPropertyValueByName('account_zip', UsagesStagingRecLcl.account_zip);
+                        JsonMgt.GetStringPropertyValueByName('group_name', UsagesStagingRecLcl.group_name);
+                        JsonMgt.GetStringPropertyValueByName('peo_company', UsagesStagingRecLcl.peo_company);
+                        JsonMgt.GetStringPropertyValueByName('peo_id', UsagesStagingRecLcl.peo_id);
+                        JsonMgt.GetStringPropertyValueByName('privacy_optout', UsagesStagingRecLcl.privacy_optout);
+                        TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
+
+                        IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', UsageTotalText) then
+                            TotalJsonMgt.GetStringPropertyValueByName('total', UsagesStagingRecLcl.total);
+                        UsagesStagingRecLcl.Insert(true);
+                    end;
                 end;
                 CMRXSetupRecLcl."Usages Staging Last Sync" := CurrentDateTime;
                 CMRXSetupRecLcl.Modify();

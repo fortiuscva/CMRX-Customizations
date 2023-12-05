@@ -45,17 +45,20 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Accounts Staging Last Sync field.';
+                    Editable = false;
                 }
 
                 field("Group Staging Last Sync"; Rec."Group Staging Last Sync")
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Group Staging Last Sync field.';
+                    Editable = false;
                 }
                 field("Peos Staging Last Sync"; Rec."Peos Staging Last Sync")
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Peos Staging Last Sync field.';
+                    Editable = false;
                 }
                 field("Usages Staging Last Sync"; Rec."Usages Staging Last Sync")
                 {
@@ -66,14 +69,17 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the Contact Staging Last Sync field.';
+                    Editable = false;
                 }
                 field("Brokers Staging Last Sync"; rec."Brokers Staging Last Sync")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
                 field("Salesperson Staging Last Sync"; rec."Salesperson Staging Last Sync")
                 {
                     ApplicationArea = all;
+                    Editable = false;
                 }
             }
         }
