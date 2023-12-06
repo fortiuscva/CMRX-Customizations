@@ -26,7 +26,8 @@ codeunit 50001 "CRX Process Staging Data"
                 PeosStagingRecLcl.Modify();
                 Commit();
             until PeosStagingRecLcl.Next() = 0;
-        Message('Processed Successfully!');
+        if GuiAllowed then
+            Message('Processed Successfully!');
     end;
 
     procedure ProcessGroupsStaging(var GroupsStagingRecPar: Record "CRX Groups Staging")
@@ -50,7 +51,8 @@ codeunit 50001 "CRX Process Staging Data"
                 GroupsStagingRecLcl.Modify();
                 Commit();
             until GroupsStagingRecLcl.Next() = 0;
-        Message('Processed Successfully!');
+        if GuiAllowed then
+            Message('Processed Successfully!');
     end;
 
     procedure ProcessAccountStaging(var AccountsStagingRecPar: Record "CRX Accounts Staging")
@@ -74,7 +76,8 @@ codeunit 50001 "CRX Process Staging Data"
                 AccountsStagingRecLcl.Modify();
                 Commit();
             until AccountsStagingRecLcl.Next() = 0;
-        Message('Processed Successfully!');
+        if GuiAllowed then
+            Message('Processed Successfully!');
     end;
 
     procedure ProcessBrokerStaging(var BrokersStagingRecPar: Record "CRX Brokers Staging")
@@ -98,7 +101,8 @@ codeunit 50001 "CRX Process Staging Data"
                 BrokersStagingRecLcl.Modify();
                 Commit();
             until BrokersStagingRecLcl.Next() = 0;
-        Message('Processed Successfully!');
+        if GuiAllowed then
+            Message('Processed Successfully!');
     end;
 
     procedure ProcessSalespersonStaging(Var SalespersonStagingRecPar: Record "CRX Salesperson Staging")
@@ -122,7 +126,8 @@ codeunit 50001 "CRX Process Staging Data"
                 SalespersonStagingRecLcl.Modify();
                 Commit();
             until SalespersonStagingRecLcl.Next() = 0;
-        Message('Processed Successfully!');
+        if GuiAllowed then
+            Message('Processed Successfully!');
     end;
 
     procedure ProcessContactStaging(Var ContactStagingRecPar: Record "CRX Contact Staging")
@@ -146,6 +151,7 @@ codeunit 50001 "CRX Process Staging Data"
                 ContactStagingRecLcl.Modify();
                 Commit();
             until ContactStagingRecLcl.Next() = 0;
-        Message('Processed Successfully!');
+        if GuiAllowed then
+            Message('Processed Successfully!');
     end;
 }
