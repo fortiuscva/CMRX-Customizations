@@ -24,10 +24,11 @@ codeunit 50000 "CRX Access Token Management"
         JsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
+        UTCVarLcl := '-05:00';
         CMRXSetupRecLcl.Get();
 
         if CMRXSetupRecLcl."Accounts Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Accounts Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Accounts Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+            URLVarLcl := CMRXSetupRecLcl."Accounts Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Accounts Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
         else
             URLVarLcl := CMRXSetupRecLcl."Accounts Staging URL";
 
@@ -95,10 +96,11 @@ codeunit 50000 "CRX Access Token Management"
         JsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
+        UTCVarLcl := '-05:00';
         CMRXSetupRecLcl.Get();
 
         if CMRXSetupRecLcl."Group Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Group Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Group Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+            URLVarLcl := CMRXSetupRecLcl."Group Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Group Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
         else
             URLVarLcl := CMRXSetupRecLcl."Group Staging URL";
 
@@ -162,10 +164,11 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
+        UTCVarLcl := '-05:00';
         CMRXSetupRecLcl.Get();
 
         if CMRXSetupRecLcl."Peos Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Peos Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Peos Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+            URLVarLcl := CMRXSetupRecLcl."Peos Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Peos Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
         else
             URLVarLcl := CMRXSetupRecLcl."Peos Staging URL";
 
@@ -233,10 +236,11 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
+        UTCVarLcl := '-05:00';
         CMRXSetupRecLcl.Get();
 
         if CMRXSetupRecLcl."Usages Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Usages Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Usages Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+            URLVarLcl := CMRXSetupRecLcl."Usages Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Usages Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
         else
             URLVarLcl := CMRXSetupRecLcl."Usages Staging URL";
 
@@ -329,10 +333,11 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
+        UTCVarLcl := '-05:00';
         CMRXSetupRecLcl.Get();
 
         if CMRXSetupRecLcl."Contact Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Contact Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Contact Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+            URLVarLcl := CMRXSetupRecLcl."Contact Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Contact Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
         else
             URLVarLcl := CMRXSetupRecLcl."Contact Staging URL";
 
@@ -397,10 +402,11 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
+        UTCVarLcl := '-05:00';
         CMRXSetupRecLcl.Get();
 
         if CMRXSetupRecLcl."Brokers Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Brokers Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Brokers Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+            URLVarLcl := CMRXSetupRecLcl."Brokers Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Brokers Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
         else
             URLVarLcl := CMRXSetupRecLcl."Brokers Staging URL";
 
@@ -464,10 +470,11 @@ codeunit 50000 "CRX Access Token Management"
         TotalJsonMgt: Codeunit "JSON Management";
         i: Integer;
     begin
+        UTCVarLcl := '-05:00';
         CMRXSetupRecLcl.Get();
 
         if CMRXSetupRecLcl."Salesperson Staging Last Sync" <> 0DT then
-            URLVarLcl := CMRXSetupRecLcl."Salesperson Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Salesperson Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>')
+            URLVarLcl := CMRXSetupRecLcl."Salesperson Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Salesperson Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
         else
             URLVarLcl := CMRXSetupRecLcl."Salesperson Staging URL";
 
@@ -591,4 +598,5 @@ codeunit 50000 "CRX Access Token Management"
     var
         AccessToken: Record "CRX Access Token";
         CMRXSetupRecLcl: Record "CRX Setup";
+        UTCVarLcl: Text;
 }
