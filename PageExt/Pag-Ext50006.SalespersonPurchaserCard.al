@@ -9,10 +9,11 @@ pageextension 50006 "CRX Salesperson/Purchaser Card" extends "Salesperson/Purcha
                 ApplicationArea = all;
                 ToolTip = 'Specifies the value of Signed Account Count';
             }
-            field("CRX Employee Affiliate Id"; rec."CRX Employee Affiliate Id")
+            field("CRX Affiliated Employees"; rec."CRX Affiliated Employees")
             {
                 ApplicationArea = all;
-                ToolTip = 'Specifies the value of Employee Affiliate Id';
+                ToolTip = 'Specifies the value of Affiliated Employees';
+                Visible = false;
             }
         }
     }

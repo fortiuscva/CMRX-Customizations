@@ -8,9 +8,9 @@ tableextension 50012 "CRX Salesperson/Purchaser" extends "Salesperson/Purchaser"
             DataClassification = CustomerContent;
             Editable = false;
         }
-        field(50001; "CRX Employee Affiliate Id"; Integer)
+        field(50001; "CRX Affiliated Employees"; Integer)
         {
-            Caption = 'Employee Affiliate Id';
+            Caption = 'Affiliated Employees';
             FieldClass = FlowField;
             CalcFormula = count(Employee where("CRX Affiliate Id" = field(Code)));
             Editable = false;
