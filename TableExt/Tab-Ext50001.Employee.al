@@ -24,5 +24,10 @@ tableextension 50001 "CRX Employee" extends Employee
             FieldClass = FlowField;
             CalcFormula = count("CRX Usages Staging" where(account_id = field("No.")));
         }
+        field(50008; "CRX Affiliate Id"; Text[250])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Affiliate Id';
+        }
     }
 }

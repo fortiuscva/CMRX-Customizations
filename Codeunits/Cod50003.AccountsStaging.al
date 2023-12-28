@@ -22,6 +22,7 @@ codeunit 50003 "CRX Accounts Staging"
                 EmployeeRecLcl.Gender := EmployeeRecLcl.Gender::Female;
         EmployeeRecLcl."CRX Ethnicity" := Rec.ethnicity;
         EmployeeRecLcl."CRX Age_range" := Rec.age_range;
+        EmployeeRecLcl."CRX Affiliate Id" := rec.affiliate_id;
 
 
         // if not CustomerRecLcl.get(Rec.group_id) then

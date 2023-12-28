@@ -46,6 +46,11 @@ page 50009 "CRX Salesperson Staging"
                     ApplicationArea = all;
                     Editable = false;
                 }
+                field("CRX signed_account_Count"; rec.signed_account_Count)
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of signed_account_Count';
+                }
                 field(created_at; Rec.created_at)
                 {
                     ToolTip = 'Specifies the value of the created_at field.';

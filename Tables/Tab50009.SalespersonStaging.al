@@ -37,6 +37,10 @@ table 50009 "CRX Salesperson Staging"
         {
             Caption = 'total';
         }
+        field(9; signed_account_Count; text[250])
+        {
+            Caption = 'signed_account_Count';
+        }
         field(35; Processed; Boolean)
         {
             DataClassification = ToBeClassified;

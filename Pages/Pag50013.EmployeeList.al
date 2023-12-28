@@ -1,7 +1,7 @@
 page 50013 "CRX Employee List"
 {
     ApplicationArea = All;
-    Caption = 'Employees';
+    Caption = 'CRX Employees';
     CardPageID = "Employee Card";
     Editable = false;
     PageType = List;
@@ -131,6 +131,10 @@ page 50013 "CRX Employee List"
                     ApplicationArea = all;
                 }
                 field("CRX Usages"; rec."CRX Usages")
+                {
+                    ApplicationArea = all;
+                }
+                field("CRX Affiliate Id"; rec."CRX Affiliate Id")
                 {
                     ApplicationArea = all;
                 }
