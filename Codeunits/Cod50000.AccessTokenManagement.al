@@ -505,6 +505,7 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('username', SalespersonStagingRecLcl.username);
                     JsonMgt.GetStringPropertyValueByName('name', SalespersonStagingRecLcl.name);
                     JsonMgt.GetStringPropertyValueByName('email', SalespersonStagingRecLcl.email);
+                    JsonMgt.GetStringPropertyValueByName('accounts_count', SalespersonStagingRecLcl.Signed_account_Count);
                     JsonMgt.GetStringPropertyValueByName('created_at', SalespersonStagingRecLcl.created_at);
                     JsonMgt.GetStringPropertyValueByName('updated_at', SalespersonStagingRecLcl.updated_at);
 

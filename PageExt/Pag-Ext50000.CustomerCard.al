@@ -9,7 +9,7 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
                 ApplicationArea = all;
                 Editable = false;
             }
-            field("CRX Group Id"; rec."CRX Broker ID")
+            field("CRX Broker Id"; rec."CRX Broker ID")
             {
                 ApplicationArea = all;
                 Editable = false;

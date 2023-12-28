@@ -8,6 +8,7 @@ codeunit 50007 "CRX Salesperson Staging"
         SalesPersonRecGbl.Validate(code, Rec.id);
         SalesPersonRecGbl.Validate(Name, rec.name);
         SalesPersonRecGbl."E-Mail" := rec.email;
+        SalesPersonRecGbl."CRX Signed Account Count" := rec.Signed_account_Count;
         if not SalesPersonRecGbl.Insert() then
             SalesPersonRecGbl.Modify();
     end;
