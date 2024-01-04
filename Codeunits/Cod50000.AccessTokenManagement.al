@@ -533,7 +533,8 @@ codeunit 50000 "CRX Access Token Management"
         ResponseTextVarLcl: Text;
     begin
 
-        URLVarLcl := 'https://comparemedsrx.codebru.com' + '/exporter/token';
+        CMRXSetupRecLcl.Get();
+        URLVarLcl := CMRXSetupRecLcl."Base URL" + '/exporter/token';
 
         RawTextVarLcl := GenerateJsonRequest();
         contentVarLcl.WriteFrom(RawTextVarLcl);
