@@ -68,6 +68,10 @@ table 50007 "CRX Setup"
         {
             Caption = 'Salesperson Staging URL';
         }
+        field(16; "Base URL"; Text[1024])
+        {
+            Caption = 'Base URL';
+        }
     }
     keys
     {

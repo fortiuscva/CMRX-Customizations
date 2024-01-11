@@ -13,6 +13,10 @@ page 50007 "CRX Setup"
             group(General)
             {
                 Caption = 'Integration';
+                field("Base URL"; rec."Base URL")
+                {
+                    ApplicationArea = all;
+                }
                 field("Accounts Staging URL"; rec."Accounts Staging URL")
                 {
                     ApplicationArea = all;
