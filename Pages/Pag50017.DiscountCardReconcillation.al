@@ -94,6 +94,11 @@ page 50017 "Discount Card Reconcillation"
                     ToolTip = 'Specifies the value of the Price field.';
                     StyleExpr = StyleTxt;
                 }
+                field("Drug Name"; rec."Drug Name")
+                {
+                    ToolTip = 'Specifies the Drug Name field.';
+                    StyleExpr = StyleTxt;
+                }
                 field("Compare Status"; Rec."Compare Status")
                 {
                     Visible = false;
