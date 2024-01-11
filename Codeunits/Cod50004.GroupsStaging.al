@@ -18,6 +18,8 @@ codeunit 50004 "CRX Groups Staging"
         end;
         CustomerRecLcl."CRX Broker ID" := rec.broker_id;
         CustomerRecLcl."CRX Group" := true;
+        CustomerRecLcl.Validate("Customer Posting Group", 'DOMESTIC');
+        CustomerRecLcl.Validate("Gen. Bus. Posting Group", 'DOMESTIC');
 
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();
