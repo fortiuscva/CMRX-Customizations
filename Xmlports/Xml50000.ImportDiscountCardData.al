@@ -30,6 +30,9 @@ xmlport 50000 "CRX Import Discount Card Data"
                 fieldelement(Price; CRXDiscountCardData.Price)
                 {
                 }
+                fieldelement(drug_name; CRXDiscountCardData."Drug Name")
+                {
+                }
                 trigger OnAfterGetRecord()
                 begin
                     NoofRecordsVarGbl += 1;

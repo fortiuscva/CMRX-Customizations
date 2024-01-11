@@ -36,6 +36,10 @@ page 50016 "CRX Discount Card Data"
                 {
                     ToolTip = 'Specifies the value of the Price field.';
                 }
+                field("Drug Name"; rec."Drug Name")
+                {
+                    ToolTip = 'Specifies the Drug Name field.';
+                }
                 field("Import DateTime"; Rec."Import DateTime")
                 {
                     ToolTip = 'Specifies the value of the Import DateTime field.';

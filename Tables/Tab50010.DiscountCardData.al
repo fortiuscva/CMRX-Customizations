@@ -45,6 +45,10 @@ table 50010 "CRX Discount Card Data"
         {
             Caption = 'Compare  Date & Time';
         }
+        field(12; "Drug Name"; text[250])
+        {
+            Caption = 'Drug Name';
+        }
     }
     keys
     {
