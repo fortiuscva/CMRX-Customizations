@@ -12,6 +12,8 @@ codeunit 50006 "CRX Broker Staging"
         //CustomerRecLcl.Validate(Name, rec.company);
         CustomerRecLcl."CRX Company" := rec.company;
         CustomerRecLcl."CRX Broker" := true;
+        CustomerRecLcl.Validate("Customer Posting Group", 'DOMESTIC');
+        CustomerRecLcl.Validate("Gen. Bus. Posting Group", 'DOMESTIC');
 
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();

@@ -10,6 +10,8 @@ codeunit 50002 "CRX Peos Staging"
         CustomerRecLcl.Validate("No.", Rec.id);
         CustomerRecLcl.Validate(Name, Rec.company);
         CustomerRecLcl."CRX Peo" := true;
+        CustomerRecLcl.Validate("Customer Posting Group", 'DOMESTIC');
+        CustomerRecLcl.Validate("Gen. Bus. Posting Group", 'DOMESTIC');
 
         if not CustomerRecLcl.Insert() then
             CustomerRecLcl.Modify();
