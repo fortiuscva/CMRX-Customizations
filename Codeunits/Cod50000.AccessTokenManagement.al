@@ -597,6 +597,80 @@ codeunit 50000 "CRX Access Token Management"
         GetSalespersonData();
     end;
 
+    procedure TestConnection()
+    var
+        CMRXSetupRec: Record "CRX Setup";
+        APIConnecttionLogRecLcl: Record "CRX API Connection Log";
+        CRXAPIConnetionLogVarLcl: Page "CRX API Connection Log";
+    begin
+        APIConnecttionLogRecLcl.DeleteAll();
+        CMRXSetupRec.Get();
+        APIConnection(CMRXSetupRec.FieldCaption("Accounts Staging URL"), CMRXSetupRec."Accounts Staging URL", CMRXSetupRec."Accounts Staging Last Sync");
+        APIConnection(CMRXSetupRec.FieldCaption("Group Staging URL"), CMRXSetupRec."Group Staging URL", CMRXSetupRec."Group Staging Last Sync");
+        APIConnection(CMRXSetupRec.FieldCaption("Peos Staging URL"), CMRXSetupRec."Peos Staging URL", CMRXSetupRec."Peos Staging Last Sync");
+        APIConnection(CMRXSetupRec.FieldCaption("Usages Staging URL"), CMRXSetupRec."Usages Staging URL", CMRXSetupRec."Usages Staging Last Sync");
+        APIConnection(CMRXSetupRec.FieldCaption("Contact Staging URL"), CMRXSetupRec."Contact Staging URL", CMRXSetupRec."Contact Staging Last Sync");
+        APIConnection(CMRXSetupRec.FieldCaption("Brokers Staging URL"), CMRXSetupRec."Brokers Staging URL", CMRXSetupRec."Brokers Staging Last Sync");
+        APIConnection(CMRXSetupRec.FieldCaption("Salesperson Staging URL"), CMRXSetupRec."Salesperson Staging URL", CMRXSetupRec."Salesperson Staging Last Sync");
+
+        APIConnecttionLogRecLcl.Reset();
+        IF APIConnecttionLogRecLcl.FindSet() then begin
+            Commit();
+            CRXAPIConnetionLogVarLcl.RunModal()
+        end else
+            Message('All API are connected successfully.');
+
+
+    end;
+
+    procedure APIConnection(StagingCaption: text[1024]; StagingURL: text[1024]; LastSync: DateTime)
+    var
+        APIConnecttionLogRecLcl: Record "CRX API Connection Log";
+        NewAPIConnecttionLogRecLcl: Record "CRX API Connection Log";
+        ClientVarLcl: HttpClient;
+        contentVarLcl: HttpContent;
+        HeaderVarLcl: HttpHeaders;
+        RequestVarLcl: HttpRequestMessage;
+        ResponseVarLcl: HttpResponseMessage;
+        AcccountDetailsTxt: Text;
+        AccountJsonText: Text;
+        URLVarLcl: Text;
+        ResponseTextVarLcl: Text;
+        JArray: JsonArray;
+        Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        i: Integer;
+    begin
+        UTCVarLcl := '-05:00';
+
+        if LastSync <> 0DT then
+            URLVarLcl := StagingURL + '&updated_after=' + Format(LastSync, 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
+        else
+            URLVarLcl := StagingURL;
+
+        AccessToken.FindFirst();
+        contentVarLcl.GetHeaders(HeaderVarLcl);
+        HeaderVarLcl.Remove('Content-Type');
+        HeaderVarLcl.Add('Content-Type', 'application/json');
+        ClientVarLcl.DefaultRequestHeaders.Clear();
+        ClientVarLcl.DefaultRequestHeaders.Add('Authorization', 'Bearer ' + AccessToken."Access Token");
+        RequestVarLcl.Method := 'GET';
+        RequestVarLcl.SetRequestUri(URLVarLcl);
+        RequestVarLcl.Content(contentVarLcl);
+        ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
+        ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
+        if not ResponseVarLcl.IsSuccessStatusCode() THEN begin
+            APIConnecttionLogRecLcl.Reset();
+            IF APIConnecttionLogRecLcl.FindLast() THEN;
+
+            NewAPIConnecttionLogRecLcl.Init();
+            NewAPIConnecttionLogRecLcl."Entry No." := APIConnecttionLogRecLcl."Entry No." + 1;
+            NewAPIConnecttionLogRecLcl."Error Message" := StagingCaption + ':' + CopyStr(ResponseTextVarLcl, 1, 1024);
+            NewAPIConnecttionLogRecLcl.Insert();
+        end;
+    end;
 
     var
         AccessToken: Record "CRX Access Token";

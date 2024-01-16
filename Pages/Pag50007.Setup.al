@@ -1,7 +1,7 @@
 page 50007 "CRX Setup"
 {
     ApplicationArea = All;
-    Caption = 'CRX Setup';
+    Caption = 'CMRX Setup';
     PageType = Card;
     SourceTable = "CRX Setup";
     UsageCategory = Administration;
@@ -88,7 +88,26 @@ page 50007 "CRX Setup"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action("Test Connection")
+            {
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedCategory = Process;
+                Image = Process;
 
+                trigger OnAction()
+                var
+                    APIAccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
+                begin
+                    APIAccessTokenMgtCULcl.TestConnection();
+                end;
+            }
+        }
+    }
     trigger OnOpenPage()
     begin
         Rec.Reset();
