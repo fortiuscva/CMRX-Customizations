@@ -552,7 +552,8 @@ codeunit 50000 "CRX Access Token Management"
             AccessToken.FindFirst();
             AccessToken."Access Token" := GetValueasText(JtokenVarLcl, 'token');
             AccessToken.Modify();
-        end;
+        end else
+            error('%1', ResponseVarLcl.ReasonPhrase);
     end;
 
     procedure GenerateJsonRequest(): Text
