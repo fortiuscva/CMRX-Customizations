@@ -235,6 +235,41 @@ page 50017 "Discount Card Reconcillation"
                     Message('Records Processed successfully.');
                 end;
             }
+            action("CRX Usages")
+            {
+                ApplicationArea = all;
+                Promoted = true;
+                PromotedIsBig = true;
+                Image = Process;
+                PromotedCategory = Process;
+                Caption = 'Usages';
+
+                trigger OnAction()
+                var
+                    DiscountCardDataRecLcl: Record "CRX Discount Card Data";
+                    UsagesRecLcl: Record "CRX Usages Staging";
+                    TempUsagesRecLcl: Record "CRX Usages Staging" temporary;
+                begin
+                    Clear(DiscountCardDataRecLcl);
+                    CurrPage.SetSelectionFilter(DiscountCardDataRecLcl);
+
+                    if DiscountCardDataRecLcl.FindSet() then
+                        repeat
+                            UsagesRecLcl.Reset();
+                            UsagesRecLcl.SetRange(bin, DiscountCardDataRecLcl.BIN);
+                            UsagesRecLcl.SetRange(npi, DiscountCardDataRecLcl."Prescriber NPI");
+                            UsagesRecLcl.SetRange(ndc, DiscountCardDataRecLcl.NDC);
+                            if UsagesRecLcl.FindSet() then
+                                repeat
+                                    TempUsagesRecLcl.Init();
+                                    TempUsagesRecLcl.TransferFields(UsagesRecLcl);
+                                    TempUsagesRecLcl.Insert();
+                                until UsagesRecLcl.Next() = 0;
+                        until DiscountCardDataRecLcl.Next() = 0;
+
+                    page.RunModal(page::"CRX Usages Selection", TempUsagesRecLcl);
+                end;
+            }
         }
     }
     trigger OnAfterGetRecord()
