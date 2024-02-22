@@ -16,6 +16,10 @@ page 50016 "CRX Discount Card Data"
                 {
                     ToolTip = 'Specifies the value of the BIN field.';
                 }
+                field("Member ID"; rec."Member ID")
+                {
+                    ToolTip = 'Specifies the value of the Member ID field.';
+                }
                 field("DATE Submitted"; Rec."DATE Submitted")
                 {
                     ToolTip = 'Specifies the value of the DATE Submitted field.';

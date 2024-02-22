@@ -1,7 +1,7 @@
-page 50017 "Discount Card Reconcillation"
+page 50017 "Discount Card Reconciliation"
 {
     ApplicationArea = All;
-    Caption = 'Discount Card Data Reconcillation';
+    Caption = 'Discount Card Data Reconciliation';
     PageType = Worksheet;
     SourceTable = "CRX Discount Card Data";
     UsageCategory = Tasks;
@@ -15,6 +15,15 @@ page 50017 "Discount Card Reconcillation"
             {
                 Caption = 'Options';
                 field("Bin Filter"; BinFilterVarGbl)
+                {
+                    ApplicationArea = all;
+
+                    trigger OnValidate()
+                    begin
+                        ValidateFilters();
+                    end;
+                }
+                field("Member ID Filter"; MemberIDFilterVarGbl)
                 {
                     ApplicationArea = all;
 
@@ -68,6 +77,10 @@ page 50017 "Discount Card Reconcillation"
                 {
                     ToolTip = 'Specifies the value of the BIN field.';
                     StyleExpr = StyleTxt;
+                }
+                field("Member ID"; rec."Member ID")
+                {
+                    ToolTip = 'Specifies the value of the Member ID field.';
                 }
                 field("DATE Submitted"; Rec."DATE Submitted")
                 {
@@ -184,6 +197,8 @@ page 50017 "Discount Card Reconcillation"
                         DiscountCardDataRecLcl.SetRange("Compare Status", RecordStatusVarGbl);
                     if DateFilterVarGbl <> '' then
                         DiscountCardDataRecLcl.SetFilter("DATE Submitted", DateFilterVarGbl);
+                    if MemberIDFilterVarGbl <> '' then
+                        DiscountCardDataRecLcl.SetFilter("Member ID", MemberIDFilterVarGbl);
                     if DiscountCardDataRecLcl.FindSet() then
                         repeat
                             ErrorDetailsRecLcl.Reset();
@@ -193,8 +208,9 @@ page 50017 "Discount Card Reconcillation"
 
                             UsagesStagingRecLcl.Reset();
                             UsagesStagingRecLcl.SetRange(bin, DiscountCardDataRecLcl.BIN);
-                            UsagesStagingRecLcl.SetRange(npi, DiscountCardDataRecLcl."Prescriber NPI");
-                            UsagesStagingRecLcl.SetRange(ndc, DiscountCardDataRecLcl.NDC);
+                            // UsagesStagingRecLcl.SetRange(npi, DiscountCardDataRecLcl."Prescriber NPI");
+                            // UsagesStagingRecLcl.SetRange(ndc, DiscountCardDataRecLcl.NDC);
+                            UsagesStagingRecLcl.SetRange(member_id, DiscountCardDataRecLcl."Member ID");
                             if UsagesStagingRecLcl.FindFirst() then begin
                                 if (UsagesStagingRecLcl.quantity <> DiscountCardDataRecLcl.Quantity) or (UsagesStagingRecLcl.price <> DiscountCardDataRecLcl.Price) then begin
                                     if UsagesStagingRecLcl.quantity <> DiscountCardDataRecLcl.Quantity then begin
@@ -257,8 +273,9 @@ page 50017 "Discount Card Reconcillation"
                         repeat
                             UsagesRecLcl.Reset();
                             UsagesRecLcl.SetRange(bin, DiscountCardDataRecLcl.BIN);
-                            UsagesRecLcl.SetRange(npi, DiscountCardDataRecLcl."Prescriber NPI");
-                            UsagesRecLcl.SetRange(ndc, DiscountCardDataRecLcl.NDC);
+                            // UsagesRecLcl.SetRange(npi, DiscountCardDataRecLcl."Prescriber NPI");
+                            // UsagesRecLcl.SetRange(ndc, DiscountCardDataRecLcl.NDC);
+                            UsagesRecLcl.SetRange(member_id, DiscountCardDataRecLcl."Member ID");
                             if UsagesRecLcl.FindSet() then
                                 repeat
                                     TempUsagesRecLcl.Init();
@@ -282,6 +299,7 @@ page 50017 "Discount Card Reconcillation"
         NPIFilterVarGbl: Text;
         NDCFilterVarGbl: Text;
         DateFilterVarGbl: Text;
+        MemberIDFilterVarGbl: Text;
         StyleTxt: Text;
         RecordStatusVarGbl: Enum "CRX Show Details";
 
@@ -292,6 +310,12 @@ page 50017 "Discount Card Reconcillation"
             Rec.SetFilter(BIN, BinFilterVarGbl)
         else
             rec.SetRange(BIN);
+
+        if MemberIDFilterVarGbl <> '' then
+            rec.SetFilter("Member ID", MemberIDFilterVarGbl)
+        else
+            rec.SetRange("Member ID");
+
         if NPIFilterVarGbl <> '' then
             Rec.SetFilter("Prescriber NPI", NPIFilterVarGbl)
         else
