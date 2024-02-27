@@ -49,6 +49,10 @@ table 50010 "CRX Discount Card Data"
         {
             Caption = 'Drug Name';
         }
+        field(14; "Member ID"; Text[250])
+        {
+            Caption = 'Member ID';
+        }
     }
     keys
     {

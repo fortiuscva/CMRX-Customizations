@@ -33,6 +33,8 @@ xmlport 50000 "CRX Import Discount Card Data"
                 fieldelement(drug_name; CRXDiscountCardData."Drug Name")
                 {
                 }
+                fieldelement(memberId; CRXDiscountCardData."Member ID")
+                { }
                 trigger OnAfterGetRecord()
                 begin
                     NoofRecordsVarGbl += 1;
