@@ -211,6 +211,7 @@ page 50017 "Discount Card Reconciliation"
                             // UsagesStagingRecLcl.SetRange(npi, DiscountCardDataRecLcl."Prescriber NPI");
                             // UsagesStagingRecLcl.SetRange(ndc, DiscountCardDataRecLcl.NDC);
                             UsagesStagingRecLcl.SetRange(member_id, DiscountCardDataRecLcl."Member ID");
+                            UsagesStagingRecLcl.SetRange(Submitted_at, DiscountCardDataRecLcl."DATE Submitted");
                             if UsagesStagingRecLcl.FindFirst() then begin
                                 if (UsagesStagingRecLcl.quantity <> DiscountCardDataRecLcl.Quantity) or (UsagesStagingRecLcl.price <> DiscountCardDataRecLcl.Price) then begin
                                     if UsagesStagingRecLcl.quantity <> DiscountCardDataRecLcl.Quantity then begin

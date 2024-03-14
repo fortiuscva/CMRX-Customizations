@@ -5,7 +5,7 @@ page 50004 "CRX Usages Staging"
     PageType = List;
     SourceTable = "CRX Usages Staging";
     UsageCategory = Lists;
-    DeleteAllowed = false;
+    //DeleteAllowed = false;
     InsertAllowed = false;
     layout
     {
@@ -175,6 +175,10 @@ page 50004 "CRX Usages Staging"
                     ApplicationArea = all;
                     ToolTip = 'Specifies the value of the peo_id field.';
                     Editable = false;
+                }
+                field(Submitted_at; Rec.Submitted_at)
+                {
+                    ToolTip = 'Specifies the value of the Submitted_at field.';
                 }
                 field(total; rec.total)
                 {
