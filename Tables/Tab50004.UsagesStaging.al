@@ -131,6 +131,10 @@ table 50004 "CRX Usages Staging"
         {
             Caption = 'broker_id';
         }
+        field(32; Submitted_at; Text[250])
+        {
+            Caption = 'Submitted_at';
+        }
         field(35; Processed; Boolean)
         {
             DataClassification = ToBeClassified;

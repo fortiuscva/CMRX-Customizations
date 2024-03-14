@@ -299,6 +299,7 @@ codeunit 50000 "CRX Access Token Management"
                         JsonMgt.GetStringPropertyValueByName('peo_company', UsagesStagingRecLcl.peo_company);
                         JsonMgt.GetStringPropertyValueByName('peo_id', UsagesStagingRecLcl.peo_id);
                         JsonMgt.GetStringPropertyValueByName('privacy_optout', UsagesStagingRecLcl.privacy_optout);
+                        JsonMgt.GetStringPropertyValueByName('submitted_at', UsagesStagingRecLcl.Submitted_at);
                         TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
 
                         IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', UsageTotalText) then

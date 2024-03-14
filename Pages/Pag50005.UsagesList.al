@@ -133,6 +133,10 @@ page 50005 "CRX Usages List"
                 {
                     ToolTip = 'Specifies the value of the broker_id field.';
                 }
+                field(Submitted_at; Rec.Submitted_at)
+                {
+                    ToolTip = 'Specifies the value of the Submitted_at field.';
+                }
             }
         }
     }
