@@ -137,6 +137,10 @@ page 50005 "CRX Usages List"
                 {
                     ToolTip = 'Specifies the value of the Submitted_at field.';
                 }
+                field(Fee; rec.Fee)
+                {
+                    ToolTip = 'Specifies the value of the Fee';
+                }
             }
         }
     }

@@ -60,5 +60,37 @@ tableextension 50000 "CRX Customer" extends Customer
             DataClassification = customercontent;
             Editable = false;
         }
+        field(50010; "CRX Commission %"; Decimal)
+        {
+            Caption = 'Commission %';
+            DataClassification = customercontent;
+
+            trigger OnValidate()
+            var
+                UsagesRecLcl: Record "CRX Usages Staging";
+                FeeAmountVarLcl: Decimal;
+                SumFeeAmountVarLcl: Decimal;
+            begin
+                Clear(FeeAmountVarLcl);
+                Clear(SumFeeAmountVarLcl);
+                UsagesRecLcl.Reset();
+                UsagesRecLcl.SetRange(group_id, rec."No.");
+                UsagesRecLcl.SetRange(peo_id, rec."CRX Peos Id");
+                if UsagesRecLcl.FindSet() then
+                    repeat
+                        Evaluate(FeeAmountVarLcl, UsagesRecLcl.Fee);
+                        SumFeeAmountVarLcl += FeeAmountVarLcl;
+                    until UsagesRecLcl.Next() = 0;
+
+                if SumFeeAmountVarLcl <> 0 then
+                    rec."CRX Commission Amount" := SumFeeAmountVarLcl * rec."CRX Commission %";
+            end;
+        }
+        field(50011; "CRX Commission Amount"; Decimal)
+        {
+            Caption = 'Commission Amount';
+            DataClassification = customercontent;
+            Editable = false;
+        }
     }
 }

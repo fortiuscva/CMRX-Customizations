@@ -135,6 +135,10 @@ table 50004 "CRX Usages Staging"
         {
             Caption = 'Submitted_at';
         }
+        field(33; Fee; text[250])
+        {
+            Caption = 'Fee';
+        }
         field(35; Processed; Boolean)
         {
             DataClassification = ToBeClassified;
