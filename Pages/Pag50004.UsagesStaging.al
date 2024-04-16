@@ -180,6 +180,10 @@ page 50004 "CRX Usages Staging"
                 {
                     ToolTip = 'Specifies the value of the Submitted_at field.';
                 }
+                field(Fee; rec.Fee)
+                {
+                    ToolTip = 'Specifies the value of the Fee';
+                }
                 field(total; rec.total)
                 {
                     ApplicationArea = all;
