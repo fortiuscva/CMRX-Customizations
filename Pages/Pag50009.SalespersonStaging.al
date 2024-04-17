@@ -69,6 +69,18 @@ page 50009 "CRX Salesperson Staging"
                     ApplicationArea = all;
                     Editable = false;
                 }
+                field(Main_Distributor_ID; rec.Main_Distributor_ID)
+                {
+                    ToolTip = 'Main_Distributor_ID received in the Response';
+                    ApplicationArea = all;
+                    Editable = false;
+                }
+                field(Sub_Distributor_ID; rec.Sub_Distributor_ID)
+                {
+                    ToolTip = 'Sub_Distributor_ID received in the Response';
+                    ApplicationArea = all;
+                    Editable = false;
+                }
             }
         }
     }

@@ -41,6 +41,14 @@ table 50009 "CRX Salesperson Staging"
         {
             Caption = 'signed_account_Count';
         }
+        field(10; Main_Distributor_ID; text[250])
+        {
+            Caption = 'Main_Distributor_ID';
+        }
+        field(11; Sub_Distributor_ID; text[250])
+        {
+            Caption = 'Sub_Distributor_ID';
+        }
         field(35; Processed; Boolean)
         {
             DataClassification = ToBeClassified;

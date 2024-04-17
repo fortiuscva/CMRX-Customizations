@@ -510,7 +510,8 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('accounts_count', SalespersonStagingRecLcl.Signed_account_Count);
                     JsonMgt.GetStringPropertyValueByName('created_at', SalespersonStagingRecLcl.created_at);
                     JsonMgt.GetStringPropertyValueByName('updated_at', SalespersonStagingRecLcl.updated_at);
-
+                    JsonMgt.GetStringPropertyValueByName('', SalespersonStagingRecLcl.Main_Distributor_ID);
+                    JsonMgt.GetStringPropertyValueByName('', SalespersonStagingRecLcl.Sub_Distributor_ID);
                     TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
                     IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', SalespersonTotalText) then
                         TotalJsonMgt.GetStringPropertyValueByName('total', SalespersonStagingRecLcl.total);
