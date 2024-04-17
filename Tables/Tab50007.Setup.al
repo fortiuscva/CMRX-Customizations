@@ -72,6 +72,14 @@ table 50007 "CRX Setup"
         {
             Caption = 'Base URL';
         }
+        field(17; "Distributor URL"; Text[1024])
+        {
+            Caption = 'Distributor URL';
+        }
+        field(18; "Distributor Staging Last Sync"; DateTime)
+        {
+            Caption = 'Distributor Staging Last Sync';
+        }
     }
     keys
     {

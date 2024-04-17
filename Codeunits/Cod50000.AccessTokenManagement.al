@@ -510,13 +510,83 @@ codeunit 50000 "CRX Access Token Management"
                     JsonMgt.GetStringPropertyValueByName('accounts_count', SalespersonStagingRecLcl.Signed_account_Count);
                     JsonMgt.GetStringPropertyValueByName('created_at', SalespersonStagingRecLcl.created_at);
                     JsonMgt.GetStringPropertyValueByName('updated_at', SalespersonStagingRecLcl.updated_at);
-
+                    JsonMgt.GetStringPropertyValueByName('main_distributor_id', SalespersonStagingRecLcl.Main_Distributor_ID);
+                    JsonMgt.GetStringPropertyValueByName('sub_distributor_id', SalespersonStagingRecLcl.Sub_Distributor_ID);
                     TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
                     IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', SalespersonTotalText) then
                         TotalJsonMgt.GetStringPropertyValueByName('total', SalespersonStagingRecLcl.total);
                     SalespersonStagingRecLcl.Insert(true);
                 end;
                 CMRXSetupRecLcl."Salesperson Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
+            end;
+        end;
+    end;
+
+    Procedure GetDistributorData()
+    var
+        DistributorStagingRecLcl: Record "CRX Distributors Staging";
+        ClientVarLcl: HttpClient;
+        contentVarLcl: HttpContent;
+        HeaderVarLcl: HttpHeaders;
+        RequestVarLcl: HttpRequestMessage;
+        ResponseVarLcl: HttpResponseMessage;
+        DistributorDetailsTxt: Text;
+        DistributorJsonText: Text;
+        DistributorTotalText: Text;
+        URLVarLcl: Text;
+        ResponseTextVarLcl: Text;
+        JArray: JsonArray;
+        Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        TotalJsonMgt: Codeunit "JSON Management";
+        i: Integer;
+    begin
+        UTCVarLcl := '-05:00';
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Distributor Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Distributor URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Distributor Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
+        else
+            URLVarLcl := CMRXSetupRecLcl."Distributor URL";
+
+        AccessToken.FindFirst();
+        contentVarLcl.GetHeaders(HeaderVarLcl);
+        HeaderVarLcl.Remove('Content-Type');
+        HeaderVarLcl.Add('Content-Type', 'application/json');
+        ClientVarLcl.DefaultRequestHeaders.Clear();
+        ClientVarLcl.DefaultRequestHeaders.Add('Authorization', 'Bearer ' + AccessToken."Access Token");
+        RequestVarLcl.Method := 'GET';
+        RequestVarLcl.SetRequestUri(URLVarLcl);
+        RequestVarLcl.Content(contentVarLcl);
+        ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
+        ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
+        if ResponseVarLcl.IsSuccessStatusCode() THEN begin
+
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
+
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('distributor', DistributorJsonText) then begin
+                DistributorJsonText := DistributorJsonText;
+
+                ArrayJsonMgt.InitializeCollection(DistributorJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(DistributorDetailsTxt, i);
+                    JsonMgt.InitializeObject(DistributorDetailsTxt);
+                    DistributorStagingRecLcl.Init();
+                    JsonMgt.GetStringPropertyValueByName('id', DistributorStagingRecLcl.id);
+                    JsonMgt.GetStringPropertyValueByName('parent_id', DistributorStagingRecLcl.parent_id);
+                    JsonMgt.GetStringPropertyValueByName('tier', DistributorStagingRecLcl.tier);
+                    JsonMgt.GetStringPropertyValueByName('name', DistributorStagingRecLcl.name);
+                    JsonMgt.GetStringPropertyValueByName('email', DistributorStagingRecLcl.email);
+                    JsonMgt.GetStringPropertyValueByName('contact_name', DistributorStagingRecLcl.contact_name);
+                    JsonMgt.GetStringPropertyValueByName('contact_note', DistributorStagingRecLcl.contact_note);
+                    JsonMgt.GetStringPropertyValueByName('created_at', DistributorStagingRecLcl.created_at);
+                    JsonMgt.GetStringPropertyValueByName('updated_at', DistributorStagingRecLcl.updated_at);
+                    DistributorStagingRecLcl.Insert(true);
+                end;
+                CMRXSetupRecLcl."Distributor Staging Last Sync" := CurrentDateTime;
                 CMRXSetupRecLcl.Modify();
             end;
         end;
@@ -598,6 +668,7 @@ codeunit 50000 "CRX Access Token Management"
         GetContactData();
         GetUsagesData();
         GetSalespersonData();
+        GetDistributorData();
     end;
 
     procedure TestConnection()
@@ -615,6 +686,7 @@ codeunit 50000 "CRX Access Token Management"
         APIConnection(CMRXSetupRec.FieldCaption("Contact Staging URL"), CMRXSetupRec."Contact Staging URL", CMRXSetupRec."Contact Staging Last Sync");
         APIConnection(CMRXSetupRec.FieldCaption("Brokers Staging URL"), CMRXSetupRec."Brokers Staging URL", CMRXSetupRec."Brokers Staging Last Sync");
         APIConnection(CMRXSetupRec.FieldCaption("Salesperson Staging URL"), CMRXSetupRec."Salesperson Staging URL", CMRXSetupRec."Salesperson Staging Last Sync");
+        APIConnection(CMRXSetupRec.FieldCaption("Distributor URL"), CMRXSetupRec."Distributor URL", CMRXSetupRec."Distributor Staging Last Sync");
 
         APIConnecttionLogRecLcl.Reset();
         IF APIConnecttionLogRecLcl.FindSet() then begin
