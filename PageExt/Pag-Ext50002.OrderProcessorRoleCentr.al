@@ -120,6 +120,13 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         RunObject = Page "CRX Salesperson Staging";
                         ToolTip = 'Manage the Integration Data for Salesperson Staging';
                     }
+                    action("CRX Distributors Staging")
+                    {
+                        ApplicationArea = Location;
+                        Caption = 'Distributor Staging';
+                        RunObject = Page "CRX Distributors Staging";
+                        ToolTip = 'Manage the Integration Data for Distributor Staging';
+                    }
                     action("CRX Get Data(All API)")
                     {
                         ApplicationArea = all;

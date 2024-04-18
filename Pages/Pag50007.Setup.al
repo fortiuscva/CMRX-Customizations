@@ -45,6 +45,10 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                 }
+                field("Distributor URL"; rec."Distributor URL")
+                {
+                    ApplicationArea = all;
+                }
                 field("Accounts Staging Last Sync"; Rec."Accounts Staging Last Sync")
                 {
                     ApplicationArea = all;
@@ -81,6 +85,11 @@ page 50007 "CRX Setup"
                     Editable = false;
                 }
                 field("Salesperson Staging Last Sync"; rec."Salesperson Staging Last Sync")
+                {
+                    ApplicationArea = all;
+                    Editable = false;
+                }
+                field("Distributor Staging Last Sync"; rec."Distributor Staging Last Sync")
                 {
                     ApplicationArea = all;
                     Editable = false;

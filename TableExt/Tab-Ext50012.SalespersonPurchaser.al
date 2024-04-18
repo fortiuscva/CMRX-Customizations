@@ -17,12 +17,12 @@ tableextension 50012 "CRX Salesperson/Purchaser" extends "Salesperson/Purchaser"
         }
         field(50002; "CRX Main_Distributor_ID"; text[250])
         {
-            Caption = 'Main_Distributor_ID';
+            Caption = 'Main Distributor';
             Editable = false;
         }
         field(50003; "CRX Sub_Distributor_ID"; text[250])
         {
-            Caption = 'Sub_Distributor_ID';
+            Caption = 'Sub Distributor';
             Editable = false;
         }
     }

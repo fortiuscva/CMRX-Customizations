@@ -15,17 +15,25 @@ pageextension 50006 "CRX Salesperson/Purchaser Card" extends "Salesperson/Purcha
                 ToolTip = 'Specifies the value of Affiliated Employees';
                 Visible = false;
             }
-            field("CRX Main_Distributor_ID"; rec."CRX Main_Distributor_ID")
+
+        }
+        addafter(Invoicing)
+        {
+            group("CRX Distributors")
             {
-                ToolTip = 'Main_Distributor_ID received in the Response';
-                ApplicationArea = all;
-                Editable = false;
-            }
-            field("CRX Sub_Distributor_ID"; rec."CRX Sub_Distributor_ID")
-            {
-                ToolTip = 'Sub_Distributor_ID received in the Response';
-                ApplicationArea = all;
-                Editable = false;
+                Caption = 'Distributors';
+                field("CRX Main_Distributor_ID"; rec."CRX Main_Distributor_ID")
+                {
+                    ToolTip = 'Main_Distributor_ID received in the Response';
+                    ApplicationArea = all;
+                    Editable = false;
+                }
+                field("CRX Sub_Distributor_ID"; rec."CRX Sub_Distributor_ID")
+                {
+                    ToolTip = 'Sub_Distributor_ID received in the Response';
+                    ApplicationArea = all;
+                    Editable = false;
+                }
             }
         }
     }

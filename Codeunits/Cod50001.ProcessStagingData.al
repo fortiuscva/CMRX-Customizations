@@ -154,4 +154,30 @@ codeunit 50001 "CRX Process Staging Data"
         if GuiAllowed then
             Message('Processed Successfully!');
     end;
+
+
+    procedure ProcessDistributorStaging(Var DistributorStagingRecPar: Record "CRX Distributors Staging")
+    var
+        DistributorStagingCU: Codeunit "CRX DistributorStaging";
+        DistributorStagingRecLcl: Record "CRX Distributors Staging";
+    begin
+        DistributorStagingRecLcl.Copy(DistributorStagingRecPar);
+        DistributorStagingRecLcl.SetRange(Processed, false);
+        if DistributorStagingRecLcl.FindSet() then
+            repeat
+                ClearLastError();
+                if not DistributorStagingCU.Run(DistributorStagingRecLcl) then begin
+                    DistributorStagingRecLcl."Error Message" := GetLastErrorText();
+                    DistributorStagingRecLcl.Processed := false;
+                end else begin
+                    DistributorStagingRecLcl.Processed := true;
+                    DistributorStagingRecLcl."Error Message" := '';
+                    DistributorStagingRecLcl."Processed Data/Time" := CurrentDateTime;
+                end;
+                DistributorStagingRecLcl.Modify();
+                Commit();
+            until DistributorStagingRecLcl.Next() = 0;
+        if GuiAllowed then
+            Message('Processed Successfully!');
+    end;
 }

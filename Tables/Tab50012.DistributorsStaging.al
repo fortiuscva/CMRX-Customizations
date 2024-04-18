@@ -9,21 +9,57 @@ table 50012 "CRX Distributors Staging"
         {
             Caption = 'Entry No.';
         }
-        field(2; "Distributor number"; Text[250])
+        field(2; id; Text[250])
         {
-            Caption = 'Distributor number';
+            Caption = 'id';
         }
-        field(3; "Distributor name"; Text[250])
+        field(3; parent_id; Text[250])
         {
-            Caption = 'Distributor name';
+            Caption = 'parent_id';
         }
-        field(4; "Email address"; Text[250])
+        field(4; tier; Text[250])
         {
-            Caption = 'Email address';
+            Caption = 'tier';
         }
-        field(5; Contact; Text[250])
+        field(5; name; Text[250])
         {
-            Caption = 'Contact';
+            Caption = 'name';
+        }
+        field(6; email; Text[250])
+        {
+            Caption = 'email';
+        }
+        field(7; contact_name; Text[250])
+        {
+            Caption = 'contact_name';
+        }
+        field(8; contact_note; Text[250])
+        {
+            Caption = 'contact_note';
+        }
+        field(9; created_at; Text[250])
+        {
+            Caption = 'created_at';
+        }
+        field(10; updated_at; Text[250])
+        {
+            Caption = 'updated_at';
+        }
+        field(35; Processed; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
+        field(36; "Processed Data/Time"; DateTime)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+
+        }
+        field(41; "Error Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
         }
     }
     keys
@@ -33,4 +69,14 @@ table 50012 "CRX Distributors Staging"
             Clustered = true;
         }
     }
+    trigger OnInsert()
+    var
+        DistributorStagingRecLcl: Record "CRX Distributors Staging";
+    begin
+        if DistributorStagingRecLcl.FindLast() then
+            "Entry No." := DistributorStagingRecLcl."Entry No." + 1
+        else
+            "Entry No." := 1;
+    end;
+
 }
