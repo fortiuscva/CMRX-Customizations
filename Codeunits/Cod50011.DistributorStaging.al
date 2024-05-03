@@ -6,6 +6,7 @@ codeunit 50011 "CRX DistributorStaging"
     var
         VendorRecLcl: Record Vendor;
         GroupVendorRecLcl: Record Vendor;
+        SalesPersonRecLcl: Record "Salesperson/Purchaser";
     begin
         VendorRecLcl.Init();
         VendorRecLcl.Validate("No.", Rec.id);
@@ -14,6 +15,12 @@ codeunit 50011 "CRX DistributorStaging"
         VendorRecLcl.Contact := rec.contact_name;
         VendorRecLcl.Validate("Vendor Posting Group", 'DOMESTIC');
         VendorRecLcl.Validate("Gen. Bus. Posting Group", 'DOMESTIC');
+
+        SalesPersonRecLcl.Reset();
+        SalesPersonRecLcl.SetRange("CRX Main_Distributor_ID", rec.id);
+        if SalesPersonRecLcl.FindFirst() then
+            VendorRecLcl.validate("Purchaser Code", SalesPersonRecLcl.Code);
+
         if not VendorRecLcl.Insert() then
             VendorRecLcl.Modify();
     end;
