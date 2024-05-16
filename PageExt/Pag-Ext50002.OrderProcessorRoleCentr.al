@@ -127,6 +127,13 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         RunObject = Page "CRX Distributors Staging";
                         ToolTip = 'Manage the Integration Data for Distributor Staging';
                     }
+                    action("CRX Claim Staging")
+                    {
+                        ApplicationArea = Location;
+                        Caption = 'Claim Staging';
+                        RunObject = Page "CRX Claim Staging";
+                        ToolTip = 'Manage the Integration Data for Claim Staging';
+                    }
                     action("CRX Get Data(All API)")
                     {
                         ApplicationArea = all;
@@ -206,7 +213,6 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         Caption = 'Claim';
                         RunObject = Page "CRX Claim List";
                         ToolTip = 'Opens the Claim';
-                        Visible = false;
                     }
                 }
             }
