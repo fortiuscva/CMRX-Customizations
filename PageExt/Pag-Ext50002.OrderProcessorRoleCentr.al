@@ -182,6 +182,7 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         Caption = 'Usages';
                         RunObject = Page "CRX Usages List";
                         ToolTip = 'Opens the Usages';
+                        Visible = false;
                     }
                     action("CRX Discount Card Data")
                     {
@@ -189,6 +190,7 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         Caption = 'Discount Card Data';
                         RunObject = Page "CRX Discount Card Data";
                         ToolTip = 'Opens the Discount Card Data';
+                        Visible = false;
                     }
                     action("CRX Discount Card Data Reconciliation")
                     {
@@ -196,6 +198,15 @@ pageextension 50002 "CRX Order Processor RoleCentr" extends "Order Processor Rol
                         Caption = 'Discount Card Data Reconcillation';
                         RunObject = Page "Discount Card Reconciliation";
                         ToolTip = 'Opens the Discount Card Data Reconciliation';
+                        Visible = false;
+                    }
+                    action("CRX Claim List")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Claim';
+                        RunObject = Page "CRX Claim List";
+                        ToolTip = 'Opens the Claim';
+                        Visible = false;
                     }
                 }
             }

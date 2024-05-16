@@ -80,6 +80,14 @@ table 50007 "CRX Setup"
         {
             Caption = 'Distributor Staging Last Sync';
         }
+        field(19; "Claim Staging Last Sync"; DateTime)
+        {
+            Caption = 'Claim Staging Last Sync';
+        }
+        field(20; "Claim Staging URL"; Text[1024])
+        {
+            Caption = 'Claim Staging URL';
+        }
     }
     keys
     {
