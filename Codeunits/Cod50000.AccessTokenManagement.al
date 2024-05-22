@@ -592,6 +592,107 @@ codeunit 50000 "CRX Access Token Management"
         end;
     end;
 
+
+    procedure GetClaimData()
+    var
+        UsagesStagingRecLcl: Record "CRX Claim Staging";
+        UsageidVarLcl: text[250];
+        ClientVarLcl: HttpClient;
+        contentVarLcl: HttpContent;
+        HeaderVarLcl: HttpHeaders;
+        RequestVarLcl: HttpRequestMessage;
+        ResponseVarLcl: HttpResponseMessage;
+        UsageDetailsTxt: Text;
+        UsageJsonText: Text;
+        UsageTotalText: Text;
+        URLVarLcl: Text;
+        ResponseTextVarLcl: Text;
+        JArray: JsonArray;
+        Jtoken: JsonToken;
+        Jobbject: JsonObject;
+        ArrayJsonMgt: Codeunit "JSON Management";
+        JsonMgt: Codeunit "JSON Management";
+        TotalJsonMgt: Codeunit "JSON Management";
+        i: Integer;
+    begin
+        UTCVarLcl := '-05:00';
+        CMRXSetupRecLcl.Get();
+
+        if CMRXSetupRecLcl."Claim Staging Last Sync" <> 0DT then
+            URLVarLcl := CMRXSetupRecLcl."Claim Staging URL" + '&updated_after=' + Format(CMRXSetupRecLcl."Claim Staging Last Sync", 0, '<Year4>-<Month,2>-<Day,2> <Hours24,2>:<Minutes,2>:<Seconds,2>') + UTCVarLcl
+        else
+            URLVarLcl := CMRXSetupRecLcl."Claim Staging URL";
+
+        AccessToken.FindFirst();
+        contentVarLcl.GetHeaders(HeaderVarLcl);
+        HeaderVarLcl.Remove('Content-Type');
+        HeaderVarLcl.Add('Content-Type', 'application/json');
+        ClientVarLcl.DefaultRequestHeaders.Clear();
+        ClientVarLcl.DefaultRequestHeaders.Add('Authorization', 'Bearer ' + AccessToken."Access Token");
+        RequestVarLcl.Method := 'GET';
+        RequestVarLcl.SetRequestUri(URLVarLcl);
+        RequestVarLcl.Content(contentVarLcl);
+        ClientVarLcl.Send(RequestVarLcl, ResponseVarLcl);
+        ResponseVarLcl.Content().ReadAs(ResponseTextVarLcl);
+        if ResponseVarLcl.IsSuccessStatusCode() THEN begin
+
+            JsonMgt.InitializeObject(ResponseTextVarLcl);
+
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('claim', UsageJsonText) then begin
+
+                ArrayJsonMgt.InitializeCollection(UsageJsonText);
+                for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
+                    ArrayJsonMgt.GetObjectFromCollectionByIndex(UsageDetailsTxt, i);
+                    JsonMgt.InitializeObject(UsageDetailsTxt);
+
+                    Clear(UsageidVarLcl);
+                    JsonMgt.GetStringPropertyValueByName('id', UsageidVarLcl);
+                    UsagesStagingRecLcl.Reset();
+                    UsagesStagingRecLcl.SetRange(id, UsageidVarLcl);
+                    if not UsagesStagingRecLcl.FindFirst() then begin
+                        UsagesStagingRecLcl.Init();
+                        JsonMgt.GetStringPropertyValueByName('id', UsagesStagingRecLcl.id);
+                        JsonMgt.GetStringPropertyValueByName('account_id', UsagesStagingRecLcl.account_id);
+                        JsonMgt.GetStringPropertyValueByName('provider', UsagesStagingRecLcl.provider);
+                        JsonMgt.GetStringPropertyValueByName('bin', UsagesStagingRecLcl.bin);
+                        JsonMgt.GetStringPropertyValueByName('npi', UsagesStagingRecLcl.npi);
+                        JsonMgt.GetStringPropertyValueByName('brand', UsagesStagingRecLcl.brand);
+                        JsonMgt.GetStringPropertyValueByName('ndc', UsagesStagingRecLcl.ndc);
+                        JsonMgt.GetStringPropertyValueByName('drug_name', UsagesStagingRecLcl.drug_name);
+                        JsonMgt.GetStringPropertyValueByName('dosage', UsagesStagingRecLcl.dosage);
+                        JsonMgt.GetStringPropertyValueByName('extra', UsagesStagingRecLcl.extra);
+                        JsonMgt.GetStringPropertyValueByName('price', UsagesStagingRecLcl.price);
+                        JsonMgt.GetStringPropertyValueByName('quantity', UsagesStagingRecLcl.quantity);
+                        JsonMgt.GetStringPropertyValueByName('created_at', UsagesStagingRecLcl.created_at);
+                        JsonMgt.GetStringPropertyValueByName('member_id', UsagesStagingRecLcl.member_id);
+                        JsonMgt.GetStringPropertyValueByName('group_id', UsagesStagingRecLcl.group_id);
+                        JsonMgt.GetStringPropertyValueByName('email', UsagesStagingRecLcl.email);
+                        JsonMgt.GetStringPropertyValueByName('phone', UsagesStagingRecLcl.phone);
+                        JsonMgt.GetStringPropertyValueByName('age_range', UsagesStagingRecLcl.age_range);
+                        JsonMgt.GetStringPropertyValueByName('ethnicity', UsagesStagingRecLcl.ethnicity);
+                        JsonMgt.GetStringPropertyValueByName('sex', UsagesStagingRecLcl.sex);
+                        JsonMgt.GetStringPropertyValueByName('first_name', UsagesStagingRecLcl.first_name);
+                        JsonMgt.GetStringPropertyValueByName('last_name', UsagesStagingRecLcl.last_name);
+                        JsonMgt.GetStringPropertyValueByName('account_zip', UsagesStagingRecLcl.account_zip);
+                        JsonMgt.GetStringPropertyValueByName('group_name', UsagesStagingRecLcl.group_name);
+                        JsonMgt.GetStringPropertyValueByName('peo_company', UsagesStagingRecLcl.peo_company);
+                        JsonMgt.GetStringPropertyValueByName('peo_id', UsagesStagingRecLcl.peo_id);
+                        JsonMgt.GetStringPropertyValueByName('privacy_optout', UsagesStagingRecLcl.privacy_optout);
+                        JsonMgt.GetStringPropertyValueByName('submitted_at', UsagesStagingRecLcl.Submitted_at);
+                        JsonMgt.GetStringPropertyValueByName('fee', UsagesStagingRecLcl.fee);
+                        TotalJsonMgt.InitializeObject(ResponseTextVarLcl);
+
+                        IF TotalJsonMgt.GetArrayPropertyValueAsStringByName('total', UsageTotalText) then
+                            TotalJsonMgt.GetStringPropertyValueByName('total', UsagesStagingRecLcl.total);
+                        UsagesStagingRecLcl.Insert(true);
+                    end;
+                end;
+                CMRXSetupRecLcl."Usages Staging Last Sync" := CurrentDateTime;
+                CMRXSetupRecLcl.Modify();
+            end;
+        end;
+    end;
+
     procedure GenerateAccessToken()
     var
         ClientVarLcl: HttpClient;
@@ -669,6 +770,7 @@ codeunit 50000 "CRX Access Token Management"
         GetUsagesData();
         GetSalespersonData();
         GetDistributorData();
+        GetClaimData();
     end;
 
     procedure TestConnection()

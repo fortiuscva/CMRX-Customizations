@@ -16,6 +16,7 @@ codeunit 50009 "CRX JQ Get Staging Data"
         AccessTokenManagementCULcl.GetAccountData(); // Group Id
         AccessTokenManagementCULcl.GetContactData(); // Group Id,Peos Id,Salesman Id,Peos Id
         AccessTokenManagementCULcl.GetUsagesData(); //Group Id, Peos Id
+        AccessTokenManagementCULcl.GetClaimData();
     end;
 
 }
