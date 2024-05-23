@@ -45,6 +45,14 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                 }
+                field("Distributor URL"; rec."Distributor URL")
+                {
+                    ApplicationArea = all;
+                }
+                field("Claim Staging URL"; rec."Claim Staging URL")
+                {
+                    ApplicationArea = all;
+                }
                 field("Accounts Staging Last Sync"; Rec."Accounts Staging Last Sync")
                 {
                     ApplicationArea = all;
@@ -84,6 +92,16 @@ page 50007 "CRX Setup"
                 {
                     ApplicationArea = all;
                     Editable = false;
+                }
+                field("Distributor Staging Last Sync"; rec."Distributor Staging Last Sync")
+                {
+                    ApplicationArea = all;
+                    Editable = false;
+                }
+                field("Claim Staging Last Sync"; Rec."Claim Staging Last Sync")
+                {
+                    ApplicationArea = all;
+                    ToolTip = 'Specifies the value of the Claim Staging Last Sync field.';
                 }
             }
         }

@@ -1,9 +1,9 @@
-page 50004 "CRX Usages Staging"
+page 50023 "CRX Claim Staging"
 {
     ApplicationArea = All;
-    Caption = 'Usages Staging';
+    Caption = 'Claim Staging';
     PageType = List;
-    SourceTable = "CRX Usages Staging";
+    SourceTable = "CRX Claim Staging";
     UsageCategory = Lists;
     //DeleteAllowed = false;
     InsertAllowed = false;
@@ -216,7 +216,7 @@ page 50004 "CRX Usages Staging"
                 var
                     AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
                 begin
-                    AccessTokenMgtCULcl.GetUsagesData();
+                    AccessTokenMgtCULcl.GetClaimData();
                 end;
             }
         }

@@ -1,12 +1,11 @@
-page 50009 "CRX Salesperson Staging"
+page 50021 "CRX Distributors Staging"
 {
     ApplicationArea = All;
-    Caption = 'Salesperson Staging';
+    Caption = 'Distributors Staging';
     PageType = List;
-    SourceTable = "CRX Salesperson Staging";
+    SourceTable = "CRX Distributors Staging";
     UsageCategory = Lists;
-    DeleteAllowed = false;
-    InsertAllowed = false;
+
     layout
     {
         area(content)
@@ -25,60 +24,44 @@ page 50009 "CRX Salesperson Staging"
                 field(id; Rec.id)
                 {
                     ToolTip = 'Specifies the value of the id field.';
-                    ApplicationArea = all;
-                    Editable = false;
                 }
-                field(username; Rec.username)
+                field(parent_id; Rec.parent_id)
                 {
-                    ToolTip = 'Specifies the value of the username field.';
-                    ApplicationArea = all;
-                    Editable = false;
+                    ToolTip = 'Specifies the value of the parent_id field.';
+                }
+                field(tier; Rec.tier)
+                {
+                    ToolTip = 'Specifies the value of the tier field.';
                 }
                 field(name; Rec.name)
                 {
                     ToolTip = 'Specifies the value of the name field.';
-                    ApplicationArea = all;
-                    Editable = false;
+                }
+                field(contact_name; Rec.contact_name)
+                {
+                    ToolTip = 'Specifies the value of the contact_name field.';
                 }
                 field(email; Rec.email)
                 {
                     ToolTip = 'Specifies the value of the email field.';
-                    ApplicationArea = all;
-                    Editable = false;
                 }
-                field("CRX signed_account_Count"; rec.signed_account_Count)
+                field(contact_note; Rec.contact_note)
                 {
-                    ApplicationArea = all;
-                    ToolTip = 'Specifies the value of signed_account_Count';
+                    ToolTip = 'Specifies the value of the contact_note field.';
                 }
                 field(created_at; Rec.created_at)
                 {
                     ToolTip = 'Specifies the value of the created_at field.';
-                    ApplicationArea = all;
-                    Editable = false;
                 }
                 field(updated_at; Rec.updated_at)
                 {
                     ToolTip = 'Specifies the value of the updated_at field.';
-                    ApplicationArea = all;
-                    Editable = false;
                 }
-                field(total; rec.total)
+
+                field("Error Message"; Rec."Error Message")
                 {
-                    ToolTip = 'Total No. of lines received in the Response';
-                    ApplicationArea = all;
-                    Editable = false;
-                }
-                field(Main_Distributor_ID; rec.Main_Distributor_ID)
-                {
-                    ToolTip = 'Main_Distributor_ID received in the Response';
-                    ApplicationArea = all;
-                    Editable = false;
-                }
-                field(Sub_Distributor_ID; rec.Sub_Distributor_ID)
-                {
-                    ToolTip = 'Sub_Distributor_ID received in the Response';
-                    ApplicationArea = all;
+                    ApplicationArea = All;
+                    ToolTip = 'Stores the reason for not processing the record.';
                     Editable = false;
                 }
             }
@@ -101,7 +84,7 @@ page 50009 "CRX Salesperson Staging"
                 var
                     AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
                 begin
-                    AccessTokenMgtCULcl.GetSalespersonData();
+                    AccessTokenMgtCULcl.GetDistributorData();
                 end;
             }
             action("Process Data")
@@ -115,11 +98,11 @@ page 50009 "CRX Salesperson Staging"
 
                 trigger OnAction()
                 var
-                    SalespersonStaging: Record "CRX Salesperson Staging";
+                    DistributorStaging: Record "CRX Distributors Staging";
                     ProcessStagingDataCULcl: Codeunit "CRX Process Staging Data";
                 begin
-                    CurrPage.SetSelectionFilter(SalespersonStaging);
-                    ProcessStagingDataCULcl.ProcessSalespersonStaging(SalespersonStaging);
+                    CurrPage.SetSelectionFilter(DistributorStaging);
+                    ProcessStagingDataCULcl.ProcessDistributorStaging(DistributorStaging);
                 end;
             }
         }

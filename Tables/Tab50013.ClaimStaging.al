@@ -1,9 +1,9 @@
-table 50004 "CRX Usages Staging"
+table 50013 "CRX Claim Staging"
 {
-    Caption = 'Usages Staging';
+    Caption = 'Claim Staging';
     DataClassification = ToBeClassified;
-    LookupPageId = "CRX Usages Staging";
-    DrillDownPageId = "CRX Usages Staging";
+    LookupPageId = "CRX Claim Staging";
+    DrillDownPageId = "CRX Claim Staging";
 
     fields
     {

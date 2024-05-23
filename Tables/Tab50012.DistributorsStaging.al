@@ -1,6 +1,6 @@
-table 50009 "CRX Salesperson Staging"
+table 50012 "CRX Distributors Staging"
 {
-    Caption = 'Salesperson Staging';
+    Caption = 'Distributors Staging';
     DataClassification = CustomerContent;
 
     fields
@@ -13,41 +13,37 @@ table 50009 "CRX Salesperson Staging"
         {
             Caption = 'id';
         }
-        field(3; username; Text[250])
+        field(3; parent_id; Text[250])
         {
-            Caption = 'username';
+            Caption = 'parent_id';
         }
-        field(4; name; Text[250])
+        field(4; tier; Text[250])
+        {
+            Caption = 'tier';
+        }
+        field(5; name; Text[250])
         {
             Caption = 'name';
         }
-        field(5; email; Text[250])
+        field(6; email; Text[250])
         {
             Caption = 'email';
         }
-        field(6; created_at; Text[250])
+        field(7; contact_name; Text[250])
+        {
+            Caption = 'contact_name';
+        }
+        field(8; contact_note; Text[250])
+        {
+            Caption = 'contact_note';
+        }
+        field(9; created_at; Text[250])
         {
             Caption = 'created_at';
         }
-        field(7; updated_at; Text[250])
+        field(10; updated_at; Text[250])
         {
             Caption = 'updated_at';
-        }
-        field(8; total; Text[250])
-        {
-            Caption = 'total';
-        }
-        field(9; signed_account_Count; text[250])
-        {
-            Caption = 'signed_account_Count';
-        }
-        field(10; Main_Distributor_ID; text[250])
-        {
-            Caption = 'Main_Distributor_ID';
-        }
-        field(11; Sub_Distributor_ID; text[250])
-        {
-            Caption = 'Sub_Distributor_ID';
         }
         field(35; Processed; Boolean)
         {
@@ -75,11 +71,12 @@ table 50009 "CRX Salesperson Staging"
     }
     trigger OnInsert()
     var
-        SalespersonStagingRecLcl: Record "CRX Salesperson Staging";
+        DistributorStagingRecLcl: Record "CRX Distributors Staging";
     begin
-        if SalespersonStagingRecLcl.FindLast() then
-            "Entry No." := SalespersonStagingRecLcl."Entry No." + 1
+        if DistributorStagingRecLcl.FindLast() then
+            "Entry No." := DistributorStagingRecLcl."Entry No." + 1
         else
             "Entry No." := 1;
     end;
+
 }

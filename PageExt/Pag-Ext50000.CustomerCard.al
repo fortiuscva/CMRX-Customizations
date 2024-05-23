@@ -46,6 +46,14 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
             {
                 ApplicationArea = all;
             }
+            field("CRX Commission %"; rec."CRX Commission %")
+            {
+                ApplicationArea = all;
+            }
+            field("CRX Commission Amount"; rec."CRX Commission Amount")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 }
