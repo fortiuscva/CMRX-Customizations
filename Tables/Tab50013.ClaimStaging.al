@@ -165,10 +165,10 @@ table 50013 "CRX Claim Staging"
     }
     trigger OnInsert()
     var
-        UsagesStagingRecLcl: Record "CRX Usages Staging";
+        ClaimStagingRecLcl: Record "CRX claim Staging";
     begin
-        if UsagesStagingRecLcl.FindLast() then
-            "Entry No." := UsagesStagingRecLcl."Entry No." + 1
+        if ClaimStagingRecLcl.FindLast() then
+            "Entry No." := ClaimStagingRecLcl."Entry No." + 1
         else
             "Entry No." := 1;
     end;

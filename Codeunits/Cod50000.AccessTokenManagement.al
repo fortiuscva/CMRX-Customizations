@@ -638,7 +638,7 @@ codeunit 50000 "CRX Access Token Management"
 
             JsonMgt.InitializeObject(ResponseTextVarLcl);
 
-            IF JsonMgt.GetArrayPropertyValueAsStringByName('claim', UsageJsonText) then begin
+            IF JsonMgt.GetArrayPropertyValueAsStringByName('claims', UsageJsonText) then begin
 
                 ArrayJsonMgt.InitializeCollection(UsageJsonText);
                 for i := 0 to ArrayJsonMgt.GetCollectionCount() - 1 do begin
