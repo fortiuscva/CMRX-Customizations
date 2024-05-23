@@ -216,7 +216,7 @@ page 50023 "CRX Claim Staging"
                 var
                     AccessTokenMgtCULcl: Codeunit "CRX Access Token Management";
                 begin
-                    AccessTokenMgtCULcl.GetUsagesData();
+                    AccessTokenMgtCULcl.GetClaimData();
                 end;
             }
         }
