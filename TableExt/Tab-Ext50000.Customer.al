@@ -67,20 +67,20 @@ tableextension 50000 "CRX Customer" extends Customer
 
             trigger OnValidate()
             var
-                UsagesRecLcl: Record "CRX Usages Staging";
+                ClaimRecLcl: Record "CRX Claim Staging";
                 FeeAmountVarLcl: Decimal;
                 SumFeeAmountVarLcl: Decimal;
             begin
                 Clear(FeeAmountVarLcl);
                 Clear(SumFeeAmountVarLcl);
-                UsagesRecLcl.Reset();
-                UsagesRecLcl.SetRange(group_id, rec."No.");
-                UsagesRecLcl.SetRange(peo_id, rec."CRX Peos Id");
-                if UsagesRecLcl.FindSet() then
+                ClaimRecLcl.Reset();
+                ClaimRecLcl.SetRange(group_id, rec."No.");
+                ClaimRecLcl.SetRange(peo_id, rec."CRX Peos Id");
+                if ClaimRecLcl.FindSet() then
                     repeat
-                        Evaluate(FeeAmountVarLcl, UsagesRecLcl.Fee);
+                        Evaluate(FeeAmountVarLcl, ClaimRecLcl.Fee);
                         SumFeeAmountVarLcl += FeeAmountVarLcl;
-                    until UsagesRecLcl.Next() = 0;
+                    until ClaimRecLcl.Next() = 0;
 
                 if SumFeeAmountVarLcl <> 0 then
                     rec."CRX Commission Amount" := SumFeeAmountVarLcl * rec."CRX Commission %";
