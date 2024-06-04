@@ -2,7 +2,7 @@
   "id": "d63e22fb-c371-4232-9870-9b6cbedcb3de",
   "name": "CMRX Customizations",
   "publisher": "ADC",
-  "version": "22.0.0.15",
+  "version": "24.0.0.15",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -14,7 +14,7 @@
   ],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "21.0.0.0",
+  "application": "24.0.0.0",
   "idRanges": [
     {
       "from": 50000,
@@ -26,5 +26,5 @@
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
   },
-  "runtime": "10.0"
+  "runtime": "13.0"
 }
