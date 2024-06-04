@@ -78,12 +78,12 @@ tableextension 50000 "CRX Customer" extends Customer
                 ClaimRecLcl.SetRange(peo_id, rec."CRX Peos Id");
                 if ClaimRecLcl.FindSet() then
                     repeat
-                        Evaluate(FeeAmountVarLcl, ClaimRecLcl.Fee);
+                        Evaluate(FeeAmountVarLcl, ClaimRecLcl."Fee ($)");
                         SumFeeAmountVarLcl += FeeAmountVarLcl;
                     until ClaimRecLcl.Next() = 0;
 
                 if SumFeeAmountVarLcl <> 0 then
-                    rec."CRX Commission Amount" := SumFeeAmountVarLcl * rec."CRX Commission %";
+                    rec."CRX Commission Amount" := (SumFeeAmountVarLcl * rec."CRX Commission %") / 100;
             end;
         }
         field(50011; "CRX Commission Amount"; Decimal)

@@ -135,9 +135,9 @@ table 50013 "CRX Claim Staging"
         {
             Caption = 'Submitted_at';
         }
-        field(33; Fee; text[250])
+        field(33; "Fee ($)"; text[250])
         {
-            Caption = 'Fee';
+            Caption = 'Fee ($)';
         }
         field(35; Processed; Boolean)
         {
