@@ -29,5 +29,11 @@ tableextension 50001 "CRX Employee" extends Employee
             DataClassification = CustomerContent;
             Caption = 'Affiliate Id';
         }
+        field(50010; "CRX Claim"; Integer)
+        {
+            Caption = 'Claim';
+            FieldClass = FlowField;
+            CalcFormula = count("CRX Claim Staging" where(account_id = field("No.")));
+        }
     }
 }

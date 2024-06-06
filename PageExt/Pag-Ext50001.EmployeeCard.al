@@ -19,6 +19,11 @@ pageextension 50001 "CRX Employee Card" extends "Employee Card"
             field("CRX Usages"; rec."CRX Usages")
             {
                 ApplicationArea = all;
+                Visible = false;
+            }
+            field("CRX Claim"; rec."CRX Claim")
+            {
+                ApplicationArea = all;
             }
             field("CRX Affiliate Id"; rec."CRX Affiliate Id")
             {

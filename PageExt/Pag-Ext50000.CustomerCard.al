@@ -37,6 +37,29 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
             field("CRX Usages"; rec."CRX Usages")
             {
                 ApplicationArea = all;
+                Visible = false;
+            }
+            field("CRX Claim"; ClaimsVarGbl)
+            {
+                Caption = 'Claim';
+                ApplicationArea = all;
+                Editable = false;
+
+                trigger OnDrillDown()
+                var
+                    ClaimRecLcl: Record "CRX Claim Staging";
+                    EmployeeRecLcl: Record Employee;
+                begin
+                    Clear(ClaimsVarGbl);
+                    EmployeeRecLcl.Reset();
+                    EmployeeRecLcl.SetRange("CRX Group Id", rec."No.");
+                    IF EmployeeRecLcl.findlast() then begin
+                        ClaimRecLcl.Reset();
+                        ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
+                        if ClaimRecLcl.FindSet() then
+                            page.RunModal(page::"CRX Claim List", ClaimRecLcl);
+                    end;
+                end;
             }
             field("CRX Groups"; rec."CRX Groups")
             {
@@ -56,4 +79,23 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
             }
         }
     }
+
+    trigger OnAfterGetRecord()
+    var
+        ClaimRecLcl: Record "CRX Claim Staging";
+        EmployeeRecLcl: Record Employee;
+    begin
+        Clear(ClaimsVarGbl);
+        EmployeeRecLcl.Reset();
+        EmployeeRecLcl.SetRange("CRX Group Id", rec."No.");
+        IF EmployeeRecLcl.findlast() then begin
+            ClaimRecLcl.Reset();
+            ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
+            if ClaimRecLcl.FindSet() then
+                ClaimsVarGbl := ClaimRecLcl.Count();
+        end;
+    end;
+
+    var
+        ClaimsVarGbl: Integer;
 }
