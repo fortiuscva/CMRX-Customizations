@@ -67,23 +67,29 @@ tableextension 50000 "CRX Customer" extends Customer
 
             trigger OnValidate()
             var
-                UsagesRecLcl: Record "CRX Usages Staging";
+                ClaimRecLcl: Record "CRX Claim Staging";
+                EmployeeRecLcl: Record Employee;
                 FeeAmountVarLcl: Decimal;
                 SumFeeAmountVarLcl: Decimal;
             begin
                 Clear(FeeAmountVarLcl);
                 Clear(SumFeeAmountVarLcl);
-                UsagesRecLcl.Reset();
-                UsagesRecLcl.SetRange(group_id, rec."No.");
-                UsagesRecLcl.SetRange(peo_id, rec."CRX Peos Id");
-                if UsagesRecLcl.FindSet() then
-                    repeat
-                        Evaluate(FeeAmountVarLcl, UsagesRecLcl.Fee);
-                        SumFeeAmountVarLcl += FeeAmountVarLcl;
-                    until UsagesRecLcl.Next() = 0;
+
+                EmployeeRecLcl.Reset();
+                EmployeeRecLcl.SetRange("CRX Group Id", rec."No.");
+                IF EmployeeRecLcl.FindLast() then begin
+                    ClaimRecLcl.Reset();
+                    ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
+                    if ClaimRecLcl.FindSet() then
+                        repeat
+                            Evaluate(FeeAmountVarLcl, ClaimRecLcl."Fee ($)");
+                            SumFeeAmountVarLcl += FeeAmountVarLcl;
+                        until ClaimRecLcl.Next() = 0;
+                end;
+
 
                 if SumFeeAmountVarLcl <> 0 then
-                    rec."CRX Commission Amount" := SumFeeAmountVarLcl * rec."CRX Commission %";
+                    rec."CRX Commission Amount" := (SumFeeAmountVarLcl * rec."CRX Commission %") / 100;
             end;
         }
         field(50011; "CRX Commission Amount"; Decimal)
@@ -93,4 +99,5 @@ tableextension 50000 "CRX Customer" extends Customer
             Editable = false;
         }
     }
+
 }

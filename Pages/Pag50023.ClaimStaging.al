@@ -180,7 +180,7 @@ page 50023 "CRX Claim Staging"
                 {
                     ToolTip = 'Specifies the value of the Submitted_at field.';
                 }
-                field(Fee; rec.Fee)
+                field(Fee; rec."Fee ($)")
                 {
                     ToolTip = 'Specifies the value of the Fee';
                 }
