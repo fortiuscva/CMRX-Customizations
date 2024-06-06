@@ -48,16 +48,26 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
                 trigger OnDrillDown()
                 var
                     ClaimRecLcl: Record "CRX Claim Staging";
+                    TempClaimRecLcl: Record "CRX Claim Staging" temporary;
                     EmployeeRecLcl: Record Employee;
                 begin
+                    TempClaimRecLcl.DeleteAll();
                     Clear(ClaimsVarGbl);
                     EmployeeRecLcl.Reset();
                     EmployeeRecLcl.SetRange("CRX Group Id", rec."No.");
-                    IF EmployeeRecLcl.findlast() then begin
-                        ClaimRecLcl.Reset();
-                        ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
-                        if ClaimRecLcl.FindSet() then
-                            page.RunModal(page::"CRX Claim List", ClaimRecLcl);
+                    IF EmployeeRecLcl.FindSet() then begin
+                        repeat
+                            ClaimRecLcl.Reset();
+                            ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
+                            if ClaimRecLcl.FindSet() then
+                                repeat
+                                    TempClaimRecLcl.Init();
+                                    TempClaimRecLcl.TransferFields(ClaimRecLcl);
+                                    TempClaimRecLcl.Insert();
+                                until ClaimRecLcl.Next() = 0;
+                        until EmployeeRecLcl.Next() = 0;
+                        if TempClaimRecLcl.FindSet() then
+                            page.RunModal(page::"CRX Claim List", TempClaimRecLcl);
                     end;
                 end;
             }
@@ -88,11 +98,13 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
         Clear(ClaimsVarGbl);
         EmployeeRecLcl.Reset();
         EmployeeRecLcl.SetRange("CRX Group Id", rec."No.");
-        IF EmployeeRecLcl.findlast() then begin
-            ClaimRecLcl.Reset();
-            ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
-            if ClaimRecLcl.FindSet() then
-                ClaimsVarGbl := ClaimRecLcl.Count();
+        IF EmployeeRecLcl.FindSet() then begin
+            repeat
+                ClaimRecLcl.Reset();
+                ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
+                if ClaimRecLcl.FindSet() then
+                    ClaimsVarGbl += ClaimRecLcl.Count();
+            until EmployeeRecLcl.Next() = 0;
         end;
     end;
 
