@@ -77,14 +77,16 @@ tableextension 50000 "CRX Customer" extends Customer
 
                 EmployeeRecLcl.Reset();
                 EmployeeRecLcl.SetRange("CRX Group Id", rec."No.");
-                IF EmployeeRecLcl.FindLast() then begin
-                    ClaimRecLcl.Reset();
-                    ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
-                    if ClaimRecLcl.FindSet() then
-                        repeat
-                            Evaluate(FeeAmountVarLcl, ClaimRecLcl."Fee ($)");
-                            SumFeeAmountVarLcl += FeeAmountVarLcl;
-                        until ClaimRecLcl.Next() = 0;
+                IF EmployeeRecLcl.findset() then begin
+                    repeat
+                        ClaimRecLcl.Reset();
+                        ClaimRecLcl.SetRange(account_id, EmployeeRecLcl."No.");
+                        if ClaimRecLcl.FindSet() then
+                            repeat
+                                Evaluate(FeeAmountVarLcl, ClaimRecLcl."Fee ($)");
+                                SumFeeAmountVarLcl += FeeAmountVarLcl;
+                            until ClaimRecLcl.Next() = 0;
+                    until EmployeeRecLcl.Next() = 0;
                 end;
 
 
