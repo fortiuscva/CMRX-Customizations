@@ -91,7 +91,9 @@ tableextension 50000 "CRX Customer" extends Customer
 
 
                 if SumFeeAmountVarLcl <> 0 then
-                    rec."CRX Commission Amount" := (SumFeeAmountVarLcl * rec."CRX Commission %") / 100;
+                    rec."CRX Commission Amount" := (SumFeeAmountVarLcl * rec."CRX Commission %") / 100
+                else
+                    rec."CRX Commission Amount" := 0;
             end;
         }
         field(50011; "CRX Commission Amount"; Decimal)
