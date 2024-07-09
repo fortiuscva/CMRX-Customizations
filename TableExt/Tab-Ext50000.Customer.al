@@ -87,6 +87,22 @@ tableextension 50000 "CRX Customer" extends Customer
                                 SumFeeAmountVarLcl += FeeAmountVarLcl;
                             until ClaimRecLcl.Next() = 0;
                     until EmployeeRecLcl.Next() = 0;
+                end else begin
+                    ClaimRecLcl.Reset();
+                    ClaimRecLcl.SetRange(peo_id, rec."No.");
+                    if ClaimRecLcl.FindSet() then
+                        repeat
+                            Evaluate(FeeAmountVarLcl, ClaimRecLcl."Fee ($)");
+                            SumFeeAmountVarLcl += FeeAmountVarLcl;
+                        until ClaimRecLcl.Next() = 0;
+
+                    ClaimRecLcl.Reset();
+                    ClaimRecLcl.SetRange(broker_id, rec."No.");
+                    if ClaimRecLcl.FindSet() then
+                        repeat
+                            Evaluate(FeeAmountVarLcl, ClaimRecLcl."Fee ($)");
+                            SumFeeAmountVarLcl += FeeAmountVarLcl;
+                        until ClaimRecLcl.Next() = 0;
                 end;
 
 
