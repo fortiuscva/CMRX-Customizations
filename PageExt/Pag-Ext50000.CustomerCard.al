@@ -66,9 +66,28 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
                                     TempClaimRecLcl.Insert();
                                 until ClaimRecLcl.Next() = 0;
                         until EmployeeRecLcl.Next() = 0;
-                        if TempClaimRecLcl.FindSet() then
-                            page.RunModal(page::"CRX Claim List", TempClaimRecLcl);
+                    end else begin
+                        ClaimRecLcl.Reset();
+                        ClaimRecLcl.SetRange(peo_id, rec."No.");
+                        if ClaimRecLcl.FindSet() then
+                            if ClaimRecLcl.FindSet() then
+                                repeat
+                                    TempClaimRecLcl.Init();
+                                    TempClaimRecLcl.TransferFields(ClaimRecLcl);
+                                    TempClaimRecLcl.Insert();
+                                until ClaimRecLcl.Next() = 0;
+
+                        ClaimRecLcl.Reset();
+                        ClaimRecLcl.SetRange(broker_id, rec."No.");
+                        if ClaimRecLcl.FindSet() then
+                            repeat
+                                TempClaimRecLcl.Init();
+                                TempClaimRecLcl.TransferFields(ClaimRecLcl);
+                                TempClaimRecLcl.Insert();
+                            until ClaimRecLcl.Next() = 0;
                     end;
+                    if TempClaimRecLcl.FindSet() then
+                        page.RunModal(page::"CRX Claim List", TempClaimRecLcl);
                 end;
             }
             field("CRX Groups"; rec."CRX Groups")
@@ -105,6 +124,17 @@ pageextension 50000 "CRX Customer Card" extends "Customer Card"
                 if ClaimRecLcl.FindSet() then
                     ClaimsVarGbl += ClaimRecLcl.Count();
             until EmployeeRecLcl.Next() = 0;
+        end else begin
+            ClaimRecLcl.Reset();
+            ClaimRecLcl.SetRange(peo_id, rec."No.");
+            if ClaimRecLcl.FindSet() then
+                if ClaimRecLcl.FindSet() then
+                    ClaimsVarGbl += ClaimRecLcl.Count();
+
+            ClaimRecLcl.Reset();
+            ClaimRecLcl.SetRange(broker_id, rec."No.");
+            if ClaimRecLcl.FindSet() then
+                ClaimsVarGbl += ClaimRecLcl.Count();
         end;
     end;
 
