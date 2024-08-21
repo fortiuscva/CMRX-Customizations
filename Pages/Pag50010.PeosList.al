@@ -265,6 +265,14 @@ page 50010 "CRX Peos List"
                 {
                     ApplicationArea = all;
                 }
+                field("CRX Commission %"; rec."CRX Commission %")
+                {
+                    ApplicationArea = all;
+                }
+                field("CRX Commission Amount"; rec."CRX Commission Amount")
+                {
+                    ApplicationArea = all;
+                }
             }
         }
 
