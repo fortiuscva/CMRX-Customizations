@@ -20,6 +20,10 @@ pageextension 50003 "CRX Customer List" extends "Customer List"
             {
                 ApplicationArea = all;
             }
+            field("CRX Commission Amount"; rec."CRX Commission Amount")
+            {
+                ApplicationArea = all;
+            }
         }
     }
 }
